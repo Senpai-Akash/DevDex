@@ -1,13 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HeroSearch() {
   const [username, setUsername] = useState("");
+  const router = useRouter();
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmedUsername = username.trim();
+
+    if (!trimmedUsername) {
+      return;
+    }
+
+    router.push(`/profile/${encodeURIComponent(trimmedUsername)}`);
+  }
 
   return (
     <form
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
       className="flex w-full gap-2"
       aria-label="Generate card"
     >

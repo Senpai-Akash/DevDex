@@ -52,10 +52,10 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 export async function getUser(username: string): Promise<GitHubUser> {
-  const trimmed = username.trim();
-  if (!trimmed) {
-    throw new GitHubApiError("Username is required.", 400);
-  }
+    if (!username) {
+        throw new GitHubApiError("Username is required.", 400);
+    }
+    const trimmed = username.trim();
 
   const response = await fetch(`${BASE_URL}/users/${encodeURIComponent(trimmed)}`, {
     headers: createHeaders(),

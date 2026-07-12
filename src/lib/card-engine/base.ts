@@ -7,7 +7,13 @@ export type CardBuilder = (dev: Developer, analysis: DeveloperAnalysis) => CardD
 export function buildBaseCard(
   dev: Developer,
   analysis: DeveloperAnalysis,
-  title: string,
+  role: string,
+  rating: number,
+  technology: string,
+  trait: string,
+  edition: string,
+  cardNumber: string,
+  branding: string,
   visualsOverrides: Partial<CardVisuals> = {}
 ): CardData {
   const visuals: CardVisuals = {
@@ -32,7 +38,14 @@ export function buildBaseCard(
     username: dev.username,
     displayName: dev.displayName,
     avatar: dev.avatar,
-    title,
+    role,
+    rating,
+    rarity: analysis.rarity,
+    technology,
+    trait,
+    edition,
+    cardNumber,
+    branding,
     stats,
     visuals,
     achievements: analysis.achievements ?? [],

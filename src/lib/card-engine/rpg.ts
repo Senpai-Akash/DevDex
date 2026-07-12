@@ -6,12 +6,22 @@ export const buildRpgCard: CardBuilder = (
   dev: Developer,
   analysis: DeveloperAnalysis
 ) => {
-  const title = `${dev.displayName} — Adventurer`;
   const visuals = {
     borderStyle: 'engraved',
     frameStyle: 'parchment',
     badge: 'sword',
   };
 
-  return buildBaseCard(dev, analysis, title, visuals);
+  return buildBaseCard(
+    dev,
+    analysis,
+    'Adventurer',
+    Math.round(analysis.overallScore),
+    analysis.primaryLanguage,
+    analysis.strongestSkill,
+    'Edition 001 of 1000',
+    `DDX-${String(Math.round(analysis.overallScore)).padStart(6, '0')}`,
+    'DEVDEX',
+    visuals
+  );
 };

@@ -6,12 +6,22 @@ export const buildLegendaryCard: CardBuilder = (
   dev: Developer,
   analysis: DeveloperAnalysis
 ) => {
-  const title = `${dev.displayName} — Legendary`; 
   const visuals = {
     borderStyle: 'gold',
     frameStyle: 'ornate',
     badge: 'crown',
   };
 
-  return buildBaseCard(dev, analysis, title, visuals);
+  return buildBaseCard(
+    dev,
+    analysis,
+    'Legendary',
+    Math.round(analysis.overallScore),
+    analysis.primaryLanguage,
+    analysis.strongestSkill,
+    'Edition 001 of 1000',
+    `DDX-${String(Math.round(analysis.overallScore)).padStart(6, '0')}`,
+    'DEVDEX',
+    visuals
+  );
 };

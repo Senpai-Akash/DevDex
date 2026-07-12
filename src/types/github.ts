@@ -10,6 +10,8 @@ export interface GitHubUser {
   public_repos: number;
   location: string | null;
   company: string | null;
+  blog: string | null;
+  created_at: string;
 }
 
 export interface GitHubRepository {

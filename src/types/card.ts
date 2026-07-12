@@ -19,8 +19,14 @@ export interface CardData {
     username: string;
     displayName: string;
     avatar: string;
-
-    title: string;
+    role: string;
+    rating: number;
+    rarity: string;
+    technology: string;
+    trait: string;
+    edition: string;
+    cardNumber: string;
+    branding: string;
 
     stats: CardStats;
 

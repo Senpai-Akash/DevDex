@@ -29,8 +29,10 @@ export function FootballCard({ data }: FootballCardProps) {
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 px-5 py-6 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl sm:px-7 sm:py-7">
           <FootballHeader rating={data.rating} rarity={data.rarity} />
           <FootballAvatar avatar={data.avatar} displayName={data.displayName} role={data.role} />
-          <FootballStats stats={data.stats} />
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mb-6">
+            <FootballStats stats={data.stats} />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
             <FootballTechnology technology={data.technology} />
             <FootballTrait trait={data.trait} />
           </div>

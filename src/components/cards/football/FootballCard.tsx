@@ -22,17 +22,17 @@ export function FootballCard({ data }: FootballCardProps) {
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ y: -8, rotateX: 0.9, rotateY: 1.2, scale: 1.01 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="group relative mx-auto flex max-w-[440px] cursor-pointer flex-col"
+      className="group relative mx-auto flex max-w-[488px] cursor-pointer flex-col"
     >
       <CardFrame>
         <CardBackground />
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 px-5 py-6 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl sm:px-7 sm:py-7">
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 px-4 py-5 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl sm:px-6 sm:py-6">
           <FootballHeader rating={data.rating} rarity={data.rarity} />
           <FootballAvatar avatar={data.avatar} displayName={data.displayName} role={data.role} />
-          <div className="mb-6">
+          <div className="mb-4">
             <FootballStats stats={data.stats} />
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2">
             <FootballTechnology technology={data.technology} />
             <FootballTrait trait={data.trait} />
           </div>

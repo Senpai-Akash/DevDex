@@ -1,6 +1,6 @@
 import { getOrganizations, getRepositories, getUser, GitHubApiError, GitHubNotFoundError } from "@/lib/github/api";
 import { mapDeveloperToCardData, mapGithubToDeveloper } from "@/lib/github/mapper";
-import { FootballCard } from "@/components/cards/football/FootballCard";
+import { ProfileCardDisplay } from "@/components/profile/ProfileCardDisplay";
 import type { Developer } from "@/types/developer";
 
 type ProfilePageProps = {
@@ -14,8 +14,8 @@ function renderDeveloperProfile(developer: Developer) {
 
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-20 text-slate-100">
-      <div className="mx-auto flex max-w-[520px] justify-center">
-        <FootballCard data={cardData} />
+      <div className="mx-auto flex max-w-[600px] flex-col gap-8 px-4">
+        <ProfileCardDisplay cardData={cardData} />
       </div>
     </main>
   );

@@ -5,6 +5,12 @@ import type {
 } from "@/types/github";
 import type { CardData } from "@/types/card";
 import type { Developer } from "@/types/developer";
+import { calculateRating } from "@/lib/intelligence/rating";
+import { detectPrimaryRole } from "@/lib/intelligence/role";
+import { detectPrimaryTechnology } from "@/lib/intelligence/technology";
+import { calculateRarity } from "@/lib/intelligence/rarity";
+import { generateTrait } from "@/lib/intelligence/trait";
+import { calculateStats } from "@/lib/intelligence/stats";
 
 export function mapGithubToDeveloper(
   user: GitHubUser,
@@ -13,13 +19,19 @@ export function mapGithubToDeveloper(
 ): Developer {
   const stars = repositories.reduce((total, repo) => total + repo.stargazers_count, 0);
   const forks = repositories.reduce((total, repo) => total + repo.forks_count, 0);
-  const languages = Array.from(
-    new Set(
-      repositories
-        .map((repo) => repo.language)
-        .filter((language): language is string => Boolean(language)),
-    ),
-  ).sort();
+  const repositoryNames = repositories.map((repo) => repo.name);
+  const languageCounts = repositories.reduce<Record<string, number>>((counts, repo) => {
+    const language = repo.language?.trim();
+
+    if (!language) {
+      return counts;
+    }
+
+    counts[language] = (counts[language] ?? 0) + 1;
+    return counts;
+  }, {});
+
+  const languages = Object.keys(languageCounts).sort();
 
   return {
     username: user.login,
@@ -32,6 +44,8 @@ export function mapGithubToDeveloper(
     stars,
     forks,
     languages,
+    languageCounts,
+    repositoryNames,
     organizations: organizations.map((org) => org.login),
     company: user.company,
     location: user.location,
@@ -42,14 +56,15 @@ export function mapGithubToDeveloper(
 }
 
 export function mapDeveloperToCardData(developer: Developer): CardData {
-  const rating = Math.min(99, Math.max(1, Math.round((developer.followers + developer.stars + developer.repositories) / 3)));
-  const technology = developer.languages[0] ?? "Unknown";
-  const role = developer.company ?? "Developer";
-  const rarity = developer.followers > 500 ? "Legendary" : developer.followers > 100 ? "Rare" : "Common";
-  const trait = developer.bio ? developer.bio.split(" ")[0] : "Commit Machine";
+  const rating = calculateRating(developer);
+  const technology = detectPrimaryTechnology(developer);
+  const role = detectPrimaryRole(developer);
+  const rarity = calculateRarity(developer, rating);
+  const trait = generateTrait(developer);
   const edition = "Edition 001 of 1000";
   const cardNumber = `DDX-${String(developer.followers).padStart(6, "0")}`;
   const branding = "DEVDEX";
+  const stats = calculateStats(developer);
 
   return {
     username: developer.username,
@@ -63,15 +78,7 @@ export function mapDeveloperToCardData(developer: Developer): CardData {
     edition,
     cardNumber,
     branding,
-    stats: {
-      overall: rating,
-      attack: Math.min(100, Math.round(developer.stars / 10 + 20)),
-      defense: Math.min(100, Math.round(developer.followers / 10 + 15)),
-      intelligence: Math.min(100, Math.round(developer.repositories / 2 + 20)),
-      speed: Math.min(100, Math.round(developer.following / 5 + 10)),
-      versatility: Math.min(100, developer.languages.length * 10),
-      teamwork: Math.min(100, Math.round(developer.organizations.length * 15)),
-    },
+    stats,
     visuals: {
       rarity,
       borderStyle: "standard",

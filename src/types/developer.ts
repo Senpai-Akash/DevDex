@@ -9,6 +9,8 @@ export interface Developer {
   stars: number;
   forks: number;
   languages: string[];
+  languageCounts: Record<string, number>;
+  repositoryNames: string[];
   organizations: string[];
   company: string | null;
   location: string | null;

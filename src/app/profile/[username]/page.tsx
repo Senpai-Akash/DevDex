@@ -37,9 +37,7 @@ function renderError(message: string) {
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { username } = await params;
-  
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  
+
   try {
     const [user, repositories, organizations] = await Promise.all([
       getUser(username),

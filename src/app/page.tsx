@@ -1,5 +1,39 @@
 import Navbar from "../components/layout/Navbar";
 import Hero from "../components/sections/Hero/Hero";
+import ThemePreview from "@/components/sections/ThemePreview";
+
+const demoCard = {
+  username: "Senpai-Akash",
+  displayName: "Akash",
+  avatar: "https://avatars.githubusercontent.com/u/583231?v=4", // or any image
+  role: "Full Stack Developer",
+  rating: 92,
+  rarity: "Legendary",
+  technology: "TypeScript",
+  trait: "Problem Solver",
+  edition: "Edition 001",
+  cardNumber: "DEV-001",
+  branding: "DEVDEX",
+
+  stats: {
+    overall: 92,
+    attack: 89,
+    defense: 90,
+    intelligence: 95,
+    speed: 87,
+    versatility: 91,
+    teamwork: 88,
+  },
+
+  visuals: {
+    rarity: "Legendary",
+    borderStyle: "standard",
+    frameStyle: "standard",
+    badge: "none",
+  },
+
+  achievements: [],
+};
 
 const themeList = [
   "Football Ultimate",
@@ -29,6 +63,7 @@ export default function Page() {
     <main className="bg-slate-950 text-slate-50">
       <Navbar />
       <Hero />
+      <ThemePreview cardData={demoCard} />
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
         <div className="rounded-[2rem] border border-indigo-500/30 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm p-10 shadow-2xl shadow-indigo-500/10">

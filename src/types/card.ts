@@ -1,3 +1,9 @@
+import type {
+    DeveloperAchievement,
+    DeveloperAnalyzerResult,
+    LanguageProfile,
+} from "@/types/analysis";
+
 export interface CardStats {
     overall: number;
     attack: number;
@@ -32,5 +38,10 @@ export interface CardData {
 
     visuals: CardVisuals;
 
-    achievements: string[];
+    analysis?: DeveloperAnalyzerResult;
+    powerScore?: number;
+    rank?: string;
+    developerClass?: string;
+    languageProfile?: LanguageProfile;
+    achievements: DeveloperAchievement[];
 }

@@ -48,6 +48,11 @@ export function buildBaseCard(
     branding,
     stats,
     visuals,
-    achievements: analysis.achievements ?? [],
+    analysis,
+    powerScore: analysis.powerScore,
+    rank: analysis.rank,
+    developerClass: analysis.developerClass,
+    languageProfile: analysis.languageProfile,
+    achievements: analysis.achievements,
   };
 }

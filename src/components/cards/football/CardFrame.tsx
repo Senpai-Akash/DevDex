@@ -21,7 +21,7 @@ export function CardFrame({ children }: PropsWithChildren<unknown>) {
         <div className="absolute inset-3 rounded-[1.9rem] bg-gradient-to-b from-amber-800/50 to-slate-900/60 border border-amber-500/30 shadow-inner shadow-amber-900/40" />
 
         {/* Content wrapper in normal flow */}
-        <div className="relative z-10 m-4 overflow-hidden rounded-[1.8rem] border-2 border-amber-600/30 bg-slate-950/98 shadow-[0_40px_120px_rgba(15,23,42,0.85)] backdrop-blur-xl">
+        <div className="relative z-10 m-3 overflow-hidden rounded-[1.7rem] border-2 border-amber-600/30 bg-slate-950/98 shadow-[0_34px_90px_rgba(15,23,42,0.82)] backdrop-blur-xl">
           {children}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400/60 via-transparent to-fuchsia-400/20" />
         </div>

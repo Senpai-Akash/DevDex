@@ -19,12 +19,11 @@ export interface DeveloperAnalyzerResult {
   languageProfile: LanguageProfile;
 }
 
-export interface DeveloperAnalysis {
+export interface DeveloperAnalysis extends DeveloperAnalyzerResult {
   overallScore: number;
   rarity: string;
   developerClass: string;
   primaryLanguage: string;
   strongestSkill: string;
-  achievements: string[];
   powerLevel: number;
 }

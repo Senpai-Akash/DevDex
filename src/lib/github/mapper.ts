@@ -11,6 +11,7 @@ import { detectPrimaryTechnology } from "@/lib/intelligence/technology";
 import { calculateRarity } from "@/lib/intelligence/rarity";
 import { generateTrait } from "@/lib/intelligence/trait";
 import { calculateStats } from "@/lib/intelligence/stats";
+import { analyzeDeveloper } from "@/lib/analyzer/analyzer";
 
 export function mapGithubToDeveloper(
   user: GitHubUser,
@@ -65,6 +66,7 @@ export function mapDeveloperToCardData(developer: Developer): CardData {
   const cardNumber = `DDX-${String(developer.followers).padStart(6, "0")}`;
   const branding = "DEVDEX";
   const stats = calculateStats(developer);
+  const analysis = analyzeDeveloper(developer, rating, stats);
 
   return {
     username: developer.username,
@@ -85,6 +87,11 @@ export function mapDeveloperToCardData(developer: Developer): CardData {
       frameStyle: "standard",
       badge: "none",
     },
-    achievements: [],
+    analysis,
+    powerScore: analysis.powerScore,
+    rank: analysis.rank,
+    developerClass: analysis.developerClass,
+    languageProfile: analysis.languageProfile,
+    achievements: analysis.achievements,
   };
 }

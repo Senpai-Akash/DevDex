@@ -29,50 +29,49 @@ export function FootballCard({ data }: FootballCardProps) {
     >
       <CardFrame>
         <CardBackground />
-        <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-transparent px-4 py-3.5 shadow-[0_30px_80px_rgba(15,23,42,0.5)] backdrop-blur-xl sm:px-5 sm:py-4">
+        <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-transparent px-5 py-4 shadow-[0_30px_80px_rgba(15,23,42,0.5)] backdrop-blur-xl sm:px-7 sm:py-5">
           <FootballHeader rating={data.rating} rarity={data.rarity} />
-          <FootballAvatar avatar={data.avatar} displayName={data.displayName} role={data.role} />
-          <div className="mb-2">
+          <FootballAvatar avatar={data.avatar} displayName={data.displayName} />
+
+          <section className="mb-4 text-center">
+            <p className="text-[1.75rem] font-black uppercase leading-tight tracking-[0.08em] text-amber-100 sm:text-[2.15rem]">
+              {data.displayName}
+            </p>
+            <p className="mt-1 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-400">
+              {developerClass}
+            </p>
+            <div className="mx-auto mt-2 flex max-w-[420px] flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.63rem] font-semibold uppercase tracking-[0.18em] text-amber-200/80">
+              <span>{data.technology}</span>
+              <span className="h-1 w-1 rounded-full bg-amber-300/40" />
+              <span>{data.trait}</span>
+              <span className="h-1 w-1 rounded-full bg-amber-300/40" />
+              <span>{rank} Rank</span>
+              <span className="h-1 w-1 rounded-full bg-amber-300/40" />
+              <span>{powerScore} Power</span>
+            </div>
+          </section>
+
+          <div className="mb-4">
             <FootballStats stats={data.stats} />
           </div>
-          <div className="rounded-2xl border border-amber-400/15 bg-slate-950/55 p-3 shadow-inner shadow-black/20">
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-              <div className="min-w-0">
-                <p className="text-[0.55rem] font-bold uppercase tracking-[0.22em] text-slate-500">Primary Tech</p>
-                <p className="truncate text-[0.72rem] font-black uppercase tracking-[0.12em] text-amber-100">{data.technology}</p>
-              </div>
-              <div className="min-w-0 text-right">
-                <p className="text-[0.55rem] font-bold uppercase tracking-[0.22em] text-slate-500">Trait</p>
-                <p className="truncate text-[0.72rem] font-black uppercase tracking-[0.12em] text-amber-100">{data.trait}</p>
-              </div>
-              <div className="min-w-0">
-                <p className="text-[0.55rem] font-bold uppercase tracking-[0.22em] text-slate-500">Class</p>
-                <p className="truncate text-[0.72rem] font-black uppercase tracking-[0.12em] text-white">{developerClass}</p>
-              </div>
-              <div className="grid grid-cols-[auto_1fr] items-end gap-3 text-right">
-                <div>
-                  <p className="text-[0.55rem] font-bold uppercase tracking-[0.22em] text-slate-500">Rank</p>
-                  <p className="text-lg font-black uppercase leading-none text-emerald-300">{rank}</p>
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[0.55rem] font-bold uppercase tracking-[0.22em] text-slate-500">Power</p>
-                  <p className="truncate text-[0.72rem] font-black uppercase tracking-[0.1em] text-white">{powerScore}</p>
-                </div>
-              </div>
-            </div>
+
+          <section className="space-y-2">
+            <p className="text-center text-[0.58rem] font-bold uppercase tracking-[0.34em] text-slate-500">
+              Achievements
+            </p>
             {topAchievements.length > 0 ? (
-              <div className="mt-2 grid gap-1.5">
+              <div className="mx-auto grid max-w-[440px] gap-2">
                 {topAchievements.map((achievement) => (
                   <div
                     key={achievement.id}
-                    className="flex min-h-[32px] items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5"
+                    className="flex items-center gap-3"
                   >
-                    <span className="text-xs" aria-hidden="true">{achievement.icon}</span>
+                    <span className="text-sm" aria-hidden="true">{achievement.icon}</span>
                     <div className="min-w-0">
-                      <p className="truncate text-[0.62rem] font-black uppercase tracking-[0.1em] text-white">
+                      <p className="truncate text-[0.68rem] font-black uppercase tracking-[0.12em] text-white">
                         {achievement.title}
                       </p>
-                      <p className="truncate text-[0.58rem] font-medium text-emerald-100/70">
+                      <p className="truncate text-[0.6rem] font-medium text-emerald-100/65">
                         {achievement.description}
                       </p>
                     </div>
@@ -80,7 +79,7 @@ export function FootballCard({ data }: FootballCardProps) {
                 ))}
               </div>
             ) : null}
-          </div>
+          </section>
           <FootballFooter edition={data.edition} branding={data.branding} cardNumber={data.cardNumber} />
         </div>
       </CardFrame>

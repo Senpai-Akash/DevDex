@@ -1,6 +1,6 @@
 import type { Developer } from "@/types/developer";
 
-const languagePriority = [
+const LANGUAGE_PRIORITY = [
   "typescript",
   "javascript",
   "python",
@@ -17,9 +17,9 @@ const languagePriority = [
   "scala",
   "haskell",
   "r",
-];
+] as const;
 
-const canonicalLanguage = new Map<string, string>([
+const CANONICAL_LANGUAGE = new Map<string, string>([
   ["typescript", "TypeScript"],
   ["javascript", "JavaScript"],
   ["python", "Python"],
@@ -40,24 +40,23 @@ const canonicalLanguage = new Map<string, string>([
 
 const normalizeLanguage = (language: string): string => {
   const trimmed = language.trim();
-  return canonicalLanguage.get(trimmed.toLowerCase()) ?? trimmed;
+  return CANONICAL_LANGUAGE.get(trimmed.toLowerCase()) ?? trimmed;
 };
 
 const priorityIndex = (language: string): number => {
   const normalized = language.trim().toLowerCase();
-  const index = languagePriority.indexOf(normalized);
-  return index === -1 ? languagePriority.length : index;
+  const index = LANGUAGE_PRIORITY.findIndex((item) => item === normalized);
+  return index === -1 ? LANGUAGE_PRIORITY.length : index;
 };
 
-/**
- * Choose the strongest technology from repository language frequency.
- */
 export function detectPrimaryTechnology(developer: Developer): string {
-  if (developer.languages.length === 0) {
+  const languageEntries = Object.entries(developer.languageCounts);
+
+  if (languageEntries.length === 0) {
     return "Unknown";
   }
 
-  const sortedLanguages = Object.entries(developer.languageCounts).sort((a, b) => {
+  const sortedLanguages = languageEntries.sort((a, b) => {
     if (b[1] !== a[1]) {
       return b[1] - a[1];
     }

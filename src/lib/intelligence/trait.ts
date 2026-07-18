@@ -1,69 +1,62 @@
 import type { Developer } from "@/types/developer";
 
-const normalizeText = (...parts: Array<string | null | undefined>) =>
-  parts
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
+const TRAIT_THRESHOLDS = {
+  openSourceStars: 1000,
+  openSourceFollowers: 1500,
+  prolificRepositories: 75,
+  architectureLanguages: 6,
+  organizationLeader: 4,
+  bugHunterForks: 250,
+  nightCoderFollowing: 250,
+} as const;
 
-const textContains = (text: string, patterns: string[]) =>
-  patterns.some((pattern) => text.includes(pattern));
-
-const languageMatch = (developer: Developer, languages: string[]) =>
+const languageMatch = (developer: Developer, languages: readonly string[]) =>
   developer.languages.some((language) =>
-    languages.includes(language.toLowerCase()),
+    languages.includes(language.trim().toLowerCase()),
   );
 
-/**
- * Generate a short, deterministic trait based on repository and GitHub stats.
- */
 export function generateTrait(developer: Developer): string {
-  const profileText = normalizeText(
-    developer.bio,
-    developer.company,
-    developer.repositoryNames.join(" "),
-  );
-
-  if (developer.stars >= 1500 || developer.followers >= 5000) {
+  if (
+    developer.stars >= TRAIT_THRESHOLDS.openSourceStars ||
+    developer.followers >= TRAIT_THRESHOLDS.openSourceFollowers
+  ) {
     return "Open Source Hero";
   }
 
-  if (developer.repositories >= 100 || developer.forks >= 800) {
-    return "Repository Collector";
+  if (developer.repositories >= TRAIT_THRESHOLDS.prolificRepositories) {
+    return "Commit Machine";
   }
 
-  if (developer.forks >= 500 || developer.organizations.length >= 7) {
+  if (developer.forks >= TRAIT_THRESHOLDS.bugHunterForks) {
     return "Bug Hunter";
   }
 
-  if (languageMatch(developer, ["typescript", "javascript", "python", "rust", "go"])) {
-    if (developer.languages.length >= 5) {
-      return "Code Wizard";
-    }
+  if (developer.organizations.length >= TRAIT_THRESHOLDS.organizationLeader) {
+    return "Code Architect";
   }
 
-  if (textContains(profileText, ["ci/cd", "docker", "kubernetes", "terraform", "devops"])) {
-    return "Automation Expert";
+  if (languageMatch(developer, ["go", "java", "php", "ruby"])) {
+    return "Backend Beast";
   }
 
-  if (textContains(profileText, ["frontend", "react", "vue", "angular", "svelte", "ui"])) {
-    return "Frontend Ninja";
+  if (languageMatch(developer, ["typescript", "javascript"])) {
+    return "Frontend Wizard";
   }
 
-  if (textContains(profileText, ["backend", "api", "server", "node", "django", "flask", "spring"])) {
-    return "Backend Architect";
+  if (languageMatch(developer, ["python", "r"])) {
+    return "AI Tinkerer";
   }
 
-  if (developer.languages.length >= 3 && developer.stars >= 300) {
-    return "Algorithm Master";
+  if (languageMatch(developer, ["rust", "c++", "c"]) || developer.stars >= 500) {
+    return "Performance Freak";
   }
 
-  if (developer.organizations.length >= 4) {
-    return "Teamwork Champion";
+  if (developer.languages.length >= TRAIT_THRESHOLDS.architectureLanguages) {
+    return "Code Architect";
   }
 
-  if (developer.followers >= 1000) {
-    return "Commit Machine";
+  if (developer.following >= TRAIT_THRESHOLDS.nightCoderFollowing) {
+    return "Night Coder";
   }
 
   return "Commit Machine";

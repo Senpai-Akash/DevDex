@@ -1,22 +1,24 @@
-import type { Developer } from "@/types/developer";
+const RARITY_THRESHOLDS = {
+  mythic: 96,
+  legendary: 90,
+  epic: 80,
+  rare: 70,
+} as const;
 
-/**
- * Calculate card rarity from developer score and profile strength.
- */
-export function calculateRarity(developer: Developer, rating: number): string {
-  if (rating >= 90 || developer.followers >= 5000 || developer.stars >= 2500) {
+export function calculateRarity(rating: number): string {
+  if (rating >= RARITY_THRESHOLDS.mythic) {
     return "Mythic";
   }
 
-  if (rating >= 75 || developer.followers >= 2000 || developer.stars >= 1000) {
+  if (rating >= RARITY_THRESHOLDS.legendary) {
     return "Legendary";
   }
 
-  if (rating >= 55 || developer.followers >= 800 || developer.stars >= 400) {
+  if (rating >= RARITY_THRESHOLDS.epic) {
     return "Epic";
   }
 
-  if (rating >= 35 || developer.followers >= 300 || developer.stars >= 150) {
+  if (rating >= RARITY_THRESHOLDS.rare) {
     return "Rare";
   }
 

@@ -5,8 +5,8 @@ import type {
 } from "@/types/github";
 import type { CardData } from "@/types/card";
 import type { Developer } from "@/types/developer";
-import { calculateRating } from "@/lib/intelligence/rating";
-import { detectPrimaryRole } from "@/lib/intelligence/role";
+import { calculateOverallRating } from "@/lib/intelligence/rating";
+import { detectRole } from "@/lib/intelligence/role";
 import { detectPrimaryTechnology } from "@/lib/intelligence/technology";
 import { calculateRarity } from "@/lib/intelligence/rarity";
 import { generateTrait } from "@/lib/intelligence/trait";
@@ -56,10 +56,10 @@ export function mapGithubToDeveloper(
 }
 
 export function mapDeveloperToCardData(developer: Developer): CardData {
-  const rating = calculateRating(developer);
+  const rating = calculateOverallRating(developer);
   const technology = detectPrimaryTechnology(developer);
-  const role = detectPrimaryRole(developer);
-  const rarity = calculateRarity(developer, rating);
+  const role = detectRole(developer);
+  const rarity = calculateRarity(rating);
   const trait = generateTrait(developer);
   const edition = "Edition 001 of 1000";
   const cardNumber = `DDX-${String(developer.followers).padStart(6, "0")}`;

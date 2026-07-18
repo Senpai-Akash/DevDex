@@ -1,29 +1,40 @@
 import type { Developer } from "@/types/developer";
+import {
+  clampScore,
+  linearScale,
+  logScale,
+  MAX_CARD_RATING,
+  MIN_CARD_RATING,
+} from "@/lib/intelligence/scoring";
 
-const clamp = (value: number, min = 1, max = 99): number =>
-  Math.min(max, Math.max(min, Math.round(value)));
+const BASE_RATING = 50;
 
-/**
- * Calculate a deterministic rating from GitHub profile metrics.
- *
- * The rating blends followers, repositories, stars, forks, organizations,
- * and language diversity into a single 1–99 score.
- */
-export function calculateRating(developer: Developer): number {
-  const followerScore = Math.min(developer.followers / 100, 30);
-  const repositoryScore = Math.min(developer.repositories / 5, 25);
-  const starScore = Math.min(developer.stars / 25, 25);
-  const forkScore = Math.min(developer.forks / 20, 10);
-  const organizationScore = Math.min(developer.organizations.length * 2.5, 5);
-  const languageScore = Math.min(developer.languages.length * 5, 5);
+const RATING_WEIGHTS = {
+  followers: 9,
+  repositories: 11,
+  stars: 15,
+  organizations: 6,
+  languages: 8,
+} as const;
 
+const RATING_SCALES = {
+  followers: 3,
+  repositories: 5,
+  stars: 5,
+  organizations: 2,
+  languages: 2,
+} as const;
+
+export function calculateOverallRating(developer: Developer): number {
   const rawScore =
-    followerScore +
-    repositoryScore +
-    starScore +
-    forkScore +
-    organizationScore +
-    languageScore;
+    BASE_RATING +
+    logScale(developer.followers, RATING_SCALES.followers, RATING_WEIGHTS.followers) +
+    logScale(developer.repositories, RATING_SCALES.repositories, RATING_WEIGHTS.repositories) +
+    logScale(developer.stars, RATING_SCALES.stars, RATING_WEIGHTS.stars) +
+    linearScale(developer.organizations.length, RATING_SCALES.organizations, RATING_WEIGHTS.organizations) +
+    linearScale(developer.languages.length, RATING_SCALES.languages, RATING_WEIGHTS.languages);
 
-  return clamp(rawScore === 0 ? 1 : rawScore, 1, 99);
+  return clampScore(rawScore, MIN_CARD_RATING, MAX_CARD_RATING);
 }
+
+export const calculateRating = calculateOverallRating;

@@ -1,17 +1,59 @@
+import type { CardStats } from "@/types/card";
 import type { Developer } from "@/types/developer";
 
-export function analyzeScore(developer: Developer): number {
-  const followerScore = Math.min(developer.followers / 50, 30);
-  const starScore = Math.min(developer.stars / 25, 25);
-  const repositoryScore = Math.min(developer.repositories / 10, 15);
-  const forkScore = Math.min(developer.forks / 20, 10);
-  const organizationScore = Math.min(developer.organizations.length * 5, 10);
-  const languageScore = Math.min(developer.languages.length * 5, 10);
+const POWER_WEIGHTS = {
+  rating: 55,
+  followers: 7,
+  stars: 10,
+  repositories: 24,
+  organizations: 280,
+  languages: 180,
+  statTotal: 5,
+} as const;
 
-  return Number(
-    Math.min(
-      followerScore + starScore + repositoryScore + forkScore + organizationScore + languageScore,
-      100,
-    ).toFixed(0),
+const logScore = (value: number, weight: number): number => {
+  if (value <= 0) {
+    return 0;
+  }
+
+  return Math.log10(value + 1) * weight;
+};
+
+const statTotal = (stats: CardStats): number =>
+  stats.attack +
+  stats.defense +
+  stats.intelligence +
+  stats.speed +
+  stats.versatility +
+  stats.teamwork +
+  stats.overall;
+
+export function calculatePowerScore(
+  developer: Developer,
+  rating: number,
+  stats: CardStats,
+): number {
+  const rawScore =
+    rating * POWER_WEIGHTS.rating +
+    logScore(developer.followers, POWER_WEIGHTS.followers) +
+    logScore(developer.stars, POWER_WEIGHTS.stars) +
+    developer.repositories * POWER_WEIGHTS.repositories +
+    developer.organizations.length * POWER_WEIGHTS.organizations +
+    developer.languages.length * POWER_WEIGHTS.languages +
+    statTotal(stats) * POWER_WEIGHTS.statTotal;
+
+  return Math.max(0, Math.round(rawScore));
+}
+
+export function analyzeScore(developer: Developer): number {
+  return Math.min(
+    100,
+    Math.round(
+      logScore(developer.followers, 8) +
+        logScore(developer.stars, 10) +
+        developer.repositories * 0.8 +
+        developer.organizations.length * 4 +
+        developer.languages.length * 3,
+    ),
   );
 }

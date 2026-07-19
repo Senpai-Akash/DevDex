@@ -14,6 +14,7 @@ interface ProfileCardDisplayProps {
 
 export function ProfileCardDisplay({ cardData }: ProfileCardDisplayProps) {
   const [activeTheme, setActiveTheme] = useState<CardTheme>('football');
+  console.log('Active theme:', activeTheme);
   const [isExporting, setIsExporting] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 

@@ -1,29 +1,45 @@
-// src/components/cards/pokemon/PokemonAbility.tsx
 'use client';
-import { motion } from 'framer-motion';
 
-interface AbilityProps {
-  ability?: string; // developerClass
-  trait?: string;
+interface PokemonAbilityProps {
+  developerClass?: string;
+  trait: string;
+  typeColor: string;
 }
 
 /**
- * Ability box – mimics the Pokémon ability area with a subtle gradient.
+ * Ability box — displayed between the artwork and attacks.
+ * Styled exactly like a Pokémon card ability/Poké-Power section:
+ *  • Red "Ability" pill on the left
+ *  • Ability name next to it
+ *  • Italic flavour text below
  */
-export function PokemonAbility({ ability, trait }: AbilityProps) {
-  if (!ability && !trait) return null;
+export function PokemonAbility({ developerClass, trait, typeColor }: PokemonAbilityProps) {
+  const abilityName = developerClass ?? 'Full-Stack';
+
   return (
-    <motion.section
-      className="my-2 rounded border border-gray-300 bg-white/80 p-2 text-center shadow-sm"
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.2 }}
+    <div
+      className="mx-3 mb-2 rounded-md border px-2.5 py-2"
+      style={{
+        borderColor: `${typeColor}55`,
+        background: `linear-gradient(135deg, rgba(255,255,255,0.85) 0%, ${typeColor}11 100%)`,
+      }}
     >
-      {ability && (
-        <p className="text-xs font-bold uppercase text-gray-700">{ability}</p>
-      )}
+      <div className="flex items-center gap-2 mb-1">
+        {/* Red Ability pill */}
+        <span className="shrink-0 rounded-full bg-red-600 px-2 py-0.5 text-[0.52rem] font-black uppercase tracking-widest text-white">
+          Ability
+        </span>
+        {/* Ability name */}
+        <span className="text-[0.72rem] font-black uppercase tracking-wide text-gray-800">
+          {abilityName}
+        </span>
+      </div>
+      {/* Flavour / trait text */}
       {trait && (
-        <p className="mt-1 text-sm text-gray-600">{trait}</p>
+        <p className="text-[0.62rem] italic leading-snug text-gray-600">
+          {trait}
+        </p>
       )}
-    </motion.section>
+    </div>
   );
 }

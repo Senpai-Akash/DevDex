@@ -1,32 +1,104 @@
-// src/components/cards/pokemon/PokemonFooter.tsx
 'use client';
+
 import { CardData } from '@/types/card';
-import { motion } from 'framer-motion';
+import { getPokemonType, TYPE_META, TYPE_WEAKNESS, TYPE_RESISTANCE } from './pokemonTypeUtils';
 
 interface PokemonFooterProps {
   data: CardData;
 }
 
 /**
- * Bottom strip of the card – displays the DEVDEX brand, card number, and spaces for
- * weakness / resistance (can be expanded later). Uses a subtle gradient background.
+ * Bottom metadata strip matching authentic Pokémon TCG layout:
+ *   • Weakness  |  Resistance  |  Retreat cost
+ *   • Collector number  |  Rarity  |  DEVDEX brand
  */
 export function PokemonFooter({ data }: PokemonFooterProps) {
+  const pkType = getPokemonType(data.technology);
+  const weakType = TYPE_WEAKNESS[pkType];
+  const resType = TYPE_RESISTANCE[pkType];
+  const weakMeta = weakType ? TYPE_META[weakType] : null;
+  const resMeta = resType ? TYPE_META[resType] : null;
+
+  // Retreat cost circles (derived from versatility stat — more versatile = lower retreat)
+  const retreatCost = Math.max(1, Math.round(4 - (data.stats.versatility / 30)));
+
   return (
-    <motion.footer
-      className="mt-auto flex items-center justify-between bg-gray-100 py-1 px-2 text-xs font-medium text-gray-700"
-      whileHover={{ scaleY: 1.02 }}
-      transition={{ duration: 0.2 }}
-    >
-      {/* Brand */}
-      <div className="font-bold uppercase tracking-wider text-gray-800">DEVDEX</div>
-      {/* Collector number */}
-      <div className="text-gray-600">#{data.edition ?? data.cardNumber}</div>
-      {/* Placeholder for weakness/resistance – can be replaced with real data */}
-      <div className="flex gap-1">
-        <span className="rounded bg-gray-300 px-1">Wk: –</span>
-        <span className="rounded bg-gray-300 px-1">Rs: –</span>
+    <div className="mx-3 mb-2.5 mt-auto space-y-1.5">
+      {/* Weakness / Resistance / Retreat */}
+      <div className="flex items-center justify-between rounded-md border border-gray-200/60 bg-white/50 px-3 py-1.5 text-[0.6rem]">
+        {/* Weakness */}
+        <div className="flex flex-col items-center gap-0.5">
+          <span className="font-bold uppercase tracking-wider text-gray-500">Weakness</span>
+          {weakMeta ? (
+            <div className="flex items-center gap-1">
+              <div
+                className="h-4 w-4 rounded-full text-[0.55rem] flex items-center justify-center text-white font-black shadow-sm"
+                style={{ background: weakMeta.color }}
+              >
+                {weakMeta.icon}
+              </div>
+              <span className="font-black text-gray-700">×2</span>
+            </div>
+          ) : (
+            <span className="font-bold text-gray-400">–</span>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="h-8 w-px bg-gray-200" />
+
+        {/* Resistance */}
+        <div className="flex flex-col items-center gap-0.5">
+          <span className="font-bold uppercase tracking-wider text-gray-500">Resistance</span>
+          {resMeta ? (
+            <div className="flex items-center gap-1">
+              <div
+                className="h-4 w-4 rounded-full text-[0.55rem] flex items-center justify-center text-white font-black shadow-sm"
+                style={{ background: resMeta.color }}
+              >
+                {resMeta.icon}
+              </div>
+              <span className="font-black text-gray-700">–20</span>
+            </div>
+          ) : (
+            <span className="font-bold text-gray-400">–</span>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="h-8 w-px bg-gray-200" />
+
+        {/* Retreat cost */}
+        <div className="flex flex-col items-center gap-0.5">
+          <span className="font-bold uppercase tracking-wider text-gray-500">Retreat</span>
+          <div className="flex gap-0.5">
+            {Array.from({ length: retreatCost }).map((_, i) => (
+              <div
+                key={i}
+                className="h-3.5 w-3.5 rounded-full border border-white/60 bg-gray-400 shadow-sm"
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.footer>
+
+      {/* Collector number / brand row */}
+      <div className="flex items-center justify-between px-1">
+        {/* Left: DEVDEX brand */}
+        <span className="text-[0.52rem] font-black uppercase tracking-[0.3em] text-gray-400">
+          DEVDEX
+        </span>
+
+        {/* Center: edition */}
+        <span className="text-[0.52rem] font-semibold text-gray-400 italic">
+          {data.edition}
+        </span>
+
+        {/* Right: collector number */}
+        <span className="text-[0.52rem] font-black text-gray-500 tabular-nums">
+          {data.cardNumber}
+        </span>
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,15 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CardData } from '../../../types/card';
+import { CyberBackground } from './CyberBackground';
+import { CyberHeader } from './CyberHeader';
+import { CyberAvatar } from './CyberAvatar';
+import { CyberStats } from './CyberStats';
+import { CyberAnalysis } from './CyberAnalysis';
+import { CyberModules } from './CyberModules';
+import { CyberFooter } from './CyberFooter';
 
 interface CyberCardProps {
   data: CardData;
@@ -10,88 +18,87 @@ interface CyberCardProps {
 export function CyberCard({ data }: CyberCardProps) {
   return (
     <motion.article
-      initial={{ opacity: 0, scale: 0.96, rotateZ: -1 }}
-      animate={{ opacity: 1, scale: 1, rotateZ: 0 }}
-      whileHover={{ y: -8, scale: 1.02, rotateZ: 0.5 }}
+      initial={{ opacity: 0, scale: 0.96, rotateY: -1 }}
+      animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+      whileHover={{ 
+        y: -6, 
+        rotateX: -0.6, 
+        rotateY: 0.8,
+        scale: 1.008,
+      }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="group relative mx-auto flex max-w-[488px] cursor-pointer flex-col"
+      className="group relative mx-auto flex w-full max-w-[580px] cursor-pointer flex-col select-none"
+      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
-      <div className="relative overflow-hidden rounded border-2 border-cyan-500 bg-gradient-to-br from-slate-950 via-cyan-950 to-slate-950 px-6 py-8 shadow-[0_0_40px_rgba(34,211,238,0.2),inset_0_0_0_1px_rgba(34,211,238,0.1)] sm:px-8 sm:py-10">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,_transparent_25%,_rgba(34,211,238,0.05)_25%,_rgba(34,211,238,0.05)_50%,_transparent_50%,_transparent_75%,_rgba(34,211,238,0.05)_75%,_rgba(34,211,238,0.05))] bg-[length:40px_40px]" />
+      {/* Outer Neon Cyan Ambient Aura */}
+      <div className="absolute -inset-10 rounded-[2.5rem] bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-60" />
+      
+      {/* Sci-Fi HUD Panel Wrapper */}
+      <div className="relative z-10 p-[10px] rounded-[2rem] bg-gradient-to-b from-[#0f172a] via-[#090d16] to-[#04060b] border border-cyan-500/35 shadow-[0_30px_70px_rgba(0,0,0,0.9)]">
+        
+        {/* Inner Tech Border Lines */}
+        <div className="absolute inset-[6px] rounded-[1.85rem] border border-cyan-500/15 pointer-events-none" />
+        <div className="absolute inset-[8px] rounded-[1.8rem] border border-magenta-500/10 pointer-events-none" />
+        
+        {/* Main Content Box */}
+        <div className="relative z-10 overflow-hidden rounded-[1.7rem] bg-[#05070f]/98 px-5 py-4 border border-cyan-500/30 sm:px-7 sm:py-5">
+          {/* Cyber HUD Animated Background */}
+          <CyberBackground />
+
+          {/* Foreground content */}
+          <div className="relative z-20 flex flex-col">
+            <CyberHeader data={data} />
+            
+            <CyberAvatar avatar={data.avatar} displayName={data.displayName} />
+            
+            <CyberStats stats={data.stats} />
+            
+            <CyberAnalysis data={data} />
+            
+            <CyberModules data={data} />
+            
+            <CyberFooter 
+              edition={data.edition} 
+              branding={data.branding} 
+              cardNumber={data.cardNumber} 
+            />
+          </div>
         </div>
-
-        <div className="relative flex flex-col items-center text-center">
-          <div className="mb-4 inline-block">
-            <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-              className="text-4xl"
-            >
-              🤖
-            </motion.span>
+        
+        {/* Technical Corner/Bevel brackets overlay */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top Left Bracket */}
+          <div className="absolute top-2 left-2 w-8 h-8 text-cyan-400">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current">
+              <rect x="0" y="0" width="16" height="4" />
+              <rect x="0" y="0" width="4" height="16" />
+              <circle cx="2" cy="2" r="2.5" fill="#ec4899" />
+            </svg>
           </div>
-
-          <div className="relative mb-6 inline-block">
-            <motion.div
-              animate={{ boxShadow: ['0_0_20px_rgba(34,211,238,0.3)', '0_0_40px_rgba(34,211,238,0.6)', '0_0_20px_rgba(34,211,238,0.3)'] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="rounded border-2 border-cyan-500"
-            >
-              <div className="h-24 w-24 overflow-hidden border-2 border-magenta-500 bg-slate-900">
-                <img src={data.avatar} alt={data.displayName} className="h-full w-full object-cover" />
-              </div>
-            </motion.div>
-            <div className="absolute -bottom-2 -right-2 rounded border border-cyan-500 bg-slate-950 px-2 py-1">
-              <p className="text-xs font-mono font-bold text-cyan-400">LVL {Math.floor(data.rating / 10)}</p>
-            </div>
+          {/* Top Right Bracket */}
+          <div className="absolute top-2 right-2 w-8 h-8 text-cyan-400">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform rotate-90">
+              <rect x="0" y="0" width="16" height="4" />
+              <rect x="0" y="0" width="4" height="16" />
+              <circle cx="2" cy="2" r="2.5" fill="#ec4899" />
+            </svg>
           </div>
-
-          <h2 className="mb-2 font-mono text-2xl font-black uppercase tracking-widest text-cyan-300">{data.displayName}</h2>
-          <p className="mb-6 border-l-2 border-r-2 border-magenta-500 px-3 text-xs font-mono uppercase tracking-[0.2em] text-magenta-300">
-            {data.role}
-          </p>
-
-          <div className="w-full space-y-2 rounded border-2 border-cyan-500 bg-slate-900/60 p-4 font-mono">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-cyan-400">SYS.CPU</span>
-              <span className="text-cyan-300">{data.stats.attack}%</span>
-            </div>
-            <div className="h-1 rounded-full bg-slate-800">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${data.stats.attack}%` }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-magenta-500"
-              />
-            </div>
-
-            <div className="mt-3 flex items-center justify-between text-xs">
-              <span className="text-magenta-400">SYS.MEM</span>
-              <span className="text-magenta-300">{data.stats.defense}%</span>
-            </div>
-            <div className="h-1 rounded-full bg-slate-800">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${data.stats.defense}%` }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="h-full rounded-full bg-gradient-to-r from-magenta-500 to-cyan-500"
-              />
-            </div>
+          {/* Bottom Left Bracket */}
+          <div className="absolute bottom-2 left-2 w-8 h-8 text-cyan-400">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform -rotate-90">
+              <rect x="0" y="0" width="16" height="4" />
+              <rect x="0" y="0" width="4" height="16" />
+              <circle cx="2" cy="2" r="2.5" fill="#ec4899" />
+            </svg>
           </div>
-
-          <div className="mt-6 flex gap-2 font-mono text-xs">
-            <div className="rounded border border-cyan-500 bg-cyan-950/50 px-2 py-1 text-cyan-300">{data.technology}</div>
-            <div className="rounded border border-magenta-500 bg-magenta-950/50 px-2 py-1 text-magenta-300">{data.rarity}</div>
+          {/* Bottom Right Bracket */}
+          <div className="absolute bottom-2 right-2 w-8 h-8 text-cyan-400">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform rotate-180">
+              <rect x="0" y="0" width="16" height="4" />
+              <rect x="0" y="0" width="4" height="16" />
+              <circle cx="2" cy="2" r="2.5" fill="#ec4899" />
+            </svg>
           </div>
-
-          <motion.p
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-cyan-500"
-          >
-            {data.cardNumber}
-          </motion.p>
         </div>
       </div>
     </motion.article>

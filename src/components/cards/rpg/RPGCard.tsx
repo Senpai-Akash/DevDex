@@ -1,7 +1,15 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CardData } from '../../../types/card';
+import { RPGBackground } from './RPGBackground';
+import { RPGHeader } from './RPGHeader';
+import { RPGAvatar } from './RPGAvatar';
+import { RPGStats } from './RPGStats';
+import { RPGPower } from './RPGPower';
+import { RPGSkills } from './RPGSkills';
+import { RPGFooter } from './RPGFooter';
 
 interface RPGCardProps {
   data: CardData;
@@ -12,75 +20,88 @@ export function RPGCard({ data }: RPGCardProps) {
     <motion.article
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ y: -8, rotateX: 0.5, rotateY: 0.8, scale: 1.01 }}
+      whileHover={{ 
+        y: -6, 
+        rotateX: 0.6, 
+        rotateY: 0.8, 
+        scale: 1.008,
+      }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="group relative mx-auto flex max-w-[488px] cursor-pointer flex-col"
+      className="group relative mx-auto flex w-full max-w-[580px] cursor-pointer flex-col select-none"
+      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
-      <div className="relative overflow-hidden rounded-lg border-4 border-purple-700 bg-gradient-to-b from-purple-950 via-slate-900 to-purple-950 px-6 py-8 shadow-[0_0_60px_rgba(168,85,247,0.25)] sm:px-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(168,85,247,0.15),transparent_60%)]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+      {/* Outer ambient magical shadow glow */}
+      <div className="absolute -inset-8 rounded-[2.5rem] bg-gradient-to-b from-purple-800/10 via-red-800/5 to-transparent blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-60" />
+      
+      {/* Heavy Bronze / Stone Frame Wrapper */}
+      <div className="relative z-10 p-[10px] rounded-[2rem] bg-gradient-to-b from-[#3a2312] via-[#24160b] to-[#140c06] border border-[#d97706]/35 shadow-[0_30px_70px_rgba(0,0,0,0.85)]">
+        
+        {/* Inner gold frame line */}
+        <div className="absolute inset-[6px] rounded-[1.85rem] border border-[#d97706]/20 pointer-events-none" />
+        
+        {/* Main Content Box */}
+        <div className="relative z-10 overflow-hidden rounded-[1.7rem] bg-[#0c0806]/98 px-5 py-4 border border-[#5c3e21]/40 sm:px-7 sm:py-5">
+          {/* Card background with runes and particles */}
+          <RPGBackground />
 
-        <div className="relative flex flex-col items-center text-center">
-          <div className="mb-4 inline-flex items-center justify-center">
-            <span className="text-4xl">⚔️</span>
+          {/* Foreground content inside container */}
+          <div className="relative z-20 flex flex-col">
+            <RPGHeader data={data} />
+            
+            <RPGAvatar 
+              avatar={data.avatar} 
+              displayName={data.displayName} 
+              rarity={data.rarity} 
+            />
+            
+            <RPGStats stats={data.stats} />
+            
+            <RPGPower data={data} />
+            
+            <RPGSkills data={data} />
+            
+            <RPGFooter 
+              edition={data.edition} 
+              branding={data.branding} 
+              cardNumber={data.cardNumber} 
+            />
           </div>
-
-          <div className="relative mb-6">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 blur-xl opacity-70" />
-            <div className="relative h-24 w-24 overflow-hidden rounded-full border-4 border-purple-400 bg-slate-800 shadow-lg">
-              <img src={data.avatar} alt={data.displayName} className="h-full w-full object-cover" />
-            </div>
-            <div className="absolute -right-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-purple-400 bg-yellow-500 shadow-lg">
-              <p className="text-lg font-black text-purple-900">{Math.floor(data.rating / 20)}</p>
-            </div>
+        </div>
+        
+        {/* Ornate corner embellishments for frame */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top Left */}
+          <div className="absolute top-2 left-2 w-8 h-8 text-[#92400e]">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current">
+              <rect x="0" y="0" width="16" height="16" />
+              <circle cx="8" cy="8" r="4" fill="#140c06" />
+              <circle cx="8" cy="8" r="2" fill="#d97706" />
+            </svg>
           </div>
-
-          <h2 className="mb-2 font-serif text-3xl font-black uppercase tracking-wider text-purple-200">{data.displayName}</h2>
-          <p className="mb-6 border-b-2 border-purple-600 pb-4 text-sm font-semibold uppercase tracking-widest text-purple-300">{data.role}</p>
-
-          <div className="w-full space-y-3 rounded-lg border-2 border-purple-600 bg-purple-900/40 p-4 backdrop-blur">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase text-purple-300">Strength</span>
-              <div className="h-2 w-24 rounded-full bg-purple-700/50">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-red-500 to-red-600"
-                  style={{ width: `${data.stats.attack}%` }}
-                />
-              </div>
-              <span className="text-xs font-bold text-purple-200">{data.stats.attack}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase text-purple-300">Resilience</span>
-              <div className="h-2 w-24 rounded-full bg-purple-700/50">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
-                  style={{ width: `${data.stats.defense}%` }}
-                />
-              </div>
-              <span className="text-xs font-bold text-purple-200">{data.stats.defense}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase text-purple-300">Intellect</span>
-              <div className="h-2 w-24 rounded-full bg-purple-700/50">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-600"
-                  style={{ width: `${data.stats.intelligence}%` }}
-                />
-              </div>
-              <span className="text-xs font-bold text-purple-200">{data.stats.intelligence}</span>
-            </div>
+          {/* Top Right */}
+          <div className="absolute top-2 right-2 w-8 h-8 text-[#92400e]">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform rotate-90">
+              <rect x="0" y="0" width="16" height="16" />
+              <circle cx="8" cy="8" r="4" fill="#140c06" />
+              <circle cx="8" cy="8" r="2" fill="#d97706" />
+            </svg>
           </div>
-
-          <div className="mt-6 flex gap-3">
-            <div className="rounded border-2 border-purple-500 bg-purple-900/60 px-3 py-1 text-xs font-bold uppercase text-purple-200">
-              {data.technology}
-            </div>
-            <div className="rounded border-2 border-yellow-500 bg-yellow-900/40 px-3 py-1 text-xs font-bold uppercase text-yellow-300">
-              {data.rarity}
-            </div>
+          {/* Bottom Left */}
+          <div className="absolute bottom-2 left-2 w-8 h-8 text-[#92400e]">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform -rotate-90">
+              <rect x="0" y="0" width="16" height="16" />
+              <circle cx="8" cy="8" r="4" fill="#140c06" />
+              <circle cx="8" cy="8" r="2" fill="#d97706" />
+            </svg>
           </div>
-
-          <p className="mt-6 text-xs uppercase tracking-[0.3em] text-purple-400">{data.cardNumber}</p>
+          {/* Bottom Right */}
+          <div className="absolute bottom-2 right-2 w-8 h-8 text-[#92400e]">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current transform rotate-180">
+              <rect x="0" y="0" width="16" height="16" />
+              <circle cx="8" cy="8" r="4" fill="#140c06" />
+              <circle cx="8" cy="8" r="2" fill="#d97706" />
+            </svg>
+          </div>
         </div>
       </div>
     </motion.article>

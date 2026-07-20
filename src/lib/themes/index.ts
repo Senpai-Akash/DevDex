@@ -3,7 +3,7 @@ import { FootballCard } from '@/components/cards/football/FootballCard';
 import { PokemonCard } from '@/components/cards/pokemon/PokemonCard';
 import { RPGCard } from '@/components/cards/rpg/RPGCard';
 import { CyberCard } from '@/components/cards/cyber/CyberCard';
-import { LegendaryCard } from '@/components/cards/legendary/LegendaryCard';
+import { YugiohCard } from '@/components/cards/yugioh/YugiohCard';
 import type { CardData } from '@/types/card';
 import { ComponentType } from 'react';
 
@@ -14,7 +14,7 @@ const themeComponentMap: Record<CardTheme, CardComponent> = {
   pokemon: PokemonCard,
   rpg: RPGCard,
   cyber: CyberCard,
-  legendary: LegendaryCard,
+  yugioh: YugiohCard,
 };
 
 export function getThemeComponent(theme: CardTheme): CardComponent {
@@ -27,7 +27,7 @@ export function getThemeIcon(theme: CardTheme): string {
     pokemon: '⚡',
     rpg: '⚔️',
     cyber: '🤖',
-    legendary: '👑',
+    yugioh: '🃏',
   };
   return icons[theme];
 }

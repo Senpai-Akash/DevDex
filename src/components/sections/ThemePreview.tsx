@@ -5,7 +5,7 @@ import { useState, useRef } from 'react';
 import { AVAILABLE_THEMES, THEME_LABELS, type CardTheme } from '@/types/theme';
 import type { CardData } from '@/types/card';
 import { getThemeComponent, getThemeIcon } from '@/lib/themes';
-import ExportStudio from '@/components/export/ExportStudio';
+
 
 interface ThemePreviewProps {
   cardData: CardData;
@@ -68,11 +68,10 @@ export default function ThemePreview({
 
         {/* Preview */}
 
-        <div className="mt-16 flex justify-center gap-8">
+        <div className="mt-16 flex justify-center">
           <div ref={cardRef}>
             <ActiveCard data={cardData} />
           </div>
-          <ExportStudio cardRef={cardRef} username={username} theme={selectedTheme} />
         </div>
 
       </div>

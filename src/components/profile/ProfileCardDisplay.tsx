@@ -1,12 +1,12 @@
 'use client';
 
-import { createElement, useRef, useState } from 'react';
+import { createElement, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CardData } from '@/types/card';
 import { CardTheme } from '@/types/theme';
 import { ThemeSelector } from '@/components/theme/ThemeSelector';
 import { getThemeComponent } from '@/lib/themes';
-import { exportCard } from '@/lib/export/exportCard';
+import ExportStudio from '@/components/export/ExportStudio';
 
 interface ProfileCardDisplayProps {
   cardData: CardData;
@@ -15,28 +15,23 @@ interface ProfileCardDisplayProps {
 export function ProfileCardDisplay({ cardData }: ProfileCardDisplayProps) {
   const [activeTheme, setActiveTheme] = useState<CardTheme>('football');
   console.log('Active theme:', activeTheme);
-  const [isExporting, setIsExporting] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [showExportModal, setShowExportModal] = useState(false);
 
   const CardComponent = getThemeComponent(activeTheme);
 
-  const handleExport = async () => {
-    if (!cardRef.current || isExporting) {
-      return;
-    }
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showExportModal) {
+        setShowExportModal(false);
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [showExportModal]);
 
-    setIsExporting(true);
 
-    try {
-      await exportCard({
-        element: cardRef.current,
-        username: cardData.username,
-        theme: activeTheme,
-      });
-    } finally {
-      setIsExporting(false);
-    }
-  };
 
   return (
     <div className="flex flex-col items-center gap-8">
@@ -56,14 +51,43 @@ export function ProfileCardDisplay({ cardData }: ProfileCardDisplayProps) {
         </motion.div>
       </AnimatePresence>
 
+      {/* Export trigger – opens the modal */}
       <button
         type="button"
-        onClick={handleExport}
-        disabled={isExporting}
-        className="rounded-full border border-amber-400/40 bg-amber-500/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-100 transition hover:border-amber-300 hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+        onClick={() => setShowExportModal(true)}
+        className="rounded-full border border-amber-400/40 bg-amber-500/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-100 transition hover:border-amber-300 hover:bg-amber-500/20"
       >
-        {isExporting ? 'Exporting...' : 'Export Card'}
+        Export Card
       </button>
+
+      {/* Export modal */}
+      {showExportModal && (
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50"
+          onClick={() => setShowExportModal(false)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="bg-white/10 backdrop-blur-xl rounded-xl p-6 max-w-md w-full relative"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ scale: 0.9, y: -20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            <button
+              type="button"
+              onClick={() => setShowExportModal(false)}
+              className="absolute top-2 right-2 text-white/70 hover:text-white text-xl"
+            >
+              &times;
+            </button>
+            <ExportStudio cardRef={cardRef} username={cardData.username} theme={activeTheme} />
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

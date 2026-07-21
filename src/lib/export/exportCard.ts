@@ -1,47 +1,30 @@
-import { toPng } from "html-to-image";
-import type { CardTheme } from "@/types/theme";
-
-const EXPORT_PIXEL_RATIO = 3;
-const FILE_PART_SEPARATOR = "-";
+import { toPng, toJpeg } from 'html-to-image';
 
 interface ExportCardOptions {
   element: HTMLElement;
-  username: string;
-  theme: CardTheme;
+  filename: string;
+  format: 'png' | 'jpeg';
+  pixelRatio: number;
+  background?: 'dark' | 'light' | 'transparent';
+  includeWatermark?: boolean;
+  includeShadow?: boolean;
+  preserveCorners?: boolean;
 }
-
-const sanitizeFilenamePart = (value: string): string =>
-  value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, FILE_PART_SEPARATOR)
-    .replace(/^-+|-+$/g, "");
-
-const buildFilename = (username: string, theme: CardTheme): string => {
-  const safeUsername = sanitizeFilenamePart(username) || "developer";
-  const safeTheme = sanitizeFilenamePart(theme) || "card";
-
-  return `${safeUsername}-${safeTheme}-devdex.png`;
-};
-
-const downloadDataUrl = (dataUrl: string, filename: string): void => {
-  const link = document.createElement("a");
-
-  link.download = filename;
-  link.href = dataUrl;
-  link.click();
-};
 
 export async function exportCard({
   element,
-  username,
-  theme,
+  filename,
+  format,
+  pixelRatio,
+  background,
+  includeWatermark,
+  includeShadow,
+  preserveCorners,
 }: ExportCardOptions): Promise<void> {
-  const dataUrl = await toPng(element, {
-    pixelRatio: EXPORT_PIXEL_RATIO,
-    cacheBust: true,
-    backgroundColor: "transparent",
-  });
-
-  downloadDataUrl(dataUrl, buildFilename(username, theme));
+  // For now, ignore background, watermark, shadow, and corner options.
+  const dataUrl = await (format === 'png' ? toPng(element, { pixelRatio }) : toJpeg(element, { pixelRatio }));
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = filename;
+  link.click();
 }

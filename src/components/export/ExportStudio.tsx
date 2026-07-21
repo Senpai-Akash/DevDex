@@ -1,8 +1,16 @@
+'use client';
 import { useState, useEffect } from 'react';
+import type { RefObject } from 'react';
+import { exportCard } from '@/lib/export/exportCard';
 
-// ExportStudio UI component – does NOT handle actual export logic
-export default function ExportStudio() {
-  // SECTION state
+interface ExportStudioProps {
+  cardRef: RefObject<HTMLDivElement | null>;
+  username: string;
+  theme: string; // CardTheme identifier
+}
+
+export default function ExportStudio({ cardRef, username, theme }: ExportStudioProps) {
+  // Export options state
   const [format, setFormat] = useState<'png' | 'jpeg'>('png');
   const [resolution, setResolution] = useState<'1x' | '2x' | '4x'>('1x');
   const [background, setBackground] = useState<'dark' | 'light' | 'transparent'>('dark');
@@ -10,17 +18,38 @@ export default function ExportStudio() {
   const [includeShadow, setIncludeShadow] = useState(true);
   const [preserveCorners, setPreserveCorners] = useState(true);
   const [filename, setFilename] = useState('');
+  const [exporting, setExporting] = useState(false);
 
-  // In a real implementation these would be derived from the active card/theme
-  const mockName = 'LinusTorvalds';
-  const mockTheme = 'football'; // placeholder, could be synced with ThemePreview via context/event
-
-  // Build filename preview whenever relevant options change
+  // Build a preview filename whenever relevant options change
   useEffect(() => {
     const ext = format;
-    const namePart = `${mockName}-${mockTheme}`;
-    setFilename(`${namePart}.${ext}`);
-  }, [format, mockTheme, mockName]);
+    const safeUsername = username.replace(/\s+/g, '').toLowerCase();
+    const safeTheme = theme.replace(/\s+/g, '').toLowerCase();
+    setFilename(`${safeUsername}-${safeTheme}.${ext}`);
+  }, [format, username, theme]);
+
+  const handleExport = async () => {
+    if (!cardRef.current) return;
+    setExporting(true);
+    try {
+      await exportCard({
+        element: cardRef.current,
+        filename,
+        format,
+        pixelRatio: resolution === '1x' ? 1 : resolution === '2x' ? 2 : 4,
+        background,
+        includeWatermark,
+        includeShadow,
+        preserveCorners,
+      });
+      alert('Card exported successfully');
+    } catch (e) {
+      console.error(e);
+      alert('Export failed');
+    } finally {
+      setExporting(false);
+    }
+  };
 
   return (
     <section className="mt-12 max-w-3xl mx-auto p-6 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
@@ -63,11 +92,7 @@ export default function ExportStudio() {
       <div className="mb-6">
         <p className="mb-2 font-medium text-white">Resolution</p>
         <div className="grid grid-cols-3 gap-4">
-          {[
-            { label: 'Standard (1x)', value: '1x' },
-            { label: 'HD (2x)', value: '2x' },
-            { label: 'Ultra HD (4x)', value: '4x' },
-          ].map((item) => (
+          {[{ label: 'Standard (1x)', value: '1x' }, { label: 'HD (2x)', value: '2x' }, { label: 'Ultra HD (4x)', value: '4x' }].map((item) => (
             <button
               key={item.value}
               onClick={() => setResolution(item.value as any)}
@@ -103,7 +128,7 @@ export default function ExportStudio() {
         </div>
       </div>
 
-      {/* SECTION 5 – Options */}
+      {/* SECTION 5 – Additional Options */}
       <div className="mb-6 space-y-2">
         <p className="font-medium text-white">Options</p>
         <label className="flex items-center space-x-2">
@@ -139,14 +164,18 @@ export default function ExportStudio() {
       <div className="mb-6">
         <p className="font-medium text-white">Filename Preview</p>
         <div className="mt-1 p-2 bg-gray-800/30 rounded text-gray-200 font-mono text-sm">
-          {filename || 'example.png'}
+          {filename}
         </div>
       </div>
 
-      {/* SECTION 7 – Buttons */}
+      {/* SECTION 7 – Action Buttons */}
       <div className="flex justify-center space-x-4">
-        <button className="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition-colors">
-          Export Card
+        <button
+          onClick={handleExport}
+          disabled={exporting}
+          className="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition-colors disabled:opacity-50"
+        >
+          {exporting ? 'Exporting...' : 'Export Card'}
         </button>
         <button className="px-6 py-2 border border-indigo-400 text-indigo-200 rounded hover:bg-indigo-400/10 transition-colors">
           Copy Share Link

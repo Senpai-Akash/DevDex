@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { AVAILABLE_THEMES, THEME_LABELS, type CardTheme } from '@/types/theme';
 import type { CardData } from '@/types/card';
@@ -18,6 +18,8 @@ export default function ThemePreview({
     useState<CardTheme>('football');
 
   const ActiveCard = getThemeComponent(selectedTheme);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const username = (cardData as any)?.displayName || 'developer';
 
   return (
     <section className="w-full py-16">
@@ -66,11 +68,11 @@ export default function ThemePreview({
 
         {/* Preview */}
 
-        <div className="mt-16 flex justify-center">
-
-          <ActiveCard data={cardData} />
-
-        <ExportStudio />
+        <div className="mt-16 flex justify-center gap-8">
+          <div ref={cardRef}>
+            <ActiveCard data={cardData} />
+          </div>
+          <ExportStudio cardRef={cardRef} username={username} theme={selectedTheme} />
         </div>
 
       </div>

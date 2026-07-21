@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { AVAILABLE_THEMES, THEME_LABELS, type CardTheme } from '@/types/theme';
 import type { CardData } from '@/types/card';
 import { getThemeComponent, getThemeIcon } from '@/lib/themes';
+import ExportStudio from '@/components/export/ExportStudio';
 
 interface ThemePreviewProps {
   cardData: CardData;
@@ -69,6 +70,7 @@ export default function ThemePreview({
 
           <ActiveCard data={cardData} />
 
+        <ExportStudio />
         </div>
 
       </div>

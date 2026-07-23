@@ -1,38 +1,71 @@
-import { CardStats } from '../../../types/card';
+import { CardStats } from "../../../types/card";
 
 interface FootballStatsProps {
   stats: CardStats;
 }
 
-const STAT_ITEMS: Array<{ key: keyof CardStats; abbr: string; label: string; icon: string }> = [
-  { key: 'attack', abbr: 'ACT', label: 'Activity', icon: '⚡' },
-  { key: 'defense', abbr: 'COL', label: 'Collaboration', icon: '👥' },
-  { key: 'intelligence', abbr: 'IMP', label: 'Impact', icon: '📊' },
-  { key: 'speed', abbr: 'REL', label: 'Reliability', icon: '🛡️' },
-  { key: 'versatility', abbr: 'IQ', label: 'Problem Solving', icon: '🧠' },
-  { key: 'teamwork', abbr: 'GRT', label: 'Grit', icon: '💪' },
-];
+const LEFT = [
+  { key: "attack", label: "PAC" },
+  { key: "intelligence", label: "SHO" },
+  { key: "speed", label: "PAS" },
+] as const;
 
-function StatBox({ abbr, icon, value }: { abbr: string; icon: string; value: number }) {
+const RIGHT = [
+  { key: "defense", label: "DRI" },
+  { key: "versatility", label: "DEF" },
+  { key: "teamwork", label: "PHY" },
+] as const;
+
+function StatColumn({
+  items,
+  stats,
+}: {
+  items: readonly {
+    key: keyof CardStats;
+    label: string;
+  }[];
+  stats: CardStats;
+}) {
   return (
-    <div className="flex min-w-0 items-center justify-center gap-1.5">
-      <div className="text-sm leading-none drop-shadow-lg">{icon}</div>
-      <div className="min-w-0 leading-none">
-        <div className="text-[0.53rem] font-bold uppercase tracking-[0.2em] text-amber-300/80">{abbr}</div>
-        <div className="mt-1 text-lg font-black text-amber-100">{value}</div>
-      </div>
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div
+          key={item.key}
+          className="flex items-center justify-between"
+        >
+          <span className="w-12 text-right text-[1.65rem] font-black leading-none text-white">
+            {Math.round(stats[item.key])}
+          </span>
+
+          <span className="ml-4 text-[0.82rem] font-black tracking-[0.18em] text-amber-300">
+            {item.label}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
 
-export function FootballStats({ stats }: FootballStatsProps) {
+export function FootballStats({
+  stats,
+}: FootballStatsProps) {
   return (
-    <section aria-labelledby="football-stats-title" className="w-full border-y border-amber-300/15 py-3">
-      <div className="grid grid-cols-3 gap-x-3 gap-y-3 sm:grid-cols-6">
-        {STAT_ITEMS.map((item) => (
-          <StatBox key={item.key} abbr={item.abbr} icon={item.icon} value={Math.round(stats[item.key])} />
-        ))}
+    <section className="mt-5 rounded-2xl border border-amber-400/20 bg-black/20 px-8 py-6 backdrop-blur-sm">
+
+      <div className="grid grid-cols-2 gap-10">
+
+        <StatColumn
+          items={LEFT}
+          stats={stats}
+        />
+
+        <StatColumn
+          items={RIGHT}
+          stats={stats}
+        />
+
       </div>
+
     </section>
   );
 }

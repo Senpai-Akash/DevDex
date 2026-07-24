@@ -1,104 +1,139 @@
 'use client';
 
 import { CardData } from '@/types/card';
-import { getPokemonType, TYPE_META, TYPE_WEAKNESS, TYPE_RESISTANCE } from './pokemonTypeUtils';
+import {
+  getPokemonType,
+  TYPE_META,
+  TYPE_RESISTANCE,
+  TYPE_WEAKNESS,
+} from './pokemonTypeUtils';
 
 interface PokemonFooterProps {
   data: CardData;
 }
 
-/**
- * Bottom metadata strip matching authentic Pokémon TCG layout:
- *   • Weakness  |  Resistance  |  Retreat cost
- *   • Collector number  |  Rarity  |  DEVDEX brand
- */
 export function PokemonFooter({ data }: PokemonFooterProps) {
   const pkType = getPokemonType(data.technology);
-  const weakType = TYPE_WEAKNESS[pkType];
-  const resType = TYPE_RESISTANCE[pkType];
-  const weakMeta = weakType ? TYPE_META[weakType] : null;
-  const resMeta = resType ? TYPE_META[resType] : null;
 
-  // Retreat cost circles (derived from versatility stat — more versatile = lower retreat)
-  const retreatCost = Math.max(1, Math.round(4 - (data.stats.versatility / 30)));
+  const weakType = TYPE_WEAKNESS[pkType];
+  const resistType = TYPE_RESISTANCE[pkType];
+
+  const weak = weakType ? TYPE_META[weakType] : null;
+  const resist = resistType ? TYPE_META[resistType] : null;
+
+  const retreat = Math.max(
+    1,
+    Math.min(4, Math.round(4 - data.stats.versatility / 30))
+  );
 
   return (
-    <div className="mx-3 mb-2.5 mt-auto space-y-1.5">
-      {/* Weakness / Resistance / Retreat */}
-      <div className="flex items-center justify-between rounded-md border border-gray-200/60 bg-white/50 px-3 py-1.5 text-[0.6rem]">
-        {/* Weakness */}
-        <div className="flex flex-col items-center gap-0.5">
-          <span className="font-bold uppercase tracking-wider text-gray-500">Weakness</span>
-          {weakMeta ? (
-            <div className="flex items-center gap-1">
-              <div
-                className="h-4 w-4 rounded-full text-[0.55rem] flex items-center justify-center text-white font-black shadow-sm"
-                style={{ background: weakMeta.color }}
-              >
-                {weakMeta.icon}
-              </div>
-              <span className="font-black text-gray-700">×2</span>
-            </div>
-          ) : (
-            <span className="font-bold text-gray-400">–</span>
-          )}
-        </div>
+    <footer className="mt-auto border-t border-black/20 px-3 py-2">
 
-        {/* Divider */}
-        <div className="h-8 w-px bg-gray-200" />
+      <div className="grid grid-cols-3 items-center text-center">
+
+        {/* Weakness */}
+
+        <div>
+
+          <p className="text-[8px] font-bold uppercase tracking-wider">
+            Weakness
+          </p>
+
+          <div className="mt-1 flex justify-center items-center gap-1">
+
+            {weak ? (
+              <>
+                <div
+                  className="flex h-4 w-4 items-center justify-center rounded-full text-[9px] text-white"
+                  style={{
+                    background: weak.color,
+                  }}
+                >
+                  {weak.icon}
+                </div>
+
+                <span className="text-[11px] font-black">
+                  ×2
+                </span>
+              </>
+            ) : (
+              "-"
+            )}
+
+          </div>
+
+        </div>
 
         {/* Resistance */}
-        <div className="flex flex-col items-center gap-0.5">
-          <span className="font-bold uppercase tracking-wider text-gray-500">Resistance</span>
-          {resMeta ? (
-            <div className="flex items-center gap-1">
-              <div
-                className="h-4 w-4 rounded-full text-[0.55rem] flex items-center justify-center text-white font-black shadow-sm"
-                style={{ background: resMeta.color }}
-              >
-                {resMeta.icon}
-              </div>
-              <span className="font-black text-gray-700">–20</span>
-            </div>
-          ) : (
-            <span className="font-bold text-gray-400">–</span>
-          )}
+
+        <div>
+
+          <p className="text-[8px] font-bold uppercase tracking-wider">
+            Resistance
+          </p>
+
+          <div className="mt-1 flex justify-center items-center gap-1">
+
+            {resist ? (
+              <>
+                <div
+                  className="flex h-4 w-4 items-center justify-center rounded-full text-[9px] text-white"
+                  style={{
+                    background: resist.color,
+                  }}
+                >
+                  {resist.icon}
+                </div>
+
+                <span className="text-[11px] font-black">
+                  −20
+                </span>
+              </>
+            ) : (
+              "-"
+            )}
+
+          </div>
+
         </div>
 
-        {/* Divider */}
-        <div className="h-8 w-px bg-gray-200" />
+        {/* Retreat */}
 
-        {/* Retreat cost */}
-        <div className="flex flex-col items-center gap-0.5">
-          <span className="font-bold uppercase tracking-wider text-gray-500">Retreat</span>
-          <div className="flex gap-0.5">
-            {Array.from({ length: retreatCost }).map((_, i) => (
+        <div>
+
+          <p className="text-[8px] font-bold uppercase tracking-wider">
+            Retreat
+          </p>
+
+          <div className="mt-1 flex justify-center gap-1">
+
+            {Array.from({ length: retreat }).map((_, i) => (
               <div
                 key={i}
-                className="h-3.5 w-3.5 rounded-full border border-white/60 bg-gray-400 shadow-sm"
+                className="h-3 w-3 rounded-full bg-neutral-700 border border-black/20"
               />
             ))}
+
           </div>
+
         </div>
+
       </div>
 
-      {/* Collector number / brand row */}
-      <div className="flex items-center justify-between px-1">
-        {/* Left: DEVDEX brand */}
-        <span className="text-[0.52rem] font-black uppercase tracking-[0.3em] text-gray-400">
-          DEVDEX
+      {/* Bottom Information */}
+
+      <div className="mt-2 flex items-center justify-between border-t border-black/15 pt-1 text-[8px] text-neutral-600">
+
+        <span>
+          DEVDEX · {data.edition}
         </span>
 
-        {/* Center: edition */}
-        <span className="text-[0.52rem] font-semibold text-gray-400 italic">
-          {data.edition}
+        <span>
+          No. {data.cardNumber}
         </span>
 
-        {/* Right: collector number */}
-        <span className="text-[0.52rem] font-black text-gray-500 tabular-nums">
-          {data.cardNumber}
-        </span>
       </div>
-    </div>
+
+    </footer>
   );
 }

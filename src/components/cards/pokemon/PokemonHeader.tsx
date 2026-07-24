@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { CardData } from '@/types/card';
 import { getPokemonType, TYPE_META } from './pokemonTypeUtils';
 
@@ -9,76 +8,89 @@ interface PokemonHeaderProps {
   isRare: boolean;
 }
 
-/**
- * Card header — name on the left, HP on the right, type icon below name.
- * Layout mirrors authentic Pokémon TCG Base Set cards.
- */
-export function PokemonHeader({ data, isRare }: PokemonHeaderProps) {
-  const pkType = getPokemonType(data.technology);
-  const meta = TYPE_META[pkType];
-  const hp = data.rating;
+export function PokemonHeader({
+  data,
+}: PokemonHeaderProps) {
 
-  // Rarity stars
-  const raritySymbol = isRare ? '✦' : '◆';
+  const type = getPokemonType(data.technology);
+  const meta = TYPE_META[type];
 
   return (
-    <div className="relative z-10 px-3 pt-3 pb-1">
-      {/* Top row: Name + HP */}
-      <div className="flex items-start justify-between gap-2">
-        {/* Left: Name + stage pill */}
-        <div className="flex flex-col min-w-0">
-          {/* Evolution stage pill */}
-          <div
-            className="mb-1 self-start rounded-full px-2 py-0.5 text-[0.55rem] font-black uppercase tracking-widest text-white shadow-sm"
-            style={{ background: meta.color }}
-          >
-            {data.analysis?.languageProfile?.primary
-              ? `Stage: ${data.analysis.languageProfile.others.length > 2 ? '2' : data.analysis.languageProfile.others.length > 0 ? '1' : 'Basic'}`
-              : 'Basic'}
-          </div>
+    <header className="relative z-10 px-4 pt-2.5 pb-2">
 
-          {/* Developer name */}
-          <h2
-            className="truncate text-[1.05rem] font-black uppercase leading-none tracking-tight"
-            style={{ color: '#1a1a2e', textShadow: '0 1px 0 rgba(255,255,255,0.6)' }}
-          >
+      {/* Top Row */}
+
+      <div className="flex items-start justify-between">
+
+        {/* LEFT */}
+
+        <div className="min-w-0">
+
+          {/* Stage */}
+
+          <p className="text-[9px] italic font-semibold text-neutral-700">
+            Basic Developer
+          </p>
+
+          {/* Name */}
+
+          <h2 className="truncate text-[27px] font-black leading-none tracking-[-0.03em] text-black">
             {data.displayName}
           </h2>
+
         </div>
 
-        {/* Right: Type icon + HP */}
-        <div className="flex shrink-0 items-center gap-1.5">
-          {/* Type icon */}
-          <motion.div
-            whileHover={{ rotate: 15, scale: 1.15 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-lg shadow-md"
-            style={{ background: `linear-gradient(135deg, ${meta.color}, ${meta.darkColor})` }}
-            title={pkType}
-          >
-            <span className="text-sm">{meta.icon}</span>
-          </motion.div>
+        {/* RIGHT */}
 
-          {/* HP value */}
-          <div className="flex items-baseline gap-0.5">
-            <span className="text-[1.4rem] font-black leading-none text-red-600">{hp}</span>
-            <span className="text-[0.55rem] font-black uppercase tracking-widest text-red-500">HP</span>
+        <div className="flex items-start gap-2">
+
+          {/* HP */}
+
+          <div className="flex items-start">
+
+            <span className="text-[32px] font-black leading-none text-red-600">
+              {data.rating}
+            </span>
+
+            <span className="mt-[6px] ml-[2px] text-[11px] font-black uppercase tracking-tight text-red-600">
+              HP
+            </span>
+
           </div>
+
+          {/* Energy Symbol */}
+
+          <div
+            className="
+              mt-[3px]
+              flex
+              h-7
+              w-7
+              items-center
+              justify-center
+              rounded-full
+              border
+              border-black/25
+              shadow-[inset_0_1px_2px_rgba(255,255,255,.5)]
+            "
+            style={{
+              background: meta.bg,
+            }}
+          >
+            <span className="text-[13px]">
+              {meta.icon}
+            </span>
+
+          </div>
+
         </div>
+
       </div>
 
-      {/* Rarity indicator row */}
-      <div className="mt-0.5 flex items-center justify-between">
-        <p className="text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-gray-500">
-          {data.role}
-        </p>
-        <span
-          className="text-[0.6rem]"
-          style={{ color: isRare ? '#d97706' : '#6b7280' }}
-        >
-          {raritySymbol} {data.rarity}
-        </span>
-      </div>
-    </div>
+      {/* Thin divider exactly like Pokémon cards */}
+
+      <div className="mt-2 h-px bg-black/15" />
+
+    </header>
   );
 }

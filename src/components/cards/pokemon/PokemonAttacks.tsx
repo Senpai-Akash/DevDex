@@ -1,90 +1,108 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { DeveloperAchievement } from '@/types/analysis';
 import { PokemonType, TYPE_META } from './pokemonTypeUtils';
 
 interface PokemonAttacksProps {
   achievements: DeveloperAchievement[];
   powerScore?: number;
-  stats: { attack: number; intelligence: number; speed: number };
+  stats: {
+    attack: number;
+    intelligence: number;
+    speed: number;
+  };
   pkType: PokemonType;
 }
 
-/**
- * Attack section — renders up to two attack rows in authentic Pokémon TCG format.
- * Each attack shows:
- *   • Cost icons (coloured energy circles derived from type)
- *   • Move name
- *   • Damage value
- *   • Short description
- */
-export function PokemonAttacks({ achievements, powerScore, stats, pkType }: PokemonAttacksProps) {
+export function PokemonAttacks({
+  achievements,
+  powerScore,
+  stats,
+  pkType,
+}: PokemonAttacksProps) {
   const meta = TYPE_META[pkType];
 
-  // Use first 2 achievements as attacks; fall back to generic moves
-  const rawAttacks = achievements.slice(0, 2);
   const attacks = [
-    rawAttacks[0] ?? { title: 'Code Commit', description: 'Push high-quality code to production.', icon: '💾' },
-    rawAttacks[1] ?? { title: 'Refactor Strike', description: 'Eliminate technical debt instantly.', icon: '🔨' },
+    achievements[0] ?? {
+      title: 'Code Slash',
+      description: 'Deliver clean commits with incredible precision.',
+    },
+    achievements[1] ?? {
+      title: 'Bug Crusher',
+      description: 'Fixes critical bugs before deployment.',
+    },
   ];
 
-  // Derive damage values from stats
   const damages = [
-    Math.round((stats.attack * 0.6 + (powerScore ?? 0) * 0.002)),
-    Math.round((stats.intelligence * 0.7 + (powerScore ?? 0) * 0.003)),
+    Math.max(30, Math.round(stats.attack * 0.7 + (powerScore ?? 0) / 900)),
+    Math.max(60, Math.round(stats.intelligence * 0.8 + (powerScore ?? 0) / 700)),
   ];
 
   return (
-    <div className="mx-3 mb-1.5 space-y-1.5">
-      {attacks.map((atk, idx) => (
-        <motion.div
-          key={idx}
-          className="rounded-md border border-gray-200/80 px-2.5 py-2 backdrop-blur-sm"
-          initial={{ backgroundColor: '#ffffffb3' }}
-          whileHover={{ x: 2, backgroundColor: `${meta.color}22` }}
-          transition={{ duration: 0.15 }}
+    <section className="mx-4 mt-2">
+
+      {attacks.map((attack, index) => (
+
+        <div
+          key={index}
+          className={`py-3 ${
+            index === 0
+              ? 'border-t border-black/25'
+              : 'border-t border-black/15'
+          }`}
         >
-          <div className="flex items-center justify-between gap-2">
-            {/* Left: Energy cost + name */}
-            <div className="flex items-center gap-2 min-w-0">
-              {/* Energy cost icons — 2 circles */}
-              <div className="flex shrink-0 gap-0.5">
-                {[0, 1].map((i) => (
-                  <div
-                    key={i}
-                    className="h-4 w-4 rounded-full border border-white/50 shadow-sm text-[0.5rem] flex items-center justify-center text-white font-black"
-                    style={{
-                      background: i === 0
-                        ? `linear-gradient(135deg, ${meta.color}, ${meta.darkColor})`
-                        : 'linear-gradient(135deg, #9ca3af, #6b7280)',
-                    }}
-                  >
-                    {i === 0 ? meta.icon : '⚪'}
-                  </div>
-                ))}
+
+          {/* Attack Header */}
+
+          <div className="flex items-center justify-between">
+
+            <div className="flex items-center gap-2">
+
+              {/* Energy Cost */}
+
+              <div className="flex gap-[3px]">
+
+                <div
+                  className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-black/25 text-[10px]"
+                  style={{
+                    background: meta.bg,
+                  }}
+                >
+                  {meta.icon}
+                </div>
+
+                <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-black/25 bg-neutral-300 text-[9px]">
+                  ★
+                </div>
+
               </div>
 
-              {/* Move name + icon */}
-              <div className="min-w-0">
-                <p className="truncate text-[0.68rem] font-black uppercase tracking-wide text-gray-800">
-                  {atk.icon} {atk.title}
-                </p>
-                {atk.description && (
-                  <p className="truncate text-[0.57rem] text-gray-500 leading-snug">
-                    {atk.description}
-                  </p>
-                )}
-              </div>
+              {/* Move Name */}
+
+              <span className="text-[15px] font-black tracking-tight text-black">
+                {attack.title}
+              </span>
+
             </div>
 
-            {/* Damage value */}
-            <span className="shrink-0 text-[1.15rem] font-black text-gray-900 leading-none">
-              {damages[idx] > 0 ? damages[idx] : idx === 0 ? 30 : 60}
+            {/* Damage */}
+
+            <span className="text-[24px] font-black leading-none tracking-tight text-black">
+              {damages[index]}
             </span>
+
           </div>
-        </motion.div>
+
+          {/* Attack Description */}
+
+          <p className="mt-1 pl-[46px] pr-2 text-[10px] leading-[1.35] text-neutral-700">
+            {attack.description}
+          </p>
+
+        </div>
+
       ))}
-    </div>
+
+    </section>
   );
 }

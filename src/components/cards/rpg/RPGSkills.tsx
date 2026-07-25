@@ -8,7 +8,7 @@ interface RPGSkillsProps {
 }
 
 export function RPGSkills({ data }: RPGSkillsProps) {
-  const topAchievements = data.achievements.slice(0, 3);
+  const topAchievements = data.achievements.slice(0, 2);
   
   if (topAchievements.length === 0) {
     return null;
@@ -16,24 +16,22 @@ export function RPGSkills({ data }: RPGSkillsProps) {
 
   // Get a fun fantasy skill classification tag based on index
   const getSkillTag = (index: number) => {
-    if (index === 0) return 'Passive';
-    if (index === 1) return 'Active';
-    return 'Ultimate';
-  };
+  return index === 0 ? 'Passive' : 'Ultimate';
+};
 
   const getTagStyle = (index: number) => {
-    if (index === 0) return 'text-emerald-400 border-emerald-950/60 bg-emerald-950/20';
-    if (index === 1) return 'text-blue-400 border-blue-950/60 bg-blue-950/20';
-    return 'text-purple-400 border-purple-950/60 bg-purple-950/20';
-  };
+  return index === 0
+    ? 'text-emerald-400 border-emerald-950/60 bg-emerald-950/20'
+    : 'text-purple-400 border-purple-950/60 bg-purple-950/20';
+};
 
   return (
-    <section aria-label="Character Skills" className="w-full space-y-2 py-2">
+    <section aria-label="Character Skills" className="w-full space-y-1 py-1">
       <p className="text-center text-[0.62rem] font-bold uppercase tracking-[0.3em] text-orange-200/40 font-['Cinzel',serif]">
         Active Skills & Traits
       </p>
       
-      <div className="flex flex-col gap-2 max-w-[440px] mx-auto">
+      <div className="flex flex-col gap-1 max-w-[440px] mx-auto">
         {topAchievements.map((achievement, idx) => (
           <div
             key={achievement.id || idx}

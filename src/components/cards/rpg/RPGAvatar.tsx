@@ -9,103 +9,308 @@ interface RPGAvatarProps {
   rarity: string;
 }
 
-export function RPGAvatar({ avatar, displayName, rarity }: RPGAvatarProps) {
-  // Choose glow color based on rarity
+export function RPGAvatar({
+  avatar,
+  displayName,
+  rarity,
+}: RPGAvatarProps) {
+
   const getGlowColor = (r: string) => {
     const low = r.toLowerCase();
-    if (low.includes('legend') || low.includes('myth')) return 'rgba(217, 119, 6, 0.4)'; // Orange/Gold
-    if (low.includes('epic') || low.includes('rare')) return 'rgba(124, 58, 237, 0.4)'; // Purple
-    if (low.includes('uncommon')) return 'rgba(13, 148, 136, 0.4)'; // Teal
-    return 'rgba(220, 38, 38, 0.3)'; // Red
+
+    if (low.includes('legend') || low.includes('myth')) {
+      return 'rgba(245,158,11,.55)';
+    }
+
+    if (low.includes('epic')) {
+      return 'rgba(147,51,234,.45)';
+    }
+
+    if (low.includes('rare')) {
+      return 'rgba(59,130,246,.40)';
+    }
+
+    if (low.includes('uncommon')) {
+      return 'rgba(16,185,129,.35)';
+    }
+
+    return 'rgba(220,38,38,.28)';
   };
 
   const glowColor = getGlowColor(rarity);
 
   return (
     <motion.section
-      whileHover={{ y: -3, scale: 1.01 }}
-      transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-      className="mx-auto mb-4 flex w-full justify-center items-center"
+      whileHover={{
+        scale: 1.015,
+        y: -6,
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 220,
+        damping: 18,
+      }}
+      className="relative mb-1 flex justify-center"
     >
-      <div className="relative flex items-center justify-center p-2">
-        {/* Soft magical backdrop glow */}
-        <div 
-          className="absolute inset-4 rounded-xl blur-2xl opacity-80 animate-[pulse_4s_infinite]"
+
+      {/* Ambient magical glow */}
+
+      <div className="absolute inset-0 flex justify-center pointer-events-none">
+        <div
+          className="h-[340px] w-[340px] rounded-full blur-[110px]"
           style={{
-            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`
+            background: glowColor,
           }}
         />
-
-        {/* Ornate Frame Container */}
-        <div className="relative h-[230px] w-[230px] sm:h-[240px] sm:w-[240px] flex items-center justify-center">
-          {/* Outer Heavy Gold/Bronze Frame */}
-          <div className="absolute inset-0 bg-[#1e140d] rounded-2xl border-[3px] border-[#92400e] shadow-[0_12px_24px_rgba(0,0,0,0.6),_inset_0_4px_12px_rgba(0,0,0,0.8)]" />
-          
-          {/* Inner Gold Bevel Border */}
-          <div className="absolute inset-[4px] rounded-xl border-2 border-[#d97706] opacity-80" />
-          
-          {/* Inner Stone Frame Background */}
-          <div className="absolute inset-[6px] rounded-lg bg-[#0e0a07] overflow-hidden" />
-          
-          {/* Subtle Grid / Rune lines inside frame */}
-          <svg className="absolute inset-[8px] h-[calc(100%-16px)] w-[calc(100%-16px)] opacity-20 text-[#d97706] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="10" y1="10" x2="90" y2="10" stroke="currentColor" strokeWidth="0.5" />
-            <line x1="10" y1="90" x2="90" y2="90" stroke="currentColor" strokeWidth="0.5" />
-            <line x1="10" y1="10" x2="10" y2="90" stroke="currentColor" strokeWidth="0.5" />
-            <line x1="90" y1="10" x2="90" y2="90" stroke="currentColor" strokeWidth="0.5" />
-            <path d="M 5 5 L 15 15 M 95 5 L 85 15 M 5 95 L 15 85 M 95 95 L 85 85" stroke="currentColor" strokeWidth="1" />
-          </svg>
-
-          {/* Avatar Image Wrapper with Ornate Cutouts */}
-          <div className="relative h-[206px] w-[206px] sm:h-[216px] sm:w-[216px] overflow-hidden rounded-lg bg-stone-950 border border-[#b45309]/50 shadow-inner">
-            {/* Dark background vignette */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_40%,_rgba(0,0,0,0.85)_100%)] z-10" />
-            
-            {/* The Image */}
-            <img 
-              src={avatar} 
-              alt={displayName} 
-              className="relative h-full w-full object-cover grayscale-[15%] contrast-[110%] transition-all duration-500 hover:scale-105 hover:grayscale-0" 
-            />
-          </div>
-
-          {/* Heavy Ornate Corners (SVG brackets overlaid on corners) */}
-          <div className="absolute inset-0 pointer-events-none z-20">
-            {/* Top-Left Corner */}
-            <svg className="absolute top-[-2px] left-[-2px] w-8 h-8 text-[#f59e0b] drop-shadow-md" viewBox="0 0 32 32">
-              <path d="M 4 20 L 4 4 L 20 4 L 16 8 L 8 8 L 8 16 Z" fill="currentColor" stroke="#78350f" strokeWidth="1" />
-              <circle cx="6" cy="6" r="1.5" fill="#ef4444" />
-            </svg>
-            {/* Top-Right Corner */}
-            <svg className="absolute top-[-2px] right-[-2px] w-8 h-8 text-[#f59e0b] drop-shadow-md" viewBox="0 0 32 32">
-              <path d="M 28 20 L 28 4 L 12 4 L 16 8 L 24 8 L 24 16 Z" fill="currentColor" stroke="#78350f" strokeWidth="1" />
-              <circle cx="26" cy="6" r="1.5" fill="#ef4444" />
-            </svg>
-            {/* Bottom-Left Corner */}
-            <svg className="absolute bottom-[-2px] left-[-2px] w-8 h-8 text-[#f59e0b] drop-shadow-md" viewBox="0 0 32 32">
-              <path d="M 4 12 L 4 28 L 20 28 L 16 24 L 8 24 L 8 16 Z" fill="currentColor" stroke="#78350f" strokeWidth="1" />
-              <circle cx="6" cy="26" r="1.5" fill="#ef4444" />
-            </svg>
-            {/* Bottom-Right Corner */}
-            <svg className="absolute bottom-[-2px] right-[-2px] w-8 h-8 text-[#f59e0b] drop-shadow-md" viewBox="0 0 32 32">
-              <path d="M 28 12 L 28 28 L 12 28 L 16 24 L 24 24 L 24 16 Z" fill="currentColor" stroke="#78350f" strokeWidth="1" />
-              <circle cx="26" cy="26" r="1.5" fill="#ef4444" />
-            </svg>
-          </div>
-
-          {/* Runes engraved on left/right frame margins */}
-          <div className="absolute left-1.5 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 text-[0.45rem] font-bold text-amber-600/70 select-none">
-            <span>ᚠ</span>
-            <span>ᚢ</span>
-            <span>ᚦ</span>
-          </div>
-          <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 text-[0.45rem] font-bold text-amber-600/70 select-none">
-            <span>ᚨ</span>
-            <span>ᚱ</span>
-            <span>ᚲ</span>
-          </div>
-        </div>
       </div>
+
+      {/* Floating particles */}
+
+      <div className="absolute left-12 top-10 h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_18px_rgba(251,191,36,.9)]" />
+      <div className="absolute right-10 top-20 h-1.5 w-1.5 rounded-full bg-yellow-200 shadow-[0_0_14px_rgba(251,191,36,.8)]" />
+      <div className="absolute left-16 bottom-16 h-2 w-2 rounded-full bg-orange-300 shadow-[0_0_16px_rgba(249,115,22,.8)]" />
+      <div className="absolute right-14 bottom-10 h-1.5 w-1.5 rounded-full bg-yellow-100 shadow-[0_0_14px_rgba(255,255,255,.8)]" />
+
+      {/* Main portrait frame */}
+
+      <div className="relative h-[270px] w-[270px]">
+
+        {/* Outer bronze frame */}
+
+        <div
+          className="
+          absolute inset-0
+          rounded-[28px]
+          bg-gradient-to-br
+          from-[#f6d99a]
+          via-[#b97725]
+          to-[#47240f]
+          p-[8px]
+          shadow-[0_0_45px_rgba(0,0,0,.7)]
+        "
+        >
+
+          {/* Inner dark frame */}
+
+          <div
+            className="
+            relative
+            h-full
+            w-full
+            rounded-[24px]
+            bg-gradient-to-br
+            from-[#2f1c10]
+            via-[#17110d]
+            to-[#080605]
+            p-[7px]
+          "
+          >
+
+            {/* Gold engraved line */}
+
+            <div
+              className="
+              absolute
+              inset-[5px]
+              rounded-[20px]
+              border
+              border-[#d4a24b]/60
+            "
+            />
+
+            {/* Corner ornaments */}
+
+            <div className="absolute left-3 top-3 h-5 w-5 rotate-45 rounded-sm border border-amber-400/70 bg-[#2c190b]" />
+            <div className="absolute right-3 top-3 h-5 w-5 rotate-45 rounded-sm border border-amber-400/70 bg-[#2c190b]" />
+            <div className="absolute left-3 bottom-3 h-5 w-5 rotate-45 rounded-sm border border-amber-400/70 bg-[#2c190b]" />
+            <div className="absolute right-3 bottom-3 h-5 w-5 rotate-45 rounded-sm border border-amber-400/70 bg-[#2c190b]" />
+
+            {/* Side gold bars */}
+
+            <div className="absolute left-3 top-1/2 h-20 w-[2px] -translate-y-1/2 bg-gradient-to-b from-transparent via-amber-400/70 to-transparent" />
+
+            <div className="absolute right-3 top-1/2 h-20 w-[2px] -translate-y-1/2 bg-gradient-to-b from-transparent via-amber-400/70 to-transparent" />
+
+            {/* Portrait area */}
+
+            <div
+              className="
+              absolute
+              inset-[14px]
+              overflow-hidden
+              rounded-[16px]
+              border
+              border-amber-500/40
+              bg-black
+              shadow-[0_0_25px_rgba(251,191,36,.15)]
+            "
+            >
+
+              {/* Avatar */}
+
+              <motion.img
+                src={avatar}
+                alt={displayName}
+                whileHover={{
+                  scale: 1.05,
+                  rotate: -1,
+                }}
+                transition={{
+                  duration: .35,
+                }}
+                className="
+                h-full
+                w-full
+                object-cover
+                object-top
+                brightness-105
+                contrast-110
+                saturate-110
+                "
+              />
+
+              {/* Vignette */}
+
+              <div
+                className="
+                absolute
+                inset-0
+                bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,.55)_100%)]
+                "
+              />
+
+              {/* Reflection */}
+
+              <div
+                className="
+                absolute
+                inset-0
+                bg-gradient-to-br
+                from-white/20
+                via-transparent
+                to-transparent
+                "
+              />
+                            {/* Bottom shadow */}
+
+              <div
+                className="
+                absolute
+                inset-x-0
+                bottom-0
+                h-24
+                bg-gradient-to-t
+                from-black/65
+                to-transparent
+                "
+              />
+
+              {/* Animated magical shine */}
+
+              <motion.div
+                className="
+                absolute
+                inset-0
+                opacity-40
+                mix-blend-screen
+                "
+                animate={{
+                  x: [-260, 280],
+                }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+                style={{
+                  background:
+                    'linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%)',
+                }}
+              />
+
+              {/* Dust particles */}
+
+              <div className="absolute left-6 top-10 h-1 w-1 rounded-full bg-yellow-200 shadow-[0_0_8px_rgba(255,255,255,.8)]" />
+              <div className="absolute right-10 top-20 h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_10px_rgba(251,191,36,.8)]" />
+              <div className="absolute left-12 bottom-16 h-1.5 w-1.5 rounded-full bg-orange-300 shadow-[0_0_8px_rgba(249,115,22,.8)]" />
+              <div className="absolute right-8 bottom-8 h-1 w-1 rounded-full bg-yellow-100 shadow-[0_0_8px_rgba(255,255,255,.8)]" />
+
+            </div>
+
+            {/* Top Ornament */}
+
+            <div
+              className="
+              absolute
+              left-1/2
+              top-1
+              -translate-x-1/2
+              text-lg
+              text-amber-300
+              "
+            >
+              ⚜
+            </div>
+
+            {/* Bottom Ornament */}
+
+            <div
+              className="
+              absolute
+              left-1/2
+              bottom-1
+              -translate-x-1/2
+              text-lg
+              text-amber-300
+              "
+            >
+              ⚜
+            </div>
+
+            {/* Side runes */}
+
+            <div
+              className="
+              absolute
+              left-[7px]
+              top-1/2
+              flex
+              -translate-y-1/2
+              flex-col
+              gap-2
+              text-[9px]
+              text-amber-400/70
+              "
+            >
+              <span>ᚠ</span>
+              <span>ᚢ</span>
+              <span>ᚦ</span>
+            </div>
+
+            <div
+              className="
+              absolute
+              right-[7px]
+              top-1/2
+              flex
+              -translate-y-1/2
+              flex-col
+              gap-2
+              text-[9px]
+              text-amber-400/70
+              "
+            >
+              <span>ᚨ</span>
+              <span>ᚱ</span>
+              <span>ᚲ</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </motion.section>
   );
 }

@@ -22,7 +22,7 @@ export function RPGPower({ data }: RPGPowerProps) {
   const xpProgressPercent = Math.min(100, Math.max(10, (xpVal % 1000) / 10));
 
   return (
-    <section aria-label="Experience and Level" className="w-full py-3 px-1 my-1 flex flex-col gap-2">
+    <section aria-label="Experience and Level" className="w-full py-1 px-1 my-1 flex flex-col gap-1">
       <div className="flex items-end justify-between">
         {/* XP */}
         <div className="leading-tight">

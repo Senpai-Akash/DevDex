@@ -62,23 +62,23 @@ const STATS_CONFIG: StatConfig[] = [
 
 export function RPGStats({ stats }: RPGStatsProps) {
   return (
-    <section aria-label="Character Stats" className="w-full py-2.5 px-1 border-y border-amber-900/30">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-3.5">
+    <section aria-label="Character Stats" className="w-full py-1 px-1 border-y border-amber-900/30">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
         {STATS_CONFIG.map((cfg) => {
           const val = Math.min(100, Math.max(0, Math.round(stats[cfg.key] || 50)));
           return (
             <div key={cfg.key} className="flex flex-col">
               {/* Stat Name, Icon and Numeric Value */}
-              <div className="flex items-center justify-between text-[0.68rem] font-bold tracking-wider font-['Cinzel',serif] text-orange-100/90 mb-1">
-                <span className="flex items-center gap-1">
+              <div className="flex items-center justify-between text-[0.62rem] font-bold tracking-wider font-['Cinzel',serif] text-orange-100/90 mb-1">
+                <span className="flex items-center gap-0.5">
                   <span>{cfg.icon}</span>
-                  <span className="text-[0.62rem] uppercase">{cfg.label}</span>
+                  <span className="text-[0.58rem] uppercase">{cfg.label}</span>
                 </span>
                 <span className="font-semibold text-amber-300">{val}</span>
               </div>
               
               {/* Fantasy Progress Bar */}
-              <div className="relative h-3 w-full rounded-sm bg-[#0e0a07] border border-[#78350f]/60 overflow-hidden shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
+              <div className="relative h-2.5 w-full rounded-sm bg-[#0e0a07] border border-[#78350f]/60 overflow-hidden shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
                 {/* Background slab gridlines for notches */}
                 <div className="absolute inset-0 flex justify-between pointer-events-none opacity-25">
                   <span className="h-full w-px bg-amber-950" />

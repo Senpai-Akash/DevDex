@@ -108,7 +108,7 @@ export function RPGCard({ data }: RPGCardProps) {
         >
           <RPGBackground />
 
-          <div className="relative z-20 flex flex-col gap-4">
+          <div className="relative z-20 flex flex-col gap-2">
             <RPGHeader data={data} />
 
             <RPGAvatar

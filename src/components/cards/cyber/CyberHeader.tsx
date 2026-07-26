@@ -36,9 +36,9 @@ export function CyberHeader({ data }: CyberHeaderProps) {
   }
 
   return (
-    <header className="relative flex flex-col border-b border-cyan-500/20 pb-3.5 mb-3.5">
+    <header className="relative flex flex-col border-b border-cyan-500/20 pb-2 mb-2">
       {/* OS ID and Threat level HUD header */}
-      <div className="flex items-center justify-between text-[0.55rem] font-['Share_Tech_Mono',monospace] tracking-[0.25em] text-cyan-400/80 mb-2">
+      <div className="flex items-center justify-between text-[0.52rem] font-['Share_Tech_Mono',monospace] tracking-[0.2em] text-cyan-400/80 mb-1">
         <div className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
           <span>DEVDEX // SECURE_OS_v4.82</span>
@@ -51,16 +51,16 @@ export function CyberHeader({ data }: CyberHeaderProps) {
       {/* Name and Role panel */}
       <div className="relative">
         {/* Name */}
-        <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-[0.12em] text-white font-['Orbitron',sans-serif] truncate drop-shadow-[0_0_12px_rgba(255,255,255,0.15)]">
+        <h1 className="text-[1.75rem] sm:text-[2.2rem] font-black uppercase tracking-[0.08em] text-white font-['Orbitron',sans-serif] truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.15)] leading-none">
           {name}
         </h1>
         
         {/* Role */}
-        <div className="mt-1 flex items-center gap-2">
-          <span className="text-[0.55rem] font-['Share_Tech_Mono',monospace] text-magenta-400 font-bold tracking-widest uppercase">
+        <div className="mt-0.5 flex items-center gap-1.5">
+          <span className="text-[0.5rem] font-['Share_Tech_Mono',monospace] text-magenta-400 font-bold tracking-widest uppercase">
             SPEC //
           </span>
-          <span className="text-[0.7rem] font-['Share_Tech_Mono',monospace] text-cyan-200 tracking-[0.15em] font-semibold">
+          <span className="text-[0.65rem] font-['Share_Tech_Mono',monospace] text-cyan-200 tracking-[0.15em] font-semibold">
             {role}
           </span>
         </div>

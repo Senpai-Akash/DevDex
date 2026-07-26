@@ -16,6 +16,52 @@ interface CyberCardProps {
 }
 
 export function CyberCard({ data }: CyberCardProps) {
+  const rarity = data.rarity.toLowerCase();
+
+const rarityTheme = (() => {
+  if (rarity.includes('myth')) {
+    return {
+      aura: 'from-red-500/20 via-orange-500/10 to-transparent',
+      border: 'border-red-400/60',
+      inner: 'border-orange-400/30',
+      shadow: '0 0 40px rgba(239,68,68,.35)',
+    };
+  }
+
+  if (rarity.includes('legend')) {
+    return {
+      aura: 'from-yellow-400/20 via-cyan-500/10 to-transparent',
+      border: 'border-yellow-400/60',
+      inner: 'border-yellow-300/25',
+      shadow: '0 0 40px rgba(250,204,21,.35)',
+    };
+  }
+
+  if (rarity.includes('epic')) {
+    return {
+      aura: 'from-fuchsia-500/20 via-purple-500/10 to-transparent',
+      border: 'border-fuchsia-400/60',
+      inner: 'border-purple-400/30',
+      shadow: '0 0 35px rgba(217,70,239,.30)',
+    };
+  }
+
+  if (rarity.includes('rare')) {
+    return {
+      aura: 'from-cyan-500/20 via-blue-500/10 to-transparent',
+      border: 'border-cyan-400/60',
+      inner: 'border-cyan-300/25',
+      shadow: '0 0 35px rgba(34,211,238,.28)',
+    };
+  }
+
+  return {
+    aura: 'from-emerald-500/15 via-cyan-500/5 to-transparent',
+    border: 'border-emerald-400/45',
+    inner: 'border-emerald-300/20',
+    shadow: '0 0 28px rgba(16,185,129,.22)',
+  };
+})();
   return (
     <motion.article
       initial={{ opacity: 0, scale: 0.96, rotateY: -1 }}
@@ -31,22 +77,63 @@ export function CyberCard({ data }: CyberCardProps) {
       style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
       {/* Outer Neon Cyan Ambient Aura */}
-      <div className="absolute -inset-10 rounded-[2.5rem] bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-60" />
+      <div className="absolute -inset-8 rounded-[2.5rem] bg-gradient-to-b ${rarityTheme.aura} blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-70" />
       
       {/* Sci-Fi HUD Panel Wrapper */}
-      <div className="relative z-10 p-[10px] rounded-[2rem] bg-gradient-to-b from-[#0f172a] via-[#090d16] to-[#04060b] border border-cyan-500/35 shadow-[0_30px_70px_rgba(0,0,0,0.9)]">
-        
+      <motion.div
+    className={`relative z-10 p-[8px] rounded-[2rem]
+    bg-gradient-to-b
+    from-[#0f172a]
+    via-[#090d16]
+    to-[#04060b]
+    ${rarityTheme.border}`}
+    style={{
+        boxShadow: `
+            0 30px 70px rgba(0,0,0,.9),
+            ${rarityTheme.shadow},
+            inset 0 0 18px rgba(255,255,255,.03)
+        `,
+    }}
+    animate={{
+        opacity: [
+            1,
+            1,
+            1,
+            0.97,
+            1,
+            1,
+            0.985,
+            1,
+        ],
+        filter: [
+            'brightness(1)',
+            'brightness(1)',
+            'brightness(1)',
+            'brightness(.95)',
+            'brightness(1.04)',
+            'brightness(1)',
+            'brightness(.98)',
+            'brightness(1)',
+        ],
+    }}
+    transition={{
+        duration: 14,
+        repeat: Infinity,
+        ease: 'linear',
+        times: [0, 0.55, 0.75, 0.76, 0.77, 0.90, 0.91, 1],
+    }}
+>
         {/* Inner Tech Border Lines */}
         <div className="absolute inset-[6px] rounded-[1.85rem] border border-cyan-500/15 pointer-events-none" />
         <div className="absolute inset-[8px] rounded-[1.8rem] border border-magenta-500/10 pointer-events-none" />
         
         {/* Main Content Box */}
-        <div className="relative z-10 overflow-hidden rounded-[1.7rem] bg-[#05070f]/98 px-5 py-4 border border-cyan-500/30 sm:px-7 sm:py-5">
+        <div className="relative z-10 overflow-hidden rounded-[1.7rem] bg-[#05070f]/98 px-5 py-3 border border-cyan-500/30 sm:px-6 sm:py-4">
           {/* Cyber HUD Animated Background */}
           <CyberBackground />
 
           {/* Foreground content */}
-          <div className="relative z-20 flex flex-col">
+          <div className="relative z-20 flex flex-col gap-2">
             <CyberHeader data={data} />
             
             <CyberAvatar avatar={data.avatar} displayName={data.displayName} />
@@ -100,7 +187,7 @@ export function CyberCard({ data }: CyberCardProps) {
             </svg>
           </div>
         </div>
-      </div>
+      </motion.div>
     </motion.article>
   );
 }

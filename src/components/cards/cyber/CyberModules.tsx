@@ -8,7 +8,7 @@ interface CyberModulesProps {
 }
 
 export function CyberModules({ data }: CyberModulesProps) {
-  const topAchievements = data.achievements.slice(0, 3);
+  const topAchievements = data.achievements.slice(0, 2);
   
   if (topAchievements.length === 0) {
     return null;
@@ -34,17 +34,17 @@ export function CyberModules({ data }: CyberModulesProps) {
   };
 
   return (
-    <section aria-label="System Modules" className="w-full space-y-2 py-2 font-['Share_Tech_Mono',monospace]">
-      <p className="text-center text-[0.62rem] font-bold uppercase tracking-[0.3em] text-cyan-400/50">
+    <section aria-label="System Modules" className="w-full space-y-1 py-1 font-['Share_Tech_Mono',monospace]">
+      <p className="text-center text-[0.55rem] font-bold uppercase tracking-[0.3em] text-cyan-400/50">
         INSTALLED_MODULES //
       </p>
       
-      <div className="flex flex-col gap-2 max-w-[440px] mx-auto">
+      <div className="flex flex-col gap-1.5 max-w-[440px] mx-auto">
         {topAchievements.map((achievement, idx) => (
           <div key={achievement.id || idx} className="relative flex items-center">
             
             {/* Left Microchip Connection Pins */}
-            <div className="flex flex-col gap-1 pr-1.5 select-none">
+            <div className="flex flex-col gap-1 pr-1 select-none">
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />
@@ -52,9 +52,9 @@ export function CyberModules({ data }: CyberModulesProps) {
 
             {/* The Microchip Body */}
             <div
-              className={`flex-1 flex flex-col p-2.5 border rounded-sm ${getModuleColor(idx)} transition duration-300 hover:brightness-110`}
+              className={`flex-1 flex flex-col p-2 border rounded-sm ${getModuleColor(idx)} transition duration-300 hover:brightness-110`}
             >
-              <div className="flex items-baseline justify-between gap-2 border-b border-current/15 pb-1 mb-1">
+              <div className="flex items-baseline justify-between gap-2 border-b border-current/15 pb-0.5 mb-0.5">
                 <span className="text-[0.58rem] font-bold tracking-widest uppercase">
                   MOD_{idx + 1} // {getModuleTitle(idx)}
                 </span>
@@ -62,16 +62,16 @@ export function CyberModules({ data }: CyberModulesProps) {
                   ONLINE
                 </span>
               </div>
-              <p className="truncate text-xs font-bold text-white uppercase tracking-wider">
+              <p className="truncate text-[0.68rem] font-bold text-white uppercase tracking-wider">
                 {achievement.title}
               </p>
-              <p className="truncate text-[0.62rem] text-cyan-200/60 font-semibold tracking-wide mt-0.5">
+              <p className="truncate text-[0.56rem] text-cyan-200/60 font-semibold tracking-wide mt-0">
                 {achievement.description}
               </p>
             </div>
 
             {/* Right Microchip Connection Pins */}
-            <div className="flex flex-col gap-1 pl-1.5 select-none">
+            <div className="flex flex-col gap-1 pl-1 select-none">
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />
               <span className={`h-1 w-1.5 rounded-sm ${getPinColor(idx)}`} />

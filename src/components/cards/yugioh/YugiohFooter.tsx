@@ -9,42 +9,111 @@ interface YugiohFooterProps {
   displayName: string;
 }
 
-export function YugiohFooter({ edition, branding, cardNumber, displayName }: YugiohFooterProps) {
+export function YugiohFooter({
+  edition,
+  branding,
+  cardNumber,
+  displayName,
+}: YugiohFooterProps) {
   return (
-    <footer className="mt-4 w-full flex flex-col gap-2 text-sm font-['Cinzel',serif] text-[#ab8552] select-none">
-      {/* Divider */}
-      <div className="flex items-center justify-center gap-2 opacity-30">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-current" />
-        <span className="uppercase tracking-widest text-xs">DEVDEX ENCODED</span>
-        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-current" />
+    <footer className="mt-3 border-t border-[#4b351d]/20 pt-3 font-['Cinzel',serif]">
+
+      {/* Serial Number */}
+
+      <div className="mb-2 flex items-center justify-between text-[0.58rem] tracking-[0.18em]">
+
+        <span className="font-bold text-[#3d2411]">
+          {cardNumber}
+        </span>
+
+        <span className="rounded border border-[#b88a4b] bg-[#e8d7b7] px-2 py-[2px] font-bold text-[#6d4418]">
+          1st EDITION
+        </span>
+
       </div>
 
-      {/* Bottom Information Grid */}
-      <div className="grid grid-cols-3 gap-2 text-xs">
-        {/* Edition */}
-        <div className="flex flex-col">
-          <span className="uppercase text-[0.6rem] font-bold mb-0.5">EDITION</span>
-          <span className="font-semibold">{edition}</span>
+      {/* Bottom Line */}
+
+      <div className="flex items-end justify-between">
+
+        {/* Attribute */}
+
+        <div className="flex flex-col leading-tight">
+
+          <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[#8c6239]">
+            System
+          </span>
+
+          <span className="text-[0.7rem] font-black text-[#3b220f] uppercase">
+            {branding}
+          </span>
+
         </div>
-        {/* Branding */}
-        <div className="flex flex-col text-center">
-          <span className="uppercase text-[0.6rem] font-bold mb-0.5">BRAND</span>
-          <span className="font-semibold uppercase">{branding}</span>
+
+        {/* Foil Stamp */}
+
+        <div className="relative flex items-center justify-center">
+
+          <div
+            className="
+            h-10
+            w-10
+            rounded-full
+            border
+            border-[#d6b25e]
+            bg-gradient-to-br
+            from-[#f9e08b]
+            via-[#c99b45]
+            to-[#8c5d1d]
+            shadow-[0_0_12px_rgba(252,211,77,.45)]
+          "
+          />
+
+          <div
+            className="
+            absolute
+            text-[0.55rem]
+            font-black
+            tracking-widest
+            text-white
+          "
+          >
+            RARE
+          </div>
+
         </div>
-        {/* Card Number */}
-        <div className="flex flex-col text-right">
-          <span className="uppercase text-[0.6rem] font-bold mb-0.5">NO.</span>
-          <span className="font-semibold">{cardNumber}</span>
+
+        {/* Signature */}
+
+        <div className="flex flex-col items-end leading-tight">
+
+          <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[#8c6239]">
+            Creator
+          </span>
+
+          <span
+            className="text-lg italic text-[#7d5628]"
+            style={{
+              fontFamily: 'cursive',
+            }}
+          >
+            {displayName}
+          </span>
+
         </div>
+
       </div>
 
-      {/* Signature line */}
-      <div className="flex items-center justify-center mt-2">
-        <style dangerouslySetInnerHTML={{ __html: `
-          @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
-        `}} />
-        <span className="text-xl text-[#fcd34d] font-[\'Pinyon_Script\',cursive]" style={{ textShadow: '0 0 4px rgba(252,211,77,0.6)' }}>{displayName}</span>
+      {/* Copyright */}
+
+      <div className="mt-3 flex items-center justify-between border-t border-[#4b351d]/15 pt-2 text-[0.45rem] tracking-[0.18em] text-[#8c6239]">
+
+        <span>© DEVDEX CARD SYSTEM</span>
+
+        <span>{edition.toUpperCase()}</span>
+
       </div>
+
     </footer>
   );
 }

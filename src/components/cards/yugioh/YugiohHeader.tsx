@@ -12,62 +12,240 @@ export function YugiohHeader({ data }: YugiohHeaderProps) {
   const developerClass = (data.developerClass ?? data.role).toUpperCase();
   const tech = data.technology.toUpperCase();
 
-  // Determine Attribute Emoji
   const getAttributeEmoji = (lang: string) => {
     const l = lang.toLowerCase();
-    if (l.includes('typescript') || l.includes('javascript') || l.includes('js') || l.includes('ts')) return '⚡';
-    if (l.includes('python') || l.includes('ai') || l.includes('machine')) return '🤖';
-    if (l.includes('rust') || l.includes('c++') || l.includes('c ') || l.includes('ruby')) return '🔥';
-    if (l.includes('go') || l.includes('swift') || l.includes('kotlin')) return '☁️';
-    if (l.includes('html') || l.includes('css') || l.includes('design')) return '🎨';
-    if (l.includes('php') || l.includes('java')) return '🌿';
+
+    if (
+      l.includes('typescript') ||
+      l.includes('javascript') ||
+      l.includes('js') ||
+      l.includes('ts')
+    )
+      return '⚡';
+
+    if (
+      l.includes('python') ||
+      l.includes('ai') ||
+      l.includes('machine')
+    )
+      return '🤖';
+
+    if (
+      l.includes('rust') ||
+      l.includes('c++') ||
+      l.includes('c ') ||
+      l.includes('ruby')
+    )
+      return '🔥';
+
+    if (
+      l.includes('go') ||
+      l.includes('swift') ||
+      l.includes('kotlin')
+    )
+      return '☁️';
+
+    if (
+      l.includes('html') ||
+      l.includes('css') ||
+      l.includes('design')
+    )
+      return '🎨';
+
+    if (
+      l.includes('php') ||
+      l.includes('java')
+    )
+      return '🌿';
+
     return '🔮';
   };
 
   const attribute = getAttributeEmoji(data.technology);
 
-  // Convert Rating to stars (Level)
   const rating = data.rating;
-  const starCount = Math.max(1, Math.min(12, Math.round(rating / 8.5))); // Maps ~80 rating to 9-10 stars
+
+  const starCount = Math.max(
+    1,
+    Math.min(
+      12,
+      Math.round(rating / 8.5)
+    )
+  );
+
+  const rarity =
+    rating >= 95
+      ? 'GHOST'
+      : rating >= 90
+      ? 'SECRET'
+      : rating >= 85
+      ? 'ULTRA'
+      : rating >= 75
+      ? 'SUPER'
+      : 'RARE';
 
   return (
-    <header className="relative flex flex-col border-b border-[#fcd34d]/25 pb-3 mb-3 select-none font-['Cinzel',serif]">
-      {/* Top Bar: Primary Tech & Attribute */}
+    <header
+      className="
+      relative
+      flex
+      flex-col
+      border-b
+      border-[#f4cf74]/20
+      pb-3
+      mb-3
+      select-none
+      font-['Cinzel',serif]
+    "
+    >
+      {/* Top Row */}
+
       <div className="flex items-center justify-between mb-2">
-        {/* Primary Technology Label */}
-        <div className="border border-[#ab8552] bg-[#1e140a]/80 px-2.5 py-0.5 rounded shadow-[inset_0_1px_3px_rgba(0,0,0,0.6)]">
-          <span className="text-[0.62rem] font-black tracking-widest text-[#fcd34d]">
+
+        {/* Technology */}
+
+        <div
+          className="
+          rounded
+          border
+          border-[#f4cf74]/35
+          bg-gradient-to-b
+          from-[#6e4d22]
+          to-[#2b1a09]
+          px-3
+          py-1
+          shadow-[0_2px_6px_rgba(0,0,0,.55)]
+        "
+        >
+          <span
+            className="
+            text-[0.62rem]
+            font-black
+            tracking-[0.22em]
+            text-[#f7d978]
+          "
+          >
             [{tech}]
           </span>
         </div>
 
-        {/* Attribute Circle Element */}
+        {/* Attribute */}
+
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full border border-[#fcd34d] bg-[#3a2510] text-sm shadow-[0_0_8px_rgba(252,211,77,0.3)]">
+
+          <div
+            className="
+            flex
+            h-9
+            w-9
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-[#ffd24c]
+            bg-gradient-to-b
+            from-[#5b3b13]
+            to-[#1b1208]
+            text-base
+            shadow-[0_0_12px_rgba(255,215,0,.28)]
+          "
+          >
             {attribute}
           </div>
-          <span className="text-[0.55rem] font-bold text-stone-300 tracking-wider">ATTR</span>
+
+          <div className="flex flex-col leading-none">
+
+            <span
+              className="
+              text-[0.45rem]
+              tracking-[0.18em]
+              text-stone-400
+            "
+            >
+              ATTR
+            </span>
+
+            <span
+              className="
+              text-[0.48rem]
+              font-black
+              tracking-[0.18em]
+              text-[#ffd24c]
+            "
+            >
+              {rarity}
+            </span>
+
+          </div>
+
         </div>
+
       </div>
 
-      {/* Developer Name & Title */}
-      <div className="flex flex-col">
-        <h1 className="text-xl sm:text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate">
-          {name}
-        </h1>
-        <p className="text-[0.65rem] font-bold tracking-widest text-[#ab8552] uppercase mt-0.5">
-          {developerClass}
-        </p>
-      </div>
+      {/* Name */}
 
-      {/* Star Rating (Level Row) */}
-      <div className="flex gap-1.5 mt-2 justify-start">
+      <h1
+        className="
+        truncate
+        text-2xl
+        sm:text-[2rem]
+        font-black
+        tracking-[0.08em]
+        text-white
+        drop-shadow-[0_2px_6px_rgba(0,0,0,.85)]
+      "
+      >
+        {name}
+      </h1>
+
+      {/* Class */}
+
+      <p
+        className="
+        mt-1
+        text-[0.7rem]
+        font-bold
+        italic
+        uppercase
+        tracking-[0.25em]
+        text-[#d9b67a]
+      "
+      >
+        {developerClass}
+      </p>
+
+      {/* Stars */}
+
+      <div className="mt-2 flex gap-1.5">
+
         {Array.from({ length: starCount }).map((_, i) => (
-          <span key={i} className="text-xs text-[#fcd34d] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+          <span
+            key={i}
+            className="
+            text-sm
+            text-[#ffd24c]
+            drop-shadow-[0_0_6px_rgba(255,215,0,.55)]
+          "
+          >
             ★
           </span>
         ))}
+
       </div>
+
+      {/* Decorative Divider */}
+
+      <div
+        className="
+        mt-3
+        h-px
+        w-full
+        bg-gradient-to-r
+        from-transparent
+        via-[#c89b3c]/60
+        to-transparent
+      "
+      />
     </header>
   );
 }

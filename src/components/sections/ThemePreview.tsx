@@ -1,5 +1,5 @@
 'use client';
-
+import CardReveal from "@/components/animations/CardReveal";
 import { useState, useRef } from 'react';
 
 import { AVAILABLE_THEMES, THEME_LABELS, type CardTheme } from '@/types/theme';
@@ -70,8 +70,10 @@ export default function ThemePreview({
 
         <div className="mt-16 flex justify-center">
           <div ref={cardRef}>
-            <ActiveCard data={cardData} />
-          </div>
+    <CardReveal>
+        <ActiveCard data={cardData} />
+    </CardReveal>
+</div>
         </div>
 
       </div>

@@ -7,7 +7,7 @@ import { CardTheme } from '@/types/theme';
 import { ThemeSelector } from '@/components/theme/ThemeSelector';
 import { getThemeComponent } from '@/lib/themes';
 import ExportStudio from '@/components/export/ExportStudio';
-
+import CardReveal from "@/components/animations/CardReveal";
 interface ProfileCardDisplayProps {
   cardData: CardData;
 }
@@ -73,13 +73,15 @@ export function ProfileCardDisplay({
           }}
         >
           <div
-            ref={cardRef}
-            className="bg-transparent p-4"
-          >
-            {createElement(CardComponent, {
-              data: cardData,
-            })}
-          </div>
+  ref={cardRef}
+  className="bg-transparent p-4"
+>
+  <CardReveal>
+    {createElement(CardComponent, {
+      data: cardData,
+    })}
+  </CardReveal>
+</div>
         </motion.div>
       </AnimatePresence>
 

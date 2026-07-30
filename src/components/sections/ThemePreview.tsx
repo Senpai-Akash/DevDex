@@ -1,5 +1,5 @@
 'use client';
-import CardReveal from "@/components/animations/CardReveal";
+import CardReveal from "@/components/opening/CardReveal";
 import { useState, useRef } from 'react';
 
 import { AVAILABLE_THEMES, THEME_LABELS, type CardTheme } from '@/types/theme';

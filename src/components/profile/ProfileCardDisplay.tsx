@@ -7,7 +7,7 @@ import { CardTheme } from '@/types/theme';
 import { ThemeSelector } from '@/components/theme/ThemeSelector';
 import { getThemeComponent } from '@/lib/themes';
 import ExportStudio from '@/components/export/ExportStudio';
-import CardReveal from "@/components/animations/CardReveal";
+import CardReveal from "@/components/opening/CardReveal";
 interface ProfileCardDisplayProps {
   cardData: CardData;
 }
@@ -74,9 +74,9 @@ export function ProfileCardDisplay({
         >
           <div
   ref={cardRef}
-  className="bg-transparent p-4"
+  className="relative flex w-full justify-center bg-transparent py-4"
 >
-  <CardReveal>
+  <CardReveal rarity={cardData.rarity}>
     {createElement(CardComponent, {
       data: cardData,
     })}

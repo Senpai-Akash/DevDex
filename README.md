@@ -1,36 +1,255 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🎴 DevDex
 
-First, run the development server:
+### Transform any GitHub profile into collectible developer cards.
+
+Create stunning game-inspired cards from your GitHub profile in seconds.  
+Inspired by Football Ultimate Team, Pokémon, Cyberpunk, RPGs, and Trading Cards.
+
+<img src="./public/preview.png" alt="DevDex Preview" width="900"/>
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animation-0055FF?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
+
+</div>
+
+---
+
+# 📖 Overview
+
+DevDex is a modern web application that converts public GitHub profiles into premium collectible developer cards.
+
+Instead of showing repositories as plain lists, DevDex analyzes developer activity and presents it through beautifully designed cards inspired by popular games.
+
+Whether you're a student, open-source contributor, recruiter, or developer, DevDex provides a fun and visually engaging way to showcase your coding journey.
+
+---
+
+# ✨ Features
+
+## 🎴 Multiple Card Themes
+
+Choose between multiple professionally designed card styles.
+
+- ⚽ Football Ultimate
+- ⚡ Monster Trainer
+- 🛡 Fantasy RPG
+- 🤖 Cyberpunk
+- 🃏 Trading Card
+
+---
+
+## 📊 GitHub Analysis
+
+DevDex automatically analyzes:
+
+- Public repositories
+- Programming languages
+- Stars
+- Forks
+- Organizations
+- Followers
+- Contributions
+- Developer statistics
+
+---
+
+## ⭐ Smart Rating System
+
+Every profile receives an overall rating calculated from GitHub activity.
+
+Examples:
+
+```
+Overall Rating
+Attack
+Defense
+Speed
+Teamwork
+Intelligence
+Versatility
+```
+
+---
+
+## 📤 Export Studio
+
+Export your cards in multiple formats.
+
+- PNG
+- High Resolution
+- Social Media Ready
+
+---
+
+# 🖼 Screenshots
+
+## Landing Page
+
+> Add screenshot here
+
+```
+/public/screenshots/home.png
+```
+---
+
+# 🚀 Tech Stack
+
+## Frontend
+
+- Next.js 16
+- React 19
+- TypeScript
+- TailwindCSS
+- Framer Motion
+
+---
+
+## APIs
+
+- GitHub REST API
+
+---
+
+## Tools
+
+- ESLint
+- Prettier
+- Vercel
+
+---
+
+# 📂 Project Structure
+
+```text
+src
+│
+├── app
+│
+├── components
+│   ├── animations
+│   ├── cards
+│   ├── export
+│   ├── layout
+│   ├── profile
+│   ├── sections
+│   └── theme
+│
+├── lib
+│   ├── github
+│   └── themes
+│
+├── types
+│
+└── utils
+```
+
+---
+
+# ⚙ Installation
+
+Clone the repository.
+
+```bash
+git clone https://github.com/yourusername/devdex.git
+```
+
+Go inside.
+
+```bash
+cd devdex
+```
+
+Install dependencies.
+
+```bash
+npm install
+```
+
+Run development server.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 🔑 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create
 
-## Learn More
+```
+.env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+```env
+GITHUB_TOKEN=your_github_token
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Using a GitHub Personal Access Token increases API rate limits significantly.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create your branch
+
+```bash
+git checkout -b feature/amazing-feature
+```
+
+3. Commit
+
+```bash
+git commit -m "Add amazing feature"
+```
+
+4. Push
+
+```bash
+git push origin feature/amazing-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# ⭐ Why DevDex?
+
+GitHub profiles are informative—but they aren't always engaging.
+
+DevDex reimagines developer portfolios as collectible cards, combining creativity, design, and software engineering into an experience that's fun to explore and easy to share.
+
+---
+
+# 📜 License
+
+Distributed under the MIT License.
+
+See `LICENSE` for more information.
+
+---
+
+# 👨‍💻 Author
+
+**Akash**
+
+GitHub
+
+https://github.com/Senpai-Akash
+
+---
+
+<div align="center">
+
+### ⭐ If you like DevDex, consider giving the repository a star.
+
+Made with ❤️ using Next.js, TypeScript and TailwindCSS.
+
+</div>

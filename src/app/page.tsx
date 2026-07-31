@@ -64,16 +64,39 @@ const faqItems = [
 
 export default function Page() {
   return (
-    <main className="bg-slate-950 text-slate-50">
-      <Navbar />
+  <main className="bg-slate-950 text-slate-50">
+    <Navbar />
 
-      <Hero />
+    <Hero />
 
-      <ThemePreview cardData={demoCard} />
+    <ThemePreview cardData={demoCard} />
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
-        {/* Your remaining landing page sections */}
-      </section>
-    </main>
-  );
+    {/* FAQ */}
+    <section
+      id="faq"
+      className="mx-auto max-w-4xl px-6 py-24"
+    >
+      <h2 className="text-center text-4xl font-black">
+        Frequently Asked Questions
+      </h2>
+
+      <div className="mt-12 space-y-6">
+        {faqItems.map((item) => (
+          <div
+            key={item.question}
+            className="rounded-2xl border border-slate-800 bg-slate-900 p-6"
+          >
+            <h3 className="text-lg font-semibold">
+              {item.question}
+            </h3>
+
+            <p className="mt-3 text-slate-400">
+              {item.answer}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+);
 }

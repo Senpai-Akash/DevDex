@@ -3,28 +3,73 @@ import HeroSearch from "./HeroSearch";
 export default function HeroContent() {
   return (
     <div>
-      <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-50 md:text-6xl">
-        Turn GitHub profiles into legendary developer cards
-      </h1>
-      <p className="mt-5 max-w-xl text-lg leading-8 text-slate-300 sm:text-xl">
-        Create beautiful, theme-driven developer cards from any public GitHub
-        username. Share your identity with a collectible game-inspired profile.
-      </p>
 
-      <div className="mt-8 flex flex-wrap items-center gap-3">
-        <button className="rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:from-indigo-500 hover:to-indigo-400">
-          Wanna create one?
-        </button>
-        <button className="rounded-full border border-indigo-500/40 bg-slate-900/50 backdrop-blur-sm px-5 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800/50 hover:border-indigo-500/60">
-          Click here
-        </button>
+      {/* Small Badge */}
+
+      <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-indigo-300">
+        🚀 Game Inspired GitHub Profiles
       </div>
 
-      <div className="mt-10 max-w-xl">
+      {/* Heading */}
+
+      <h1 className="mt-6 text-5xl font-black leading-[1.05] tracking-tight text-white md:text-7xl">
+
+        Your GitHub.
+
+        <br />
+
+        Reimagined as a Legendary
+
+        <span className="block bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+       Trading Card
+        </span>
+
+      </h1>
+
+      {/* Description */}
+
+      <p className="mt-8 max-w-xl text-xl leading-9 text-slate-300">
+        Transform any public GitHub profile into a collectible developer card
+        inspired by Football Ultimate Team, Pokémon, RPGs, Cyberpunk,
+        Yu-Gi-Oh and more.
+      </p>
+
+      {/* CTA */}
+
+      <div className="mt-10 flex flex-wrap gap-4">
+
+        <button
+          className="
+          rounded-full
+          bg-gradient-to-r
+          from-indigo-600
+          via-violet-600
+          to-cyan-500
+          px-8
+          py-4
+          text-base
+          font-bold
+          text-white
+          shadow-[0_0_40px_rgba(99,102,241,.45)]
+          transition-all
+          duration-300
+          hover:scale-105
+          hover:shadow-[0_0_60px_rgba(99,102,241,.75)]
+        "
+        >
+          Generate My Card →
+        </button>
+
+      </div>
+
+      {/* Search */}
+
+      <div className="mt-12 max-w-xl">
         <HeroSearch />
       </div>
 
       <div id="features" className="sr-only" />
+
     </div>
   );
 }

@@ -42,29 +42,82 @@ export default function ThemePreview({
 
         {/* Theme Buttons */}
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
+<div className="mt-12 flex flex-wrap justify-center gap-6">
 
-          {AVAILABLE_THEMES.map((theme) => (
+  {AVAILABLE_THEMES.map((theme) => {
 
-            <button
-              key={theme}
-              onClick={() => setSelectedTheme(theme)}
-              className={`rounded-xl border px-5 py-3 transition-all duration-300 ${
-                selectedTheme === theme
-                  ? 'border-amber-400 bg-amber-500/10 text-amber-200'
-                  : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500'
-              }`}
+    const active = selectedTheme === theme;
+
+    return (
+      <button
+        key={theme}
+        onClick={() => setSelectedTheme(theme)}
+        className={`
+          group
+          relative
+          h-[120px]
+          w-[120px]
+          overflow-hidden
+          rounded-2xl
+          border
+          transition-all
+          duration-300
+          ${
+            active
+              ? 'border-amber-400 bg-gradient-to-b from-amber-500/20 to-amber-900/20 shadow-[0_0_35px_rgba(251,191,36,.35)]'
+              : 'border-slate-700 bg-slate-900 hover:border-indigo-500 hover:-translate-y-1 hover:shadow-xl'
+          }
+        `}
+      >
+
+        <div
+          className="
+            absolute
+            inset-0
+            bg-gradient-to-br
+            from-white/5
+            to-transparent
+          "
+        />
+
+        <div className="relative flex h-full flex-col items-center justify-center">
+
+          <div className="text-4xl">
+            {getThemeIcon(theme)}
+          </div>
+
+          <div className="mt-4 text-sm font-semibold text-white">
+            {THEME_LABELS[theme]}
+          </div>
+
+          {active && (
+            <div
+              className="
+                absolute
+                bottom-3
+                rounded-full
+                bg-amber-400
+                px-3
+                py-1
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-[0.2em]
+                text-black
+              "
             >
-              <div className="text-xl">{getThemeIcon(theme)}</div>
-
-              <div className="mt-2 text-sm font-semibold">
-                {THEME_LABELS[theme]}
-              </div>
-            </button>
-
-          ))}
+              Active
+            </div>
+          )}
 
         </div>
+
+      </button>
+    );
+
+  })}
+
+</div>
 
         {/* Preview */}
 
@@ -80,3 +133,4 @@ export default function ThemePreview({
     </section>
   );
 }
+

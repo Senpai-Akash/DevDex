@@ -14,7 +14,7 @@ function renderDeveloperProfile(developer: Developer) {
 
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-20 text-slate-100">
-      <div className="mx-auto flex max-w-[600px] flex-col gap-8 px-4">
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4">
         <ProfileCardDisplay cardData={cardData} />
       </div>
     </main>

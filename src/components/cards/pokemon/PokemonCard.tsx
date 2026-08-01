@@ -62,7 +62,7 @@ export function PokemonCard({ data }: PokemonCardProps) {
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="group relative mx-auto w-[380px] cursor-pointer select-none"
+      className="group relative mx-auto w-full max-w-full md:max-w-[380px] cursor-pointer select-none"
       aria-label={`Pokémon card for ${data.displayName}`}
     >
       <PokemonFrame isRare={isRare} typeColor={meta.color}>

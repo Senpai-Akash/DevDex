@@ -50,7 +50,7 @@ export default function ThemePreview({
   }
 
   return (
-    <section className="w-full py-24">
+    <section className="w-full py-24 overflow-x-hidden">
 
       <div className="mx-auto max-w-7xl px-6">
 
@@ -93,8 +93,9 @@ export default function ThemePreview({
                 onClick={() => setSelectedTheme(theme)}
                 className={`
                   relative
-                  h-[145px]
-                  w-[160px]
+                  w-full sm:w-40
+                  h-auto
+                  min-h-[145px]
                   overflow-hidden
                   rounded-3xl
                   border
@@ -175,6 +176,8 @@ export default function ThemePreview({
         <div
           className="
             mt-20
+            w-full
+            max-w-full
             rounded-[40px]
             border
             border-slate-800
@@ -182,7 +185,7 @@ export default function ThemePreview({
             from-slate-900/90
             via-slate-950
             to-black
-            p-10
+            p-4 sm:p-6 lg:p-10
             shadow-[0_40px_120px_rgba(0,0,0,.55)]
           "
         >

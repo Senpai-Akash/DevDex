@@ -7,8 +7,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-indigo-500/20 bg-slate-950/70 backdrop-blur-xl">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+    <header className="sticky top-0 z-50 border-b border-indigo-500/20 bg-slate-950/70 backdrop-blur-xl overflow-x-hidden">
+      <nav className="mx-auto w-full flex h-16 max-w-7xl items-center justify-between px-6 flex-wrap">
 
         {/* Logo */}
 
@@ -29,12 +29,12 @@ export default function Navbar() {
         <ul className="hidden items-center gap-10 text-sm font-semibold md:flex">
 
           <li>
-            <a
-              href="#home"
-              className="relative text-slate-300 transition hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-indigo-400 after:transition-all hover:after:w-full"
-            >
-              Home
-            </a>
+<a
+  href="#generate"
+  className="mt-3 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center font-semibold text-white"
+>
+  Generate Card
+</a>
           </li>
 
           <li>
@@ -124,14 +124,14 @@ export default function Navbar() {
       {/* Mobile Menu */}
 
       {open && (
-        <div className="border-t border-slate-800 bg-slate-950 md:hidden">
+        <div className="border-t border-slate-800 bg-slate-950 w-full md:hidden">
 
           <div className="flex flex-col gap-2 p-6">
 
             <a
               href="#home"
               onClick={() => setOpen(false)}
-              className="rounded-lg px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg w-full px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
             >
               Home
             </a>
@@ -139,7 +139,7 @@ export default function Navbar() {
             <a
               href="#themes"
               onClick={() => setOpen(false)}
-              className="rounded-lg px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg w-full px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
             >
               Themes
             </a>
@@ -147,7 +147,7 @@ export default function Navbar() {
             <a
               href="#faq"
               onClick={() => setOpen(false)}
-              className="rounded-lg px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg w-full px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
             >
               FAQ
             </a>
@@ -156,7 +156,7 @@ export default function Navbar() {
               href="https://github.com/Senpai-Akash/DevDex"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg w-full px-4 py-3 text-slate-300 transition hover:bg-slate-800 hover:text-white"
             >
               GitHub
             </a>
@@ -164,7 +164,7 @@ export default function Navbar() {
             <a
               href="#generate"
               onClick={() => setOpen(false)}
-              className="mt-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center font-semibold text-white"
+              className="mt-3 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center font-semibold text-white"
             >
               Generate Card
             </a>

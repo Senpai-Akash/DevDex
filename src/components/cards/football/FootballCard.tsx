@@ -28,7 +28,7 @@ export function FootballCard({ data }: FootballCardProps) {
         stiffness: 180,
         damping: 18,
       }}
-      className="mx-auto w-full max-w-[760px]"
+      className="mx-auto w-full max-w-full md:max-w-[760px]"
       style={{
         perspective: 1500,
       }}

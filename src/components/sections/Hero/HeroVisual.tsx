@@ -1,15 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-
+const particles = [
+  { left: 8, top: 16, duration: 2.5, delay: 0 },
+  { left: 18, top: 42, duration: 3, delay: 0.3 },
+  { left: 27, top: 65, duration: 2.8, delay: 0.7 },
+  { left: 36, top: 25, duration: 3.2, delay: 0.5 },
+  { left: 45, top: 80, duration: 2.6, delay: 1.1 },
+  { left: 56, top: 18, duration: 3.1, delay: 0.9 },
+  { left: 64, top: 56, duration: 2.7, delay: 1.5 },
+  { left: 72, top: 30, duration: 3.3, delay: 0.4 },
+  { left: 82, top: 68, duration: 2.9, delay: 1.2 },
+  { left: 90, top: 45, duration: 3, delay: 0.8 },
+  { left: 12, top: 86, duration: 2.7, delay: 1.4 },
+  { left: 24, top: 8, duration: 3.2, delay: 0.6 },
+];
 export default function HeroVisual() {
   return (
-    <div className="relative flex items-center justify-center py-10">
+    <div className="relative flex items-center justify-center py-10 overflow-hidden">
       {/* Background Glow */}
 
       <motion.div
-        className="absolute h-[620px] w-[620px] rounded-full bg-indigo-500/20 blur-[140px]"
+        className="absolute h-[50vw] w-[50vw] md:h-[620px] md:w-[620px] rounded-full bg-indigo-500/20 blur-[140px]"
         animate={{
           scale: [1, 1.08, 1],
           opacity: [0.25, 0.5, 0.25],
@@ -24,7 +36,7 @@ export default function HeroVisual() {
       {/* Cyan Glow */}
 
       <motion.div
-        className="absolute h-[420px] w-[420px] rounded-full bg-cyan-500/20 blur-[120px]"
+        className="absolute h-[40vw] w-[40vw] md:h-[420px] md:w-[420px] rounded-full bg-cyan-500/20 blur-[120px]"
         animate={{
           scale: [1.1, 0.9, 1.1],
           opacity: [0.3, 0.5, 0.3],
@@ -45,14 +57,16 @@ export default function HeroVisual() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="
-          absolute
-          h-[520px]
-          w-[520px]
-          rounded-full
-          border
-          border-indigo-500/20
-        "
+className="
+            absolute
+            h-[45vw]
+            w-[45vw]
+            md:h-[520px]
+            md:w-[520px]
+            rounded-full
+            border
+            border-indigo-500/20
+          "
       />
 
       <motion.div
@@ -62,39 +76,39 @@ export default function HeroVisual() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="
-          absolute
-          h-[430px]
-          w-[430px]
-          rounded-full
-          border
-          border-cyan-400/20
-        "
+className="
+            absolute
+            h-[38vw]
+            w-[38vw]
+            md:h-[430px]
+            md:w-[430px]
+            rounded-full
+            border
+            border-cyan-400/20
+          "
       />
+{/* Floating Particles */}
 
-      {/* Floating Particles */}
-
-      {Array.from({ length: 20 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute h-2 w-2 rounded-full bg-cyan-300"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [-20, -80],
-            opacity: [0, 1, 0],
-            scale: [0.5, 1.2, 0.5],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        />
-      ))}
-
+{particles.map((particle, i) => (
+  <motion.div
+    key={i}
+    className="absolute h-2 w-2 rounded-full bg-cyan-300"
+    style={{
+      left: `${particle.left}%`,
+      top: `${particle.top}%`,
+    }}
+    animate={{
+      y: [-20, -80],
+      opacity: [0, 1, 0],
+      scale: [0.5, 1.2, 0.5],
+    }}
+    transition={{
+      duration: particle.duration,
+      repeat: Infinity,
+      delay: particle.delay,
+    }}
+  />
+))}
       {/* Main Card */}
 
       <motion.div
@@ -118,20 +132,23 @@ export default function HeroVisual() {
         style={{
           transformStyle: "preserve-3d",
         }}
-        className="
-          relative
-          h-[560px]
-          w-[340px]
-          overflow-hidden
-          rounded-[34px]
-          border
-          border-yellow-500/40
-          bg-gradient-to-b
-          from-[#2c2207]
-          via-[#16130c]
-          to-[#050505]
-          shadow-[0_0_70px_rgba(255,215,0,.22)]
-        "
+className="
+            relative
+            h-[70vh]
+            w-full
+            max-w-[340px]
+            md:h-[560px]
+            md:w-[340px]
+            overflow-hidden
+            rounded-[34px]
+            border
+            border-yellow-500/40
+            bg-gradient-to-b
+            from-[#2c2207]
+            via-[#16130c]
+            to-[#050505]
+            shadow-[0_0_70px_rgba(255,215,0,.22)]
+          "
       >
         {" "}
         {/* Metallic Shine */}

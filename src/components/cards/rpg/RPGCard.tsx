@@ -30,15 +30,15 @@ export function RPGCard({ data }: RPGCardProps) {
         duration: 0.35,
         ease: "easeOut",
       }}
-      className="
-        group
-        relative
-        mx-auto
-        w-full
-        max-w-[700px]
-        cursor-pointer
-        select-none
-      "
+className="
+          group
+          relative
+          mx-auto
+          w-full
+          max-w-full md:max-w-[700px]
+          cursor-pointer
+          select-none
+        "
       style={{
         transformStyle: "preserve-3d",
         perspective: 1400,

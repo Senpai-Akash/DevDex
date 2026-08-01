@@ -67,15 +67,15 @@ export default function Page() {
 </section>
 
     {/* FAQ */}
-    <section
-      id="faq"
-      className="mx-auto max-w-4xl px-6 py-24"
-    >
+<section
+  id="faq"
+  className="mx-auto max-w-full sm:max-w-4xl px-6 py-24 overflow-x-hidden"
+>
       <h2 className="text-center text-4xl font-black">
         Frequently Asked Questions
       </h2>
 
-      <div className="mt-12 space-y-6">
+      <div className="mt-12 space-y-6 w-full">
         {faqItems.map((item) => (
           <div
             key={item.question}

@@ -20,6 +20,7 @@ export default function HeroSearch() {
 
   return (
     <form
+    id="generate"
       onSubmit={handleSubmit}
       className="flex w-full gap-2"
       aria-label="Generate card"

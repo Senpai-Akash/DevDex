@@ -4,10 +4,10 @@ import ThemePreview from "@/components/sections/ThemePreview";
 import type { CardData } from "@/types/card";
 
 const demoCard: CardData = {
-  username: "Senpai-Akash",
-  displayName: "Akash",
-  avatar: "https://avatars.githubusercontent.com/u/583231?v=4",
-  role: "Full Stack Developer",
+  username: "torvalds",
+displayName: "Linus Torvalds",
+avatar: "https://avatars.githubusercontent.com/u/583231?v=4",
+role: "Creator of Linux",
   rating: 92,
   rarity: "Legendary",
   technology: "TypeScript",
@@ -36,13 +36,6 @@ const demoCard: CardData = {
   achievements: [],
 };
 
-const themeList = [
-  "Football Ultimate",
-  "Monster Trainer",
-  "Fantasy RPG",
-  "Cyber Profile",
-  "Legendary Trading Card",
-];
 
 const faqItems = [
   {
@@ -69,7 +62,9 @@ export default function Page() {
 
     <Hero />
 
-    <ThemePreview cardData={demoCard} />
+    <section id="themes">
+  <ThemePreview cardData={demoCard} />
+</section>
 
     {/* FAQ */}
     <section
@@ -97,6 +92,50 @@ export default function Page() {
         ))}
       </div>
     </section>
+    <footer className="border-t border-slate-800 py-10">
+  <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 text-center">
+
+    <h3 className="text-xl font-bold text-white">
+      DevDex
+    </h3>
+
+    <p className="text-sm text-slate-400">
+      Turn GitHub profiles into collectible developer cards.
+    </p>
+
+    <div className="flex gap-6 pt-3 text-sm text-slate-400">
+
+      <a
+        href="https://github.com/Senpai-Akash/DevDex"
+        target="_blank"
+        className="hover:text-white"
+      >
+        GitHub
+      </a>
+
+      <a
+        href="#themes"
+        className="hover:text-white"
+      >
+        Themes
+      </a>
+
+      <a
+        href="#faq"
+        className="hover:text-white"
+      >
+        FAQ
+      </a>
+
+    </div>
+
+    <p className="pt-5 text-xs text-slate-600">
+      © 2026 DevDex. Built with Next.js & TypeScript.
+    </p>
+
+  </div>
+</footer>
+
   </main>
 );
 }

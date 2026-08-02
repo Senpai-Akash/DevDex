@@ -62,14 +62,14 @@ export default function Page() {
 
     <Hero />
 
-    <section id="themes">
+    <section id="themes" className="scroll-mt-20">
   <ThemePreview cardData={demoCard} />
 </section>
 
     {/* FAQ */}
 <section
   id="faq"
-  className="mx-auto max-w-full sm:max-w-4xl px-6 py-24 overflow-x-hidden"
+  className="mx-auto max-w-full sm:max-w-4xl px-6 py-24 overflow-x-hidden scroll-mt-20"
 >
       <h2 className="text-center text-4xl font-black">
         Frequently Asked Questions

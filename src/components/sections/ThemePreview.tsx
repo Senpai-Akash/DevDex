@@ -97,15 +97,16 @@ className={`
   h-auto
   min-h-[145px]
   overflow-hidden
-  rounded-3xl
+  rounded-[32px]               /* smoother, premium corner radius */
   border
   transition-all
   duration-300
-  ${
-    active
-      ? 'border-amber-400 bg-gradient-to-b from-amber-400/20 via-yellow-500/10 to-slate-900 shadow-[0_0_60px_rgba(251,191,36,.45)] hover:shadow-[0_0_80px_rgba(251,191,36,.6)]'
-      : 'border-slate-700 bg-slate-900/70 hover:border-indigo-500 hover:shadow-[0_0_40px_rgba(100,149,237,.5)]'
+  shadow-lg                     /* deeper shadow for depth */
+  ${active
+    ? 'border-amber-400 bg-gradient-to-b from-amber-400/40 via-yellow-500/20 to-slate-900/95 shadow-[0_0_100px_rgba(251,191,36,.7)] hover:shadow-[0_0_120px_rgba(251,191,36,.9)]'
+    : 'border-slate-700 bg-slate-900/85 hover:border-indigo-500 hover:shadow-[0_0_80px_rgba(100,149,237,.7)]'
   }
+  hover:scale-105 hover:scale-[1.03]   /* subtle scaling on hover */
 `}
 >
 
@@ -178,15 +179,16 @@ className={`
             mt-20
             w-full
             max-w-full
-            rounded-[40px]
+            rounded-[48px]               /* larger radius for premium feel */
             border
-            border-slate-800
+            border-[3px]                 /* slightly thicker border */
+            border-slate-700/70           /* subtle, softer border */
             bg-gradient-to-b
-            from-slate-900/90
-            via-slate-950
-            to-black
-            p-4 sm:p-6 lg:p-10
-            shadow-[0_40px_120px_rgba(0,0,0,.55)]
+            from-[#181818]               /* deeper base */
+            via-[#0f0f0f]                /* richer middle */
+            to-[#000000]                 /* true black depth */
+            p-6 sm:p-8 lg:p-12            /* more breathing room */
+            shadow-[0_0_40px_rgba(255,215,0,.3),0_0_120px_rgba(255,215,0,.07)] /* premium gold glow */
           "
         >
 

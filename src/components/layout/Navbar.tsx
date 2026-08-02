@@ -29,12 +29,12 @@ export default function Navbar() {
         <ul className="hidden items-center gap-10 text-sm font-semibold md:flex">
 
           <li>
-<a
-  href="#generate"
-  className="mt-3 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center font-semibold text-white"
->
-  Generate Card
-</a>
+            <a
+              href="#generate"
+              className="mt-3 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center font-semibold text-white"
+            >
+              Generate Card
+            </a>
           </li>
 
           <li>

@@ -111,28 +111,34 @@ className="
 ))}
       {/* Main Card */}
 
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 50,
-          rotateX: 15,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-        }}
-        transition={{
-          duration: 0.8,
-        }}
-        animate={{
-          y: [0, -10, 0],
-          rotateY: [-5, 5, -5],
-        }}
-        style={{
-          transformStyle: "preserve-3d",
-        }}
-className="
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+            scale: 0.95,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          whileHover={{
+            y: -8,
+            rotateX: 2,
+            rotateY: 2,
+            scale: 1.06,
+            boxShadow: "0 0 45px rgba(255,215,0,0.9)",
+          }}
+          transition={{
+            duration: 0.45,
+            type: "spring",
+            stiffness: 220,
+            damping: 22,
+          }}
+          style={{
+            transformStyle: "preserve-3d",
+          }}
+          className="
             relative
             h-[70vh]
             w-full
@@ -140,16 +146,17 @@ className="
             md:h-[560px]
             md:w-[340px]
             overflow-hidden
-            rounded-[34px]
+            rounded-[48px]            /* smoother, larger corner radius */
             border
-            border-yellow-500/40
-            bg-gradient-to-b
-            from-[#2c2207]
-            via-[#16130c]
-            to-[#050505]
-            shadow-[0_0_70px_rgba(255,215,0,.22)]
+            border-[3px]              /* slightly thicker premium border */
+            border-yellow-500/40      /* richer border hue */
+            bg-gradient-to-br
+            from-[#2b2727]           /* deeper, richer dark base */
+            via-[#1e1b1b]            /* subtle middle tone */
+            to-[#080808]             /* near‑black depth */
+            shadow-[0_0_40px_rgba(255,215,0,.5),0_0_120px_rgba(255,215,0,.15)] /* stronger, smoother glow */
           "
-      >
+        >
         {" "}
         {/* Metallic Shine */}
         <motion.div

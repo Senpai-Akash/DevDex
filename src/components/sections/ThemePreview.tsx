@@ -91,23 +91,23 @@ export default function ThemePreview({
                   scale: 0.97,
                 }}
                 onClick={() => setSelectedTheme(theme)}
-                className={`
-                  relative
-                  w-full sm:w-40
-                  h-auto
-                  min-h-[145px]
-                  overflow-hidden
-                  rounded-3xl
-                  border
-                  transition-all
-                  duration-300
-                  ${
-                    active
-                      ? 'border-amber-400 bg-gradient-to-b from-amber-400/20 via-yellow-500/10 to-slate-900 shadow-[0_0_40px_rgba(251,191,36,.30)]'
-                      : 'border-slate-700 bg-slate-900/70 hover:border-indigo-500 hover:shadow-xl'
-                  }
-                `}
-              >
+className={`
+  relative
+  w-full sm:w-40
+  h-auto
+  min-h-[145px]
+  overflow-hidden
+  rounded-3xl
+  border
+  transition-all
+  duration-300
+  ${
+    active
+      ? 'border-amber-400 bg-gradient-to-b from-amber-400/20 via-yellow-500/10 to-slate-900 shadow-[0_0_60px_rgba(251,191,36,.45)] hover:shadow-[0_0_80px_rgba(251,191,36,.6)]'
+      : 'border-slate-700 bg-slate-900/70 hover:border-indigo-500 hover:shadow-[0_0_40px_rgba(100,149,237,.5)]'
+  }
+`}
+>
 
                 <div
                   className="

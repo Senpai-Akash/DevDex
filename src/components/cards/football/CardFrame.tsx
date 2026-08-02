@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 export function CardFrame({ children }: PropsWithChildren<unknown>) {
   return (
-    <div className="relative w-full overflow-visible">
+    <div className="group relative w-full overflow-visible">
 
       {/* Ambient Glow */}
 
@@ -65,19 +65,22 @@ export function CardFrame({ children }: PropsWithChildren<unknown>) {
 
         {/* Content */}
 
-        <div
-          className="
-          relative
-          z-10
-          m-3
-          overflow-hidden
-          rounded-[1.65rem]
-          border
-          border-white/10
-          bg-[#101010]
-          shadow-[0_30px_80px_rgba(0,0,0,.65)]
-          "
-        >
+<div
+  className="
+  relative
+  z-10
+  m-3
+  overflow-hidden
+  rounded-[1.65rem]
+  border
+  border-white/10
+  bg-[#101010]
+  shadow-[0_40px_100px_rgba(0,0,0,.75)]
+  transition-shadow
+  duration-300
+  group-hover:shadow-[0_0_150px_rgba(255,215,0,.6)]
+  "
+>
           {children}
 
           {/* Top Shine */}

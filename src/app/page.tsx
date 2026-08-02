@@ -6,7 +6,7 @@ import type { CardData } from "@/types/card";
 const demoCard: CardData = {
   username: "torvalds",
 displayName: "Linus Torvalds",
-avatar: "https://avatars.githubusercontent.com/u/583231?v=4",
+avatar: "https://avatars.githubusercontent.com/u/1024025?v=4",
 role: "Creator of Linux",
   rating: 92,
   rarity: "Legendary",

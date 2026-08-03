@@ -38,27 +38,29 @@ export default function HeroContent() {
 
       <div className="mt-10 flex flex-wrap gap-4">
 
-        <button
-          className="
-          rounded-full
-          bg-gradient-to-r
-          from-indigo-600
-          via-violet-600
-          to-cyan-500
-          px-8
-          py-4
-          text-base
-          font-bold
-          text-white
-          shadow-[0_0_40px_rgba(99,102,241,.45)]
-          transition-all
-          duration-300
-          hover:scale-105
-          hover:shadow-[0_0_60px_rgba(99,102,241,.75)]
-        "
-        >
-          Generate My Card →
-        </button>
+       <a
+         href="#generate"
+         className="
+         inline-block
+         rounded-full
+         bg-gradient-to-r
+         from-indigo-600
+         via-violet-600
+         to-cyan-500
+         px-8
+         py-4
+         text-base
+         font-bold
+         text-white
+         shadow-[0_0_40px_rgba(99,102,241,.45)]
+         transition-all
+         duration-300
+         hover:scale-105
+         hover:shadow-[0_0_60px_rgba(99,102,241,.75)]
+       "
+       >
+         Generate My Card →
+       </a>
 
       </div>
 

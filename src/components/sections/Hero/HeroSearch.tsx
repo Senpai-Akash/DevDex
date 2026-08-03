@@ -1,26 +1,27 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 export default function HeroSearch() {
   const [username, setUsername] = useState("");
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmedUsername = username.trim();
 
-    if (!trimmedUsername) {
-      return;
-    }
+    if (!trimmedUsername) return;
 
-    router.push(`/profile/${encodeURIComponent(trimmedUsername)}`);
+    startTransition(() => {
+      router.push(`/profile/${encodeURIComponent(trimmedUsername)}`);
+    });
   }
 
   return (
     <form
-    id="generate"
+      id="generate"
       onSubmit={handleSubmit}
       className="flex w-full gap-2"
       aria-label="Generate card"
@@ -31,6 +32,7 @@ export default function HeroSearch() {
       <input
         id="github-username"
         name="github-username"
+        required
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Enter GitHub username (e.g. LinusTorvalds)"
@@ -38,9 +40,10 @@ export default function HeroSearch() {
       />
       <button
         type="submit"
-        className="inline-flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-indigo-500 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-indigo-400 shadow-lg shadow-indigo-500/40 transition"
+        disabled={isPending}
+        className="inline-flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-indigo-500 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-indigo-400 shadow-lg shadow-indigo-500/40 transition disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        Generate Card
+        {isPending ? "Generating..." : "Generate Card"}
       </button>
     </form>
   );

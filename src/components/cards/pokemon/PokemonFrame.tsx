@@ -14,20 +14,10 @@ export function PokemonFrame({
   isRare,
   typeColor,
 }: PokemonFrameProps) {
-  return (
-    <motion.div
-      whileHover={{
-        rotateX: 3,
-        rotateY: -3,
-        scale: 1.02,
-      }}
-      transition={{
-        type: 'spring',
-        stiffness: 170,
-        damping: 20,
-      }}
-      className="relative mx-auto w-[395px] shadow-[0_30px_80px_rgba(0,0,0,.7)] transition-shadow duration-300 hover:shadow-[0_0_120px_rgba(255,215,0,.5)]"
-    >
+    return (
+      <motion.div
+        className="relative mx-auto w-[395px] shadow-[0_30px_80px_rgba(0,0,0,.7)] transition-shadow duration-300 hover:shadow-[0_0_120px_rgba(255,215,0,.5)]"
+      >
       {/* Soft Shadow */}
       <div className="absolute inset-0 translate-y-4 rounded-[22px] bg-black/40 blur-2xl" />
 

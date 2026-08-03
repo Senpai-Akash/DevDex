@@ -15,11 +15,9 @@ interface CyberCardProps {
   data: CardData;
 }
 
-export function CyberCard({ data }: CyberCardProps) {
-  const rarity = data.rarity.toLowerCase();
-
-const rarityTheme = (() => {
-  if (rarity.includes('myth')) {
+const getRarityTheme = (rarity: string) => {
+  const r = rarity.toLowerCase();
+  if (r.includes('myth')) {
     return {
       aura: 'from-red-500/20 via-orange-500/10 to-transparent',
       border: 'border-red-400/60',
@@ -27,8 +25,7 @@ const rarityTheme = (() => {
       shadow: '0 0 40px rgba(239,68,68,.35)',
     };
   }
-
-  if (rarity.includes('legend')) {
+  if (r.includes('legend')) {
     return {
       aura: 'from-yellow-400/20 via-cyan-500/10 to-transparent',
       border: 'border-yellow-400/60',
@@ -36,8 +33,7 @@ const rarityTheme = (() => {
       shadow: '0 0 40px rgba(250,204,21,.35)',
     };
   }
-
-  if (rarity.includes('epic')) {
+  if (r.includes('epic')) {
     return {
       aura: 'from-fuchsia-500/20 via-purple-500/10 to-transparent',
       border: 'border-fuchsia-400/60',
@@ -45,8 +41,7 @@ const rarityTheme = (() => {
       shadow: '0 0 35px rgba(217,70,239,.30)',
     };
   }
-
-  if (rarity.includes('rare')) {
+  if (r.includes('rare')) {
     return {
       aura: 'from-cyan-500/20 via-blue-500/10 to-transparent',
       border: 'border-cyan-400/60',
@@ -54,16 +49,20 @@ const rarityTheme = (() => {
       shadow: '0 0 35px rgba(34,211,238,.28)',
     };
   }
-
   return {
     aura: 'from-emerald-500/15 via-cyan-500/5 to-transparent',
     border: 'border-emerald-400/45',
     inner: 'border-emerald-300/20',
     shadow: '0 0 28px rgba(16,185,129,.22)',
   };
-})();
+};
+
+export function CyberCard({ data }: CyberCardProps) {
+  const rarityTheme = getRarityTheme(data.rarity);
+
   return (
     <motion.article
+      aria-label={`Cyber profile card for ${data.displayName}`}
       initial={{ opacity: 0, scale: 0.96, rotateY: -1 }}
       animate={{ opacity: 1, scale: 1, rotateY: 0 }}
       whileHover={{ 
@@ -77,11 +76,11 @@ const rarityTheme = (() => {
       style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
       {/* Outer Neon Cyan Ambient Aura */}
-      <div className="absolute -inset-8 rounded-[2.5rem] bg-gradient-to-b ${rarityTheme.aura} blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-70" />
+      <div className={`absolute -inset-8 rounded-[2.5rem] bg-gradient-to-b ${rarityTheme.aura} blur-3xl pointer-events-none z-0 transition-opacity duration-500 group-hover:opacity-100 opacity-70`} />
       
       {/* Sci-Fi HUD Panel Wrapper */}
       <motion.div
-    className={`relative z-10 p-[8px] rounded-[2rem]
+    className={`relative z-10 p-[8px] rounded-[2rem] animate-cyber-flicker
     bg-gradient-to-b
     from-[#0f172a]
     via-[#090d16]
@@ -93,34 +92,6 @@ const rarityTheme = (() => {
             ${rarityTheme.shadow},
             inset 0 0 18px rgba(255,255,255,.03)
         `,
-    }}
-    animate={{
-        opacity: [
-            1,
-            1,
-            1,
-            0.97,
-            1,
-            1,
-            0.985,
-            1,
-        ],
-        filter: [
-            'brightness(1)',
-            'brightness(1)',
-            'brightness(1)',
-            'brightness(.95)',
-            'brightness(1.04)',
-            'brightness(1)',
-            'brightness(.98)',
-            'brightness(1)',
-        ],
-    }}
-    transition={{
-        duration: 14,
-        repeat: Infinity,
-        ease: 'linear',
-        times: [0, 0.55, 0.75, 0.76, 0.77, 0.90, 0.91, 1],
     }}
 >
         {/* Inner Tech Border Lines */}

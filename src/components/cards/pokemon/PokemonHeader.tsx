@@ -1,5 +1,3 @@
-'use client';
-
 import { CardData } from '@/types/card';
 import { getPokemonType, TYPE_META } from './pokemonTypeUtils';
 

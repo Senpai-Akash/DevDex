@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { RarityBadge } from "./RarityBadge";
 
 interface FootballHeaderProps {
@@ -13,11 +14,14 @@ export function FootballHeader({
     <header className="relative flex items-start justify-between">
 
       {/* LEFT SIDE */}
-      <div className="flex flex-col">
+       <div className="flex flex-col">
 
-        <h1 className="text-[4.6rem] leading-[0.8] font-black tracking-[-0.06em] text-[#FFD15A] drop-shadow-[0_0_20px_rgba(255,209,90,0.55)]">
-          {rating}
-        </h1>
+         <div className="relative">
+           <span className="sr-only">Overall Rating: </span>
+           <span className="text-[4.6rem] leading-[0.8] font-black tracking-[-0.06em] text-[#FFD15A] drop-shadow-[0_0_20px_rgba(255,209,90,0.55)]">
+             {rating}
+           </span>
+         </div>
 
         <span className="-mt-1 text-[13px] font-black uppercase tracking-[0.45em] text-white/90">
           DEV
@@ -27,21 +31,27 @@ export function FootballHeader({
 
         <div className="mt-4 flex gap-2">
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
-            <img
-              src="/icons/github.svg"
-              alt="GitHub"
-              className="h-5 w-5"
-            />
-          </div>
+           <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
+             <Image
+               src="/icons/github.svg"
+               alt="GitHub"
+               width={20}
+               height={20}
+               priority
+               className="h-5 w-5"
+             />
+           </div>
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
-            <img
-              src="/icons/typescript.svg"
-              alt="TypeScript"
-              className="h-5 w-5"
-            />
-          </div>
+           <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
+             <Image
+               src="/icons/typescript.svg"
+               alt="TypeScript"
+               width={20}
+               height={20}
+               priority
+               className="h-5 w-5"
+             />
+           </div>
 
         </div>
 
@@ -65,7 +75,7 @@ export function FootballHeader({
 
       {/* Decorative Divider */}
 
-      <div className="absolute left-0 right-0 bottom-[-14px] h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
+      <div aria-hidden="true" className="absolute left-0 right-0 bottom-[-14px] h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
 
     </header>
   );

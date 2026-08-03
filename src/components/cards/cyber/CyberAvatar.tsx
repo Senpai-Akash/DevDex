@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface CyberAvatarProps {
   avatar: string;
@@ -10,9 +11,8 @@ interface CyberAvatarProps {
 
 export function CyberAvatar({ avatar, displayName }: CyberAvatarProps) {
   return (
-    <motion.section
-      whileHover={{ y: -2, scale: 1.01 }}
-      transition={{ type: 'spring', stiffness: 240, damping: 20 }}
+    <section
+      aria-label={`Avatar of ${displayName}`}
       className="mx-auto mb-2 flex w-full justify-center items-center select-none"
     >
       <div className="relative flex items-center justify-center p-1">
@@ -22,19 +22,11 @@ export function CyberAvatar({ avatar, displayName }: CyberAvatarProps) {
         {/* Outer Rotating HUD Bracket Frame */}
         <div className="relative h-[200px] w-[200px] sm:h-[205px] sm:w-[205px] flex items-center justify-center">
           
-          {/* Inner Rotating Ring 1 (Clockwise) */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-0 rounded-full border border-dashed border-cyan-500/30 p-1 pointer-events-none"
-          />
-
-          {/* Inner Rotating Ring 2 (Counter-Clockwise) */}
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-[6px] rounded-full border border-cyan-500/40 border-r-transparent border-l-transparent pointer-events-none"
-          />
+            {/* Inner Rotating Ring 1 (Clockwise) */}
+            <div className="absolute inset-0 rounded-full border border-dashed border-cyan-500/30 p-1 pointer-events-none animate-cyber-rotate-cw will-change-transform" />
+  
+            {/* Inner Rotating Ring 2 (Counter-Clockwise) */}
+            <div className="absolute inset-[6px] rounded-full border border-cyan-500/40 border-r-transparent border-l-transparent pointer-events-none animate-cyber-rotate-ccw will-change-transform" />
 
           {/* Hexagonal Outer HUD Bracket */}
           <svg className="absolute inset-[-6px] w-[calc(100%+12px)] h-[calc(100%+12px)] text-cyan-400 pointer-events-none" viewBox="0 0 100 100">
@@ -48,13 +40,10 @@ export function CyberAvatar({ avatar, displayName }: CyberAvatarProps) {
             <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(34, 211, 238, 0.08)" strokeWidth="1" />
           </svg>
 
-          {/* Hologram Scanner Bar */}
-          <div 
-            className="absolute left-[8%] right-[8%] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_8px_rgba(34,211,238,0.8)] z-20 pointer-events-none"
-            style={{
-              animation: 'cyber-scanline 3.5s ease-in-out infinite',
-            }}
-          />
+            {/* Hologram Scanner Bar */}
+            <div 
+              className="absolute left-[8%] right-[8%] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_8px_rgba(34,211,238,0.8)] z-20 pointer-events-none animate-cyber-scanline will-change-transform"
+            />
 
           {/* Heavy Octagonal Border Frame for Avatar */}
           <div 
@@ -69,10 +58,13 @@ export function CyberAvatar({ avatar, displayName }: CyberAvatarProps) {
             {/* Cyan Glare Vignette */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_50%,_rgba(6,12,24,0.85)_100%)] z-10 pointer-events-none" />
 
-            <img
+            <Image
               src={avatar}
               alt={displayName}
-              className="relative h-full w-full object-cover filter saturate-[80%] brightness-[95%] hue-rotate-[355deg] transition-all duration-300 hover:scale-105 hover:saturate-[105%]"
+              fill
+              priority
+              className="relative object-cover filter saturate-[80%] brightness-[95%] hue-rotate-[355deg] transition-all duration-300 hover:scale-105 hover:saturate-[105%]"
+              sizes="(max-width: 768px) 170px, 175px"
             />
           </div>
 
@@ -85,6 +77,6 @@ export function CyberAvatar({ avatar, displayName }: CyberAvatarProps) {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

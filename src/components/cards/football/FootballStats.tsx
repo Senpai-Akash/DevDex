@@ -27,22 +27,22 @@ function StatColumn({
   stats: CardStats;
 }) {
   return (
-    <div className="space-y-3">
+    <dl className="space-y-3">
       {items.map((item) => (
         <div
           key={item.key}
           className="flex items-center justify-between"
         >
-          <span className="w-12 text-right text-[1.65rem] font-black leading-none text-white">
+          <dd className="w-12 text-right text-[1.6rem] font-black leading-none text-white">
             {Math.round(stats[item.key])}
-          </span>
+          </dd>
 
-          <span className="ml-4 text-[0.82rem] font-black tracking-[0.18em] text-amber-300">
+          <dt className="ml-4 text-[0.82rem] font-black tracking-[0.18em] text-amber-300">
             {item.label}
-          </span>
+          </dt>
         </div>
       ))}
-    </div>
+    </dl>
   );
 }
 
@@ -50,7 +50,10 @@ export function FootballStats({
   stats,
 }: FootballStatsProps) {
   return (
-    <section className="mt-5 rounded-2xl border border-amber-400/20 bg-black/20 px-8 py-6 backdrop-blur-sm">
+    <section 
+      aria-label="Developer Stats" 
+      className="mt-5 rounded-2xl border border-amber-400/20 bg-black/20 px-8 py-6 backdrop-blur-sm"
+    >
 
       <div className="grid grid-cols-2 gap-10">
 

@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface FootballAvatarProps {
   avatar: string;
@@ -12,17 +10,9 @@ export function FootballAvatar({
   displayName,
 }: FootballAvatarProps) {
   return (
-    <motion.section
-      whileHover={{
-        scale: 1.03,
-        y: -6,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 250,
-        damping: 18,
-      }}
-      className="relative -mt-2 mb-4 flex justify-center"
+    <section
+      aria-label={`${displayName}'s avatar`}
+      className="relative -mt-2 mb-4 flex justify-center transition-transform duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1.5 cursor-default"
     >
       <div className="relative h-[340px] w-[340px]">
 
@@ -67,30 +57,33 @@ export function FootballAvatar({
 
         {/* Portrait */}
 
-        <div
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            h-[305px]
-            w-[305px]
-            -translate-x-1/2
-            -translate-y-[47%]
-            overflow-hidden
-            rounded-full
-          "
-        >
-          <img
-            src={avatar}
-            alt={displayName}
-            className="
-              h-full
-              w-full
-              object-cover
-              object-top
-              scale-[1.18]
-            "
-          />
+         <div
+           className="
+             absolute
+             left-1/2
+             top-1/2
+             h-[305px]
+             w-[305px]
+             -translate-x-1/2
+             -translate-y-[47%]
+             overflow-hidden
+             rounded-full
+           "
+         >
+           <Image
+             src={avatar}
+             alt={displayName}
+             width={305}
+             height={305}
+             priority
+             className="
+               h-full
+               w-full
+               object-cover
+               object-top
+               scale-[1.18]
+             "
+           />
 
           {/* Top Light */}
 
@@ -140,6 +133,6 @@ export function FootballAvatar({
 
         <div className="absolute right-8 top-1/2 h-1.5 w-1.5 rounded-full bg-white/70" />
       </div>
-    </motion.section>
+    </section>
   );
 }

@@ -1,7 +1,15 @@
 import Navbar from "../components/layout/Navbar";
 import Hero from "../components/sections/Hero/Hero";
+import Footer from "@/components/layout/Footer";
 import ThemePreview from "@/components/sections/ThemePreview";
+import Link from "next/link";
+import type { Metadata } from "next";
 import type { CardData } from "@/types/card";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Generate your professional developer card from your GitHub profile.",
+};
 
 const demoCard: CardData = {
   username: "torvalds",
@@ -57,85 +65,26 @@ const faqItems = [
 
 export default function Page() {
   return (
-  <main className="bg-slate-950 text-slate-50">
+  <>
     <Navbar />
 
-    <Hero />
+    <main className="bg-slate-950 text-slate-50">
+      <Hero />
 
-    <section id="themes" className="scroll-mt-20">
-  <ThemePreview cardData={demoCard} />
-</section>
+      <section id="themes" className="scroll-mt-20">
+        <ThemePreview cardData={demoCard} />
+      </section>
 
-    {/* FAQ */}
-<section
-  id="faq"
-  className="mx-auto max-w-full sm:max-w-4xl px-6 py-24 overflow-x-hidden scroll-mt-20"
->
-      <h2 className="text-center text-4xl font-black">
-        Frequently Asked Questions
-      </h2>
-
-      <div className="mt-12 space-y-6 w-full">
-        {faqItems.map((item) => (
-          <div
-            key={item.question}
-            className="rounded-2xl border border-slate-800 bg-slate-900 p-6"
-          >
-            <h3 className="text-lg font-semibold">
-              {item.question}
-            </h3>
-
-            <p className="mt-3 text-slate-400">
-              {item.answer}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-    <footer className="border-t border-slate-800 py-10">
-  <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 text-center">
-
-    <h3 className="text-xl font-bold text-white">
-      DevDex
-    </h3>
-
-    <p className="text-sm text-slate-400">
-      Turn GitHub profiles into collectible developer cards.
-    </p>
-
-    <div className="flex gap-6 pt-3 text-sm text-slate-400">
-
-      <a
-        href="https://github.com/Senpai-Akash/DevDex"
-        target="_blank"
-        className="hover:text-white"
+      <section
+        id="faq"
+        className="mx-auto max-w-full sm:max-w-4xl px-6 py-24 overflow-x-hidden scroll-mt-20"
+        aria-labelledby="faq-heading"
       >
-        GitHub
-      </a>
+        {/* FAQ */}
+      </section>
+    </main>
 
-      <a
-        href="#themes"
-        className="hover:text-white"
-      >
-        Themes
-      </a>
-
-      <a
-        href="#faq"
-        className="hover:text-white"
-      >
-        FAQ
-      </a>
-
-    </div>
-
-    <p className="pt-5 text-xs text-slate-600">
-      © 2026 DevDex. Built with Next.js & TypeScript.
-    </p>
-
-  </div>
-</footer>
-
-  </main>
+    <Footer />
+  </>
 );
 }

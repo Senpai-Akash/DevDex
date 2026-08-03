@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { CardData } from '../../../types/card';
 
@@ -7,15 +5,34 @@ interface RPGHeaderProps {
   data: CardData;
 }
 
+const getRankColor = (rank: string) => {
+  if (rank === 'SSS') return 'from-yellow-100 via-yellow-300 to-amber-600';
+  if (rank === 'SS') return 'from-amber-100 via-yellow-400 to-orange-600';
+  if (rank === 'S') return 'from-red-200 via-red-500 to-red-700';
+  if (rank === 'A') return 'from-emerald-200 via-emerald-500 to-green-700';
+  if (rank === 'B') return 'from-sky-200 via-blue-500 to-blue-700';
+  return 'from-stone-200 via-stone-400 to-stone-600';
+};
+
+const getFantasyTitle = (developerClass: string) => {
+  const role = developerClass.toLowerCase();
+  if (role.includes('backend')) return 'Rune Architect';
+  if (role.includes('frontend')) return 'Crystal Weaver';
+  if (role.includes('full')) return 'Grand Spellsmith';
+  if (role.includes('mobile')) return 'Storm Rider';
+  if (role.includes('ai')) return 'Void Scholar';
+  if (role.includes('ml')) return 'Chronomancer';
+  if (role.includes('security')) return 'Shadow Sentinel';
+  return 'Legendary Adventurer';
+};
+
 export function RPGHeader({ data }: RPGHeaderProps) {
   const name = data.displayName;
   const developerClass = data.developerClass ?? data.role;
 
   let rank = data.rank;
-
   if (!rank) {
     const rating = data.rating;
-
     if (rating >= 98) rank = 'SSS';
     else if (rating >= 94) rank = 'SS';
     else if (rating >= 88) rank = 'S';
@@ -24,59 +41,7 @@ export function RPGHeader({ data }: RPGHeaderProps) {
     else rank = 'C';
   }
 
-  const level = Math.min(
-    99,
-    Math.max(
-      1,
-      Math.round(data.rating)
-    )
-  );
-
-  const getRankColor = (rank: string) => {
-    if (rank === 'SSS')
-      return 'from-yellow-100 via-yellow-300 to-amber-600';
-
-    if (rank === 'SS')
-      return 'from-amber-100 via-yellow-400 to-orange-600';
-
-    if (rank === 'S')
-      return 'from-red-200 via-red-500 to-red-700';
-
-    if (rank === 'A')
-      return 'from-emerald-200 via-emerald-500 to-green-700';
-
-    if (rank === 'B')
-      return 'from-sky-200 via-blue-500 to-blue-700';
-
-    return 'from-stone-200 via-stone-400 to-stone-600';
-  };
-
-  const getFantasyTitle = () => {
-    const role = developerClass.toLowerCase();
-
-    if (role.includes('backend'))
-      return 'Rune Architect';
-
-    if (role.includes('frontend'))
-      return 'Crystal Weaver';
-
-    if (role.includes('full'))
-      return 'Grand Spellsmith';
-
-    if (role.includes('mobile'))
-      return 'Storm Rider';
-
-    if (role.includes('ai'))
-      return 'Void Scholar';
-
-    if (role.includes('ml'))
-      return 'Chronomancer';
-
-    if (role.includes('security'))
-      return 'Shadow Sentinel';
-
-    return 'Legendary Adventurer';
-  };
+  const level = Math.min(99, Math.max(1, Math.round(data.rating)));
 
   return (
     <header className="relative mb-5">
@@ -103,17 +68,9 @@ export function RPGHeader({ data }: RPGHeaderProps) {
 
         <div className="min-w-0 pr-5">
 
-          <p
-            className="
-            text-[11px]
-            uppercase
-            tracking-[0.45em]
-            text-amber-400/80
-            font-bold
-          "
-          >
-            ✠ {getFantasyTitle()}
-          </p>
+            <p className="text-[11px] uppercase tracking-[0.45em] text-amber-400/80 font-bold">
+              ✠ {getFantasyTitle(developerClass)}
+            </p>
 
           <h1
             className="
@@ -166,16 +123,11 @@ export function RPGHeader({ data }: RPGHeaderProps) {
           "
           />
 
-          <svg
-            viewBox="0 0 100 100"
-            className="
-            absolute
-            inset-0
-            h-full
-            w-full
-            text-amber-500
-          "
-          >
+           <svg
+             viewBox="0 0 100 100"
+             className="absolute inset-0 h-full w-full text-amber-500"
+             aria-labelledby="rank-badge"
+           >
             <path
               d="M50 6
                  L84 20
@@ -199,18 +151,19 @@ export function RPGHeader({ data }: RPGHeaderProps) {
               stroke="#f59e0b"
               strokeWidth="2"
             />
-                        <text
-              x="50"
-              y="56"
-              textAnchor="middle"
-              className={`fill-current font-black ${getRankColor(rank)}`}
-              style={{
-                fontSize: '28px',
-                fontWeight: 900,
-              }}
-            >
-              {rank}
-            </text>
+                         <text
+               id="rank-badge"
+               x="50"
+               y="56"
+               textAnchor="middle"
+               className={`fill-current font-black ${getRankColor(rank)}`}
+               style={{
+                 fontSize: '28px',
+                 fontWeight: 900,
+               }}
+             >
+               {rank}
+             </text>
           </svg>
 
           {/* LEVEL */}

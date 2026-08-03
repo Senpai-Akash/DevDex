@@ -1,6 +1,7 @@
 import { getOrganizations, getRepositories, getUser, GitHubApiError, GitHubNotFoundError } from "@/lib/github/api";
 import { mapDeveloperToCardData, mapGithubToDeveloper } from "@/lib/github/mapper";
 import { ProfileCardDisplay } from "@/components/profile/ProfileCardDisplay";
+import type { Metadata } from "next";
 import type { Developer } from "@/types/developer";
 
 type ProfilePageProps = {
@@ -8,6 +9,36 @@ type ProfilePageProps = {
     username: string;
   }>;
 };
+
+export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
+  const { username } = await params;
+
+  try {
+    const user = await getUser(username);
+    const name = user.name || username;
+    const avatar = user.avatar_url;
+
+    return {
+      title: `${name}'s Developer Card`,
+      description: `Check out ${name}'s collectible developer card on DevDex. Visualizing GitHub stats as legendary cards.`,
+      openGraph: {
+        title: `${name}'s Developer Card | DevDex`,
+        description: `Visualizing ${name}'s GitHub profile as a collectible card.`,
+        images: avatar ? [{ url: avatar }] : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${name}'s Developer Card | DevDex`,
+        description: `Visualizing ${name}'s GitHub profile as a collectible card.`,
+        images: avatar ? [avatar] : [],
+      },
+    };
+  } catch (error) {
+    return {
+      title: `Profile not found | DevDex`,
+    };
+  }
+}
 
 function renderDeveloperProfile(developer: Developer) {
   const cardData = mapDeveloperToCardData(developer);

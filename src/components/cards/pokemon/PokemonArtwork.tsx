@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { getPokemonType, TYPE_META } from './pokemonTypeUtils';
 
 interface PokemonArtworkProps {
@@ -75,25 +76,24 @@ export function PokemonArtwork({
 
         {/* Artwork */}
 
-        <motion.img
-          src={avatar}
-          alt={name}
+        <motion.div
           whileHover={{
             scale: 1.06,
           }}
           transition={{
-            duration: .35,
+            duration: 0.35,
           }}
-          className="
-            absolute
-            inset-0
-            h-full
-            w-full
-            object-cover
-            object-top
-            scale-[1.15]
-          "
-        />
+          className="absolute inset-0 h-full w-full scale-[1.15]"
+        >
+          <Image
+            src={avatar}
+            alt={`${name} Pokemon Artwork`}
+            fill
+            priority
+            className="object-cover object-top"
+            sizes="400px"
+          />
+        </motion.div>
 
         {/* Top Gloss */}
 

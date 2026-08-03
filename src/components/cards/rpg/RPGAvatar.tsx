@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 interface RPGAvatarProps {
@@ -9,34 +10,20 @@ interface RPGAvatarProps {
   rarity: string;
 }
 
+const getGlowColor = (r: string) => {
+  const low = r.toLowerCase();
+  if (low.includes('legend') || low.includes('myth')) return 'rgba(245,158,11,.55)';
+  if (low.includes('epic')) return 'rgba(147,51,234,.45)';
+  if (low.includes('rare')) return 'rgba(59,130,246,.40)';
+  if (low.includes('uncommon')) return 'rgba(16,185,129,.35)';
+  return 'rgba(220,38,38,.28)';
+};
+
 export function RPGAvatar({
   avatar,
   displayName,
   rarity,
 }: RPGAvatarProps) {
-
-  const getGlowColor = (r: string) => {
-    const low = r.toLowerCase();
-
-    if (low.includes('legend') || low.includes('myth')) {
-      return 'rgba(245,158,11,.55)';
-    }
-
-    if (low.includes('epic')) {
-      return 'rgba(147,51,234,.45)';
-    }
-
-    if (low.includes('rare')) {
-      return 'rgba(59,130,246,.40)';
-    }
-
-    if (low.includes('uncommon')) {
-      return 'rgba(16,185,129,.35)';
-    }
-
-    return 'rgba(220,38,38,.28)';
-  };
-
   const glowColor = getGlowColor(rarity);
 
   return (
@@ -146,28 +133,26 @@ export function RPGAvatar({
             "
             >
 
-              {/* Avatar */}
-
-              <motion.img
-                src={avatar}
-                alt={displayName}
-                whileHover={{
-                  scale: 1.05,
-                  rotate: -1,
-                }}
-                transition={{
-                  duration: .35,
-                }}
-                className="
-                h-full
-                w-full
-                object-cover
-                object-top
-                brightness-105
-                contrast-110
-                saturate-110
-                "
-              />
+               {/* Avatar */}
+               <motion.div
+                 whileHover={{
+                   scale: 1.05,
+                   rotate: -1,
+                 }}
+                 transition={{
+                   duration: 0.35,
+                 }}
+                 className="relative h-full w-full"
+               >
+                 <Image
+                   src={avatar}
+                   alt={displayName}
+                   fill
+                   priority
+                   className="object-cover object-top brightness-105 contrast-110 saturate-110"
+                   sizes="(max-width: 768px) 270px, 270px"
+                 />
+               </motion.div>
 
               {/* Vignette */}
 
@@ -267,43 +252,24 @@ export function RPGAvatar({
               ⚜
             </div>
 
-            {/* Side runes */}
+             {/* Side runes */}
+             <div
+               className="absolute left-[7px] top-1/2 flex -translate-y-1/2 flex-col gap-2 text-[9px] text-amber-400/70"
+               aria-hidden="true"
+             >
+               <span>ᚠ</span>
+               <span>ᚢ</span>
+               <span>ᚦ</span>
+             </div>
 
-            <div
-              className="
-              absolute
-              left-[7px]
-              top-1/2
-              flex
-              -translate-y-1/2
-              flex-col
-              gap-2
-              text-[9px]
-              text-amber-400/70
-              "
-            >
-              <span>ᚠ</span>
-              <span>ᚢ</span>
-              <span>ᚦ</span>
-            </div>
-
-            <div
-              className="
-              absolute
-              right-[7px]
-              top-1/2
-              flex
-              -translate-y-1/2
-              flex-col
-              gap-2
-              text-[9px]
-              text-amber-400/70
-              "
-            >
-              <span>ᚨ</span>
-              <span>ᚱ</span>
-              <span>ᚲ</span>
-            </div>
+             <div
+               className="absolute right-[7px] top-1/2 flex -translate-y-1/2 flex-col gap-2 text-[9px] text-amber-400/70"
+               aria-hidden="true"
+             >
+               <span>ᚨ</span>
+               <span>ᚱ</span>
+               <span>ᚲ</span>
+             </div>
 
           </div>
 

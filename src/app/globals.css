@@ -39,3 +39,41 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+@keyframes cyber-flicker {
+  0%, 55%, 75%, 76%, 77%, 90%, 91%, 100% { opacity: 1; filter: brightness(1); }
+  76% { opacity: 0.97; filter: brightness(0.95); }
+  77% { opacity: 1; filter: brightness(1.04); }
+  91% { opacity: 0.985; filter: brightness(0.98); }
+}
+
+@keyframes cyber-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes cyber-rotate-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cyber-rotate-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-cyber-flicker {
+  animation: cyber-flicker 14s linear infinite;
+}
+
+.animate-cyber-scanline {
+  animation: cyber-scanline 3.5s ease-in-out infinite;
+}
+
+.animate-cyber-rotate-cw {
+  animation: cyber-rotate-cw 24s linear infinite;
+}
+
+.animate-cyber-rotate-ccw {
+  animation: cyber-rotate-ccw 16s linear infinite;
+}

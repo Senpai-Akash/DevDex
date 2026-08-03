@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { CardData } from '../../../types/card';
 
@@ -7,33 +5,39 @@ interface CyberHeaderProps {
   data: CardData;
 }
 
+const getThreatLevel = (rating: number) => {
+  if (rating >= 95) {
+    return {
+      clearance: 'OVERSEER_ACCESS',
+      threat: 'THREAT_MAXIMUM',
+      color: 'text-magenta-400 border-magenta-500/30 bg-magenta-950/20',
+    };
+  }
+  if (rating >= 85) {
+    return {
+      clearance: 'SECURE_ACCESS',
+      threat: 'THREAT_CRITICAL',
+      color: 'text-purple-400 border-purple-500/30 bg-purple-950/20',
+    };
+  }
+  if (rating >= 75) {
+    return {
+      clearance: 'LEVEL_03',
+      threat: 'THREAT_ELEVATED',
+      color: 'text-cyan-400 border-cyan-500/30 bg-cyan-950/20',
+    };
+  }
+  return {
+    clearance: 'LEVEL_02',
+    threat: 'THREAT_STABLE',
+    color: 'text-blue-400 border-blue-500/30 bg-blue-950/20',
+  };
+};
+
 export function CyberHeader({ data }: CyberHeaderProps) {
   const name = data.displayName.toUpperCase();
   const role = (data.developerClass ?? data.role).toUpperCase();
-
-  // Determine a threat level / security clearance based on rating
-  let clearance = 'UNRESTRICTED';
-  let threat = 'LEVEL_LOW';
-  let threatColor = 'text-green-400 border-green-500/30 bg-green-950/20';
-  
-  const rating = data.rating;
-  if (rating >= 95) {
-    clearance = 'OVERSEER_ACCESS';
-    threat = 'THREAT_MAXIMUM';
-    threatColor = 'text-magenta-400 border-magenta-500/30 bg-magenta-950/20';
-  } else if (rating >= 85) {
-    clearance = 'SECURE_ACCESS';
-    threat = 'THREAT_CRITICAL';
-    threatColor = 'text-purple-400 border-purple-500/30 bg-purple-950/20';
-  } else if (rating >= 75) {
-    clearance = 'LEVEL_03';
-    threat = 'THREAT_ELEVATED';
-    threatColor = 'text-cyan-400 border-cyan-500/30 bg-cyan-950/20';
-  } else {
-    clearance = 'LEVEL_02';
-    threat = 'THREAT_STABLE';
-    threatColor = 'text-blue-400 border-blue-500/30 bg-blue-950/20';
-  }
+  const { threat, color } = getThreatLevel(data.rating);
 
   return (
     <header className="relative flex flex-col border-b border-cyan-500/20 pb-2 mb-2">
@@ -43,7 +47,7 @@ export function CyberHeader({ data }: CyberHeaderProps) {
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
           <span>DEVDEX // SECURE_OS_v4.82</span>
         </div>
-        <div className={`px-2 py-0.5 rounded border ${threatColor} font-bold tracking-[0.18em]`}>
+        <div className={`px-2 py-0.5 rounded border ${color} font-bold tracking-[0.18em]`}>
           {threat}
         </div>
       </div>
@@ -51,9 +55,9 @@ export function CyberHeader({ data }: CyberHeaderProps) {
       {/* Name and Role panel */}
       <div className="relative">
         {/* Name */}
-        <h1 className="text-[1.75rem] sm:text-[2.2rem] font-black uppercase tracking-[0.08em] text-white font-['Orbitron',sans-serif] truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.15)] leading-none">
+        <h2 className="text-[1.75rem] sm:text-[2.2rem] font-black uppercase tracking-[0.08em] text-white font-['Orbitron',sans-serif] truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.15)] leading-none">
           {name}
-        </h1>
+        </h2>
         
         {/* Role */}
         <div className="mt-0.5 flex items-center gap-1.5">

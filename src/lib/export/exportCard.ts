@@ -1,5 +1,3 @@
-import { toPng, toJpeg } from 'html-to-image';
-
 interface ExportCardOptions {
   element: HTMLElement;
   filename: string;
@@ -22,6 +20,7 @@ export async function exportCard({
   preserveCorners,
 }: ExportCardOptions): Promise<void> {
   // For now, ignore background, watermark, shadow, and corner options.
+  const { toPng, toJpeg } = await import('html-to-image');
   const dataUrl = await (format === 'png' ? toPng(element, { pixelRatio }) : toJpeg(element, { pixelRatio }));
   const link = document.createElement('a');
   link.href = dataUrl;

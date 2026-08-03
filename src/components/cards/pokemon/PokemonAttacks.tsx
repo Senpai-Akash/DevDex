@@ -1,5 +1,3 @@
-'use client';
-
 import { DeveloperAchievement } from '@/types/analysis';
 import { PokemonType, TYPE_META } from './pokemonTypeUtils';
 

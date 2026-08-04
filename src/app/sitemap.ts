@@ -1,18 +1,16 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://devdex.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
   return [
     {
-      url: 'https://devdex.app',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
+      url: `${SITE_URL}/`,
+      lastModified: now,
+      changeFrequency: "daily",
       priority: 1,
-    },
-    {
-      url: 'https://devdex.app/about', // Adding common pages even if not yet fully implemented
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
     },
   ];
 }

@@ -28,6 +28,24 @@ Whether you're a student, open-source contributor, recruiter, or developer, DevD
 
 ---
 
+# 📸 Showcase
+
+<div align="center">
+
+### 🏠 Landing Page
+
+<img src="./public/screenshots/Landing-Page.png" alt="Landing Page" width="900"/>
+
+<br><br>
+
+### 🎴 Developer Card Preview
+
+<img src="./public/screenshots/card-preview.png" alt="Developer Card" width="900"/>
+
+</div>
+
+---
+
 # ✨ Features
 
 ## 🎴 Multiple Card Themes
@@ -83,17 +101,6 @@ Export your cards in multiple formats.
 - High Resolution
 - Social Media Ready
 
----
-
-# 🖼 Screenshots
-
-## Landing Page
-
-> Add screenshot here
-
-```
-/public/screenshots/home.png
-```
 ---
 
 # 🚀 Tech Stack

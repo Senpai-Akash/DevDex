@@ -120,11 +120,10 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <Navbar />
+      
         <main id="main-content" className="flex-grow">
           {children}
         </main>
-        <Footer />
       </body>
     </html>
   );

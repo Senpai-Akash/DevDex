@@ -8,6 +8,7 @@ import { ThemeSelector } from '@/components/theme/ThemeSelector';
 import { getThemeComponent } from '@/lib/themes';
 import ExportStudio from '@/components/export/ExportStudio';
 import CardReveal from "@/components/opening/CardReveal";
+
 interface ProfileCardDisplayProps {
   cardData: CardData;
 }
@@ -73,82 +74,35 @@ export function ProfileCardDisplay({
           }}
         >
           <div
-  ref={cardRef}
-  className="relative flex w-full justify-center bg-transparent py-4"
->
-  <CardReveal rarity={cardData.rarity}>
-    {createElement(CardComponent, {
-      data: cardData,
-    })}
-  </CardReveal>
-</div>
+            ref={cardRef}
+            className="relative flex w-full justify-center bg-transparent py-4"
+          >
+            <CardReveal rarity={cardData.rarity}>
+              {createElement(CardComponent, {
+                data: cardData,
+              })}
+            </CardReveal>
+          </div>
         </motion.div>
       </AnimatePresence>
 
+      {/* Single, focused call-to-action — the Profile page stays clean */}
       <button
         type="button"
         onClick={() => setShowExportModal(true)}
-        className="rounded-full border border-amber-400/40 bg-amber-500/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-100 transition-all duration-300 hover:border-amber-300 hover:bg-amber-500/20 hover:scale-105"
+        className="rounded-full border border-indigo-400/40 bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-cyan-500/15 px-7 py-3 text-sm font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:scale-[1.03] hover:border-indigo-300 hover:from-indigo-500/30 hover:via-purple-500/30 hover:to-cyan-500/30 hover:shadow-[0_0_40px_-5px_rgba(99,102,241,0.6)]"
       >
-        Export Card
+        Open Export Studio
       </button>
 
       <AnimatePresence>
-
         {showExportModal && (
-
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowExportModal(false)}
-          >
-
-            <motion.div
-              onClick={(e) => e.stopPropagation()}
-              initial={{
-                opacity: 0,
-                scale: 0.85,
-                y: 25,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.85,
-                y: 25,
-              }}
-              transition={{
-                duration: 0.25,
-                ease: 'easeOut',
-              }}
-              className="relative w-[95vw] max-w-4xl rounded-3xl border border-white/10 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-2xl"
-            >
-
-              <button
-                type="button"
-                onClick={() => setShowExportModal(false)}
-                className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20"
-              >
-                ✕
-              </button>
-
-              <ExportStudio
-                cardRef={cardRef}
-                username={cardData.username}
-                theme={activeTheme}
-              />
-
-            </motion.div>
-
-          </motion.div>
-
+          <ExportStudio
+            cardData={cardData}
+            theme={activeTheme}
+            onClose={() => setShowExportModal(false)}
+          />
         )}
-
       </AnimatePresence>
 
     </div>

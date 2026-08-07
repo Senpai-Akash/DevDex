@@ -1,133 +1,78 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import {
-  Download,
-  Loader2,
-  CreditCard,
-  Briefcase,
-  Bird,
-  Monitor,
-  Smartphone,
-  Image as ImageIcon,
-  type LucideIcon,
-} from 'lucide-react';
+import { forwardRef } from 'react';
+import type { CardData } from '@/types/card';
+import type { CardTheme } from '@/types/theme';
+import CardPreview from './CardPreview';
+import LinkedInBannerPreview from './LinkedInBannerPreview';
+import TwitterHeaderPreview from './TwitterHeaderPreview';
+import DesktopWallpaperPreview from './DesktopWallpaperPreview';
+import MobileWallpaperPreview from './MobileWallpaperPreview';
 
-export interface ExportOptionConfig {
-  id: string;
-  title: string;
-  description: string;
-  resolution: string;
-  icon: 'card' | 'linkedin' | 'twitter' | 'desktop' | 'mobile';
-  /** Live render dimensions (px) */
-  width: number;
-  height: number;
-  /**
-   * Component that renders the live preview at full resolution.
-   * Must accept { className?: string }.
-   */
-  preview: React.ComponentType<{ className?: string }>;
+/**
+ * ExportOption renders a single export format tile inside ExportStudio.
+ * It shows:
+ *   • Live preview of the format
+ *   • Title + platform icon
+ *   • Short description
+ *   • Recommended usage
+ *   • Resolution information
+ *
+ * The `template` prop uses a loose type (`any`) to stay compatible with the
+ * existing templateData shape.
+ */
+interface ExportOptionProps {
+  data: CardData;
+  theme: CardTheme;
+  /** Shape matches the objects defined in templateData.ts */
+  template: any;
 }
 
-const ICON_MAP: Record<ExportOptionConfig['icon'], LucideIcon> = {
-  card: CreditCard,
-  linkedin: Briefcase,
-  twitter: Bird,
-  desktop: Monitor,
-  mobile: Smartphone,
+/* Map template IDs to the appropriate preview component */
+const previewMap: Record<string, React.ComponentType<any>> = {
+  card: CardPreview,
+  linkedin: LinkedInBannerPreview,
+  twitter: TwitterHeaderPreview,
+  desktop: DesktopWallpaperPreview,
+  mobile: MobileWallpaperPreview,
 };
 
-const THUMBNAIL_WIDTH = 220;
-
-interface ExportOptionProps {
-  option: ExportOptionConfig;
-  onDownload: (option: ExportOptionConfig) => void;
-  downloading: boolean;
-  isCurrent: boolean;
-}
-
-export function ExportOption({
-  option,
-  onDownload,
-  downloading,
-  isCurrent,
-}: ExportOptionProps) {
-  const Icon = ICON_MAP[option.icon];
-  const Preview = option.preview;
-
-  // Scale the fixed-size preview down into the thumbnail frame
-  const scale = THUMBNAIL_WIDTH / option.width;
-  const scaledHeight = option.height * scale;
+const ExportOption = forwardRef<HTMLDivElement, ExportOptionProps>(function ExportOption(
+  { data, theme, template },
+  ref,
+) {
+  const Preview = previewMap[template.id] ?? CardPreview;
 
   return (
-    <motion.article
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-5 shadow-[0_8px_40px_-12px_rgba(99,102,241,0.35)] backdrop-blur-xl"
+    <div
+      ref={ref}
+      className="flex flex-col rounded-xl border border-white/10 bg-gray-900/50 p-4 backdrop-blur-lg"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-3xl border border-transparent transition-colors duration-500 group-hover:border-indigo-400/40" />
-
-      <header className="mb-4 flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-500/30 via-purple-500/20 to-cyan-500/30 text-indigo-100 shadow-inner">
-            <Icon className="h-5 w-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-black leading-tight text-white">
-              {option.title}
-            </h3>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              {option.resolution}
-            </p>
-          </div>
-        </div>
-        <ImageIcon className="h-4 w-4 text-slate-500" />
-      </header>
-
-      {/* Thumbnail */}
-      <div
-        className="relative mx-auto mb-4 overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl"
-        style={{
-          width: THUMBNAIL_WIDTH,
-          height: scaledHeight,
-        }}
-      >
-        <div
-          className="origin-top-left"
-          style={{
-            transform: `scale(${scale})`,
-            width: option.width,
-            height: option.height,
-          }}
-        >
-          <Preview />
-        </div>
+      {/* Header with icon and title */}
+      <div className="mb-2 flex items-center space-x-2">
+        {template.icon && (
+          <img src={template.icon} alt={template.title} className="h-6 w-6 object-contain" />
+        )}
+        <h2 className="text-lg font-medium text-white">{template.title ?? 'Export Option'}</h2>
       </div>
 
-      <p className="mb-4 text-sm leading-relaxed text-slate-300">
-        {option.description}
-      </p>
+      {/* Live preview */}
+      <div className="relative mb-3 overflow-hidden rounded-md bg-gray-800">
+        <Preview data={data} theme={theme} variant={template.variant ?? ''} />
+      </div>
 
-      <button
-        type="button"
-        disabled={downloading && isCurrent}
-        onClick={() => onDownload(option)}
-        className="mt-auto flex items-center justify-center gap-2 rounded-2xl border border-indigo-400/30 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-cyan-500/20 px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-indigo-300 hover:from-indigo-500/40 hover:via-purple-500/40 hover:to-cyan-500/40 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.6)] disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {downloading && isCurrent ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Exporting…
-          </>
-        ) : (
-          <>
-            <Download className="h-4 w-4" />
-            Download
-          </>
+      {/* Description */}
+      <p className="text-sm text-gray-300">{template.description ?? ''}</p>
+
+      {/* Footer with usage & resolution */}
+      <div className="mt-2 text-xs text-gray-400">
+        {template.usage && <span>Recommended: {template.usage}</span>}
+        {template.resolution && (
+          <span className={template.usage ? 'ml-4' : ''}>Resolution: {template.resolution}</span>
         )}
-      </button>
-    </motion.article>
+      </div>
+    </div>
   );
-}
+});
 
 export default ExportOption;

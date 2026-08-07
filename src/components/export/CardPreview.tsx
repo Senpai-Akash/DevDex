@@ -13,26 +13,26 @@ interface CardPreviewProps {
 }
 
 /**
- * CardPreview renders the currently selected developer card with the
- * active theme. Used as the "Developer Card" export option (PNG).
- *
- * The component is exported in this wrapper so it can be sized
- * independently of the in-profile render and captured by html-to-image.
+ * CardPreview renders the developer card at full resolution.
+ * Includes a subtle dark gradient background and soft shadow.
  */
-const CardPreview = forwardRef<HTMLDivElement, CardPreviewProps>(
-  function CardPreview({ data, theme, className = '' }, ref) {
-    const CardComponent = getThemeComponent(theme);
+const CardPreview = forwardRef<HTMLDivElement, CardPreviewProps>(function CardPreview(
+  { data, theme, className = '' },
+  ref,
+) {
+  const CardComponent = getThemeComponent(theme);
 
-    return (
-      <div
-        ref={ref}
-        className={`relative flex items-center justify-center ${className}`}
-        style={{ width: 760, height: 1040 }}
-      >
-        {createElement(CardComponent, { data })}
-      </div>
-    );
-  }
-);
+  return (
+    <div
+      ref={ref}
+      className={'relative flex items-center justify-center ' + className + ' bg-gradient-to-b from-gray-900 via-purple-900 to-black rounded-2xl p-6 shadow-2xl overflow-hidden'}
+      style={{ width: 760, height: 1040 }}
+    >
+      {/* Subtle particle / light speckle overlay */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.08),transparent_70%)]" />
+      {createElement(CardComponent, { data })}
+    </div>
+  );
+});
 
 export default CardPreview;

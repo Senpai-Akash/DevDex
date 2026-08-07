@@ -7,85 +7,117 @@ import type { CardTheme } from '@/types/theme';
 import { getThemeComponent } from '@/lib/themes';
 import {
   BrandedBackground,
-  BrandedProfile,
   BrandedWatermark,
 } from '@/components/export/BrandedContent';
 
 interface BannerPreviewProps {
   data: CardData;
   theme: CardTheme;
-  /** Twitter/X or LinkedIn */
+  /** LinkedIn or Twitter/X */
   variant: 'linkedin' | 'twitter';
   className?: string;
 }
 
-const DIMENSIONS = {
-  linkedin: { width: 1584, height: 396 },
-  twitter: { width: 1500, height: 500 },
-} as const;
-
 /**
- * BannerPreview renders a wide banner (LinkedIn or Twitter/X).
- *
- * Layout: developer card anchored on the right, profile details on the left.
- * The lower-left region is intentionally kept empty for LinkedIn because the
- * profile picture overlaps it.
+ * BannerPreview renders a platform‑specific banner.
+ * LinkedIn – clean professional layout.
+ * Twitter/X – bold expressive layout.
  */
-const BannerPreview = forwardRef<HTMLDivElement, BannerPreviewProps>(
-  function BannerPreview({ data, theme, variant, className = '' }, ref) {
-    const CardComponent = getThemeComponent(theme);
-    const { width, height } = DIMENSIONS[variant];
+const BannerPreview = forwardRef<HTMLDivElement, BannerPreviewProps>(function BannerPreview(
+  { data, theme, variant, className = '' },
+  ref,
+) {
+  const CardComponent = getThemeComponent(theme);
+  const { width, height } = variant === 'linkedin'
+    ? { width: 1584, height: 396 }
+    : { width: 1500, height: 500 };
 
-    const cardWidth = Math.round(height * 0.7);
-    const cardHeight = Math.round(height * 1.05);
+  // Card sizing based on banner height
+  const cardWidth = Math.round(height * 0.7);
+  const cardHeight = Math.round(height * 1.05);
+  const scale = cardWidth / 760;
 
+  // Render tech badges (up to 6)
+  const renderTech = () => {
+    const techStack = data.technology?.split(/[,\s|/]+/).filter(Boolean).slice(0, 6) ?? [];
+    return (
+      <div className="flex flex-wrap gap-2 mt-3">
+        {techStack.map((t) => (
+          <span
+            key={t}
+            className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  if (variant === 'linkedin') {
+    // LinkedIn layout – respects profile picture safe area (lower‑left empty)
     return (
       <div
         ref={ref}
-        className={`relative isolate overflow-hidden text-white ${className}`}
+        className={'relative isolate overflow-hidden text-white ' + className}
         style={{ width, height }}
       >
         <BrandedBackground variant="aurora" />
-
-        <div className="relative flex h-full w-full items-center justify-between gap-8 px-12">
-          {/* Left: profile details. On LinkedIn we move them up to
-              keep the lower-left empty for the profile photo. */}
-          <div
-            className={`flex max-w-[58%] flex-1 flex-col ${
-              variant === 'linkedin' ? 'justify-start pt-8' : 'justify-center'
-            }`}
-          >
-            <BrandedProfile data={data} orientation="horizontal" />
+        <div className="relative h-full w-full p-8">
+          {/* Text block */}
+          <div className="max-w-[60%]">
+            <h1 className="text-5xl font-black text-white">{data.displayName}</h1>
+            <p className="mt-1 text-xl font-semibold text-indigo-200">{data.role}</p>
+            {renderTech()}
           </div>
 
-          {/* Right: developer card scaled into the banner */}
+          {/* Card positioned bottom‑right */}
           <div
-            className="relative flex items-center justify-center"
+            className="absolute bottom-8 right-8"
             style={{
               width: cardWidth,
               height: cardHeight,
-              transform: `translateY(${variant === 'linkedin' ? 6 : 0}%)`,
+              transform: 'scale(' + scale + ')',
+              transformOrigin: 'bottom right',
             }}
           >
-            <div
-              style={{
-                transform: `scale(${cardWidth / 760})`,
-                transformOrigin: 'center',
-                width: 760,
-                height: 1040,
-              }}
-            >
-              {createElement(CardComponent, { data })}
-            </div>
+            {createElement(CardComponent, { data })}
           </div>
-        </div>
 
-        <BrandedWatermark
-          position={variant === 'linkedin' ? 'bottom-right' : 'bottom-left'}
-        />
+          <BrandedWatermark position="bottom-left" />
+        </div>
       </div>
     );
   }
-);
+
+  // Twitter / X layout – bold and dynamic
+  return (
+    <div
+      ref={ref}
+      className={'relative isolate overflow-hidden text-white ' + className}
+      style={{ width, height }}
+    >
+      <BrandedBackground variant="sunset" />
+      <div className="relative flex h-full w-full items-center justify-between px-12">
+        {/* Left side – name, role, tech */}
+        <div className="flex max-w-[45%] flex-col">
+          <h1 className="text-6xl font-black text-white">{data.displayName}</h1>
+          <p className="mt-1 text-2xl font-semibold text-indigo-200">{data.role}</p>
+          {renderTech()}
+        </div>
+
+        {/* Right side – developer card */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{ width: cardWidth, height: cardHeight }}
+        >
+          {createElement(CardComponent, { data })}
+        </div>
+
+        <BrandedWatermark position="bottom-right" />
+      </div>
+    </div>
+  );
+});
 
 export default BannerPreview;

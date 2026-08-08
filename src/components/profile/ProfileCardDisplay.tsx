@@ -95,15 +95,37 @@ export function ProfileCardDisplay({
         Open Export Studio
       </button>
 
-      <AnimatePresence>
-        {showExportModal && (
-          <ExportStudio
-            cardData={cardData}
-            theme={activeTheme}
-            onClose={() => setShowExportModal(false)}
-          />
-        )}
-      </AnimatePresence>
+       <AnimatePresence>
+         {showExportModal && (
+           <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }}
+             className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-slate-950/80 p-4 backdrop-blur-md"
+           >
+             <motion.div
+               initial={{ opacity: 0, scale: 0.9, y: 20 }}
+               animate={{ opacity: 1, scale: 1, y: 0 }}
+               exit={{ opacity: 0, scale: 0.9, y: 20 }}
+               className="relative h-full max-h-[90vh] w-full max-w-7xl overflow-y-auto rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl shadow-black/50"
+             >
+               <button
+                 onClick={() => setShowExportModal(false)}
+                 className="absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 text-white transition-colors hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                 aria-label="Close Export Studio"
+               >
+                 ✕
+               </button>
+
+               <ExportStudio
+                 cardData={cardData}
+                 theme={activeTheme}
+                 onClose={() => setShowExportModal(false)}
+               />
+             </motion.div>
+           </motion.div>
+         )}
+       </AnimatePresence>
 
     </div>
   );
